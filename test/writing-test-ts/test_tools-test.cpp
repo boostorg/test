@@ -27,6 +27,7 @@
 // Boost
 #include <boost/bind/bind.hpp>
 #include <boost/noncopyable.hpp>
+#include <boost/shared_ptr.hpp>
 
 // STL
 #include <iostream>
@@ -141,7 +142,7 @@ BOOST_AUTO_TEST_CASE( name )                                        \
                                              __LINE__ );            \
     impl->p_default_status.value = ut::test_unit::RS_ENABLED;       \
                                                                     \
-    /* to detect for issues concerning the file pattern, we take    
+    /* to detect for issues concerning the file pattern, we take
        the stream now */                                            \
     tt::output_test_stream& stream = ots();                         \
                                                                     \

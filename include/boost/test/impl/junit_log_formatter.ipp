@@ -448,7 +448,7 @@ public:
             if(m_display_build_info)
             {
                 m_stream  << "<properties>" << std::endl;
-                m_stream  << "<property name=\"platform\" value" << utils::attr_value() << BOOST_PLATFORM << " />" << std::endl;
+                m_stream  << "<property name=\"platform\" value" << utils::attr_value() << BOOST_TEST_PLATFORM << " />" << std::endl;
                 m_stream  << "<property name=\"compiler\" value" << utils::attr_value() << BOOST_COMPILER << " />" << std::endl;
                 m_stream  << "<property name=\"stl\" value" << utils::attr_value() << BOOST_STDLIB << " />" << std::endl;
 

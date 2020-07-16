@@ -67,7 +67,7 @@ xml_log_formatter::log_build_info( std::ostream& ostr, bool log_build_info )
 {
     if( log_build_info ) {
         ostr  << "<BuildInfo"
-                << " platform"  << utils::attr_value() << BOOST_PLATFORM
+                << " platform"  << utils::attr_value() << BOOST_TEST_PLATFORM
                 << " compiler"  << utils::attr_value() << BOOST_COMPILER
                 << " stl"       << utils::attr_value() << BOOST_STDLIB
                 << " boost=\""  << BOOST_TEST_VERSION/100000     << "."

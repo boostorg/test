@@ -147,7 +147,7 @@ struct massive_hash_function_test : test_suite {
         std::cout << "Enter alphabet (4 characters without delimeters)\n";
         std::cin >> alphabet;
 
-        boost::shared_ptr<hash_function_tester> instance( new hash_function_tester( alphabet ) );
+        BOOST_TEST_SHARE_PTR<hash_function_tester> instance( new hash_function_tester( alphabet ) );
 
         std::cout << "\nEnter test data in a format [string] [value] to check correct calculation\n";
         std::cout << "Enter test data in a format [string] -1 to check long string validation\n";

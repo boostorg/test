@@ -78,7 +78,7 @@ void
 compiler_log_formatter::log_build_info( std::ostream& output, bool log_build_info )
 {
     if(log_build_info) {
-        output  << "Platform: " << BOOST_PLATFORM                << '\n'
+        output  << "Platform: " << BOOST_TEST_PLATFORM           << '\n'
                 << "Compiler: " << BOOST_COMPILER                << '\n'
                 << "STL     : " << BOOST_STDLIB                  << '\n'
                 << "Boost   : " << BOOST_TEST_VERSION/100000     << "."

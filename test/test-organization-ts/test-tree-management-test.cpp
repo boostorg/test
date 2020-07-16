@@ -281,7 +281,7 @@ struct E : public C {
 
 BOOST_AUTO_TEST_CASE( user_class_test_case )
 {
-    boost::shared_ptr<A> instA( new A );
+    BOOST_TEST_SHARE_PTR<A> instA( new A );
     test_case* tc1 = BOOST_CLASS_TEST_CASE( &A::test_methodA1, instA );
     test_case* tc2 = BOOST_CLASS_TEST_CASE( &A::test_methodA2, instA );
 
@@ -294,7 +294,7 @@ BOOST_AUTO_TEST_CASE( user_class_test_case )
     tc2->p_test_func.get()();
     BOOST_TEST( instA->i == 2 );
 
-    boost::shared_ptr<B> instB( new B );
+    BOOST_TEST_SHARE_PTR<B> instB( new B );
     test_case* tc3 = BOOST_CLASS_TEST_CASE( &A::test_methodA1, instB );
     test_case* tc4 = BOOST_CLASS_TEST_CASE( &B::test_methodB, instB );
 
@@ -307,7 +307,7 @@ BOOST_AUTO_TEST_CASE( user_class_test_case )
     tc4->p_test_func.get()();
     BOOST_TEST( instB->i == 0 );
 
-    boost::shared_ptr<C> instC1( new D );
+    BOOST_TEST_SHARE_PTR<C> instC1( new D );
     test_case* tc5 = BOOST_CLASS_TEST_CASE( &C::test_method, instC1 );
 
     BOOST_TEST( tc5->p_name == const_string( "C__test_method" ) );
@@ -315,7 +315,7 @@ BOOST_AUTO_TEST_CASE( user_class_test_case )
     tc5->p_test_func.get()();
     BOOST_TEST( instC1->i == 1 );
 
-    boost::shared_ptr<C> instC2( new E );
+    BOOST_TEST_SHARE_PTR<C> instC2( new E );
     test_case* tc6 = BOOST_CLASS_TEST_CASE( &C::test_method, instC2 );
 
     BOOST_TEST( tc6->p_name == const_string( "C__test_method" ) );

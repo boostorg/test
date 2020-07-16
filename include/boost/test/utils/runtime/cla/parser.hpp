@@ -322,7 +322,7 @@ public:
 #endif
        ostr << " Boost.Test\n";
        ostr << "- Compiler: " << BOOST_COMPILER << '\n'
-            << "- Platform: " << BOOST_PLATFORM << '\n'
+            << "- Platform: " << BOOST_TEST_PLATFORM << '\n'
             << "- STL     : " << BOOST_STDLIB;
        ostr << std::endl;
     }

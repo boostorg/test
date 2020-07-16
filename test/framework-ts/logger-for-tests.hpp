@@ -71,7 +71,7 @@ public:
         std::string other_vars_fixes;
         {
             std::ostringstream s_version;
-            s_version << BOOST_VERSION/100000 << "." << BOOST_VERSION/100 % 1000 << "." << BOOST_VERSION % 100;
+            s_version << BOOST_TEST_VERSION/100000 << "." << BOOST_TEST_VERSION/100 % 1000 << "." << BOOST_TEST_VERSION % 100;
 
             const std::string to_look_for[] = {"time=\"*\"",
                                                basename + "(*):",

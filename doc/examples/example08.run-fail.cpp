@@ -30,7 +30,7 @@ bool init_unit_test()
   using boost::placeholders::_1;
   double params[] = { 1., 1.1, 1.01, 1.001, 1.0001 };
 
-  std::function<void (double)> test_method = bind( &test_class::test_method, &tester, _1);
+  BOOST_TEST_FUNCTION<void (double)> test_method = bind( &test_class::test_method, &tester, _1);
 
   framework::master_test_suite().
     add( BOOST_PARAM_TEST_CASE( test_method, params, params+5 ) );

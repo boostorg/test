@@ -33,6 +33,7 @@ using utf::const_string;
 #include <boost/mpl/joint_view.hpp>
 #include <boost/mpl/transform.hpp>
 #include <boost/type_traits/add_const.hpp>
+#include <boost/type_traits/remove_const.hpp>
 
 // STL
 #include <cctype>
@@ -509,7 +510,7 @@ init_unit_test_suite( int /*argc*/, char* /*argv*/[] )
     test->add( BOOST_TEST_CASE_TEMPLATE( io_test, io_test_types ) );
     test->add( BOOST_TEST_CASE_TEMPLATE( find_test, char_types ) );
     test->add( BOOST_TEST_CASE( &const_conversion ) );
-  
+
 #if defined(BOOST_TEST_STRING_VIEW)
     test->add( BOOST_TEST_CASE_TEMPLATE( string_view_support, char_types ) );
 #endif

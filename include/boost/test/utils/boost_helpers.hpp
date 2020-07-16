@@ -12,13 +12,21 @@
 #ifndef BOOST_TEST_BOOST_HELPERS_HPP__
 #define BOOST_TEST_BOOST_HELPERS_HPP__
 
-#if (__cplusplus < 201103L)
-  #define BOOST_TEST_USE_BOOST
-  #include <boost/config.hpp>
-#else
-  #if defined(BOOST_TEST_USE_BOOST)
-    #error "BOOST_TEST_USE_BOOST already defined"
+#if !defined(BOOST_TEST_USE_BOOST)
+    #if (__cplusplus < 201103L)
+        #define BOOST_TEST_USE_BOOST 1
+    #else
+        #define BOOST_TEST_USE_BOOST 0
+    #endif
+#endif
+
+
+// include boost/config if we are using boost
+#if BOOST_TEST_USE_BOOST==0
+  #if (__cplusplus < 201103L)
+    #error "Cannot use BOOST_TEST_USE_BOOST==0 for pre-C++11 compilers"
   #endif
+  #include <boost/config.hpp>
 #endif
 
 // ************************************************************************** //
@@ -26,7 +34,7 @@
 // ************************************************************************** //
 
 // BOOST_TEST_ATTRIBUTE_UNUSED <-> BOOST_ATTRIBUTE_UNUSED
-#if defined(BOOST_TEST_USE_BOOST)
+#if BOOST_TEST_USE_BOOST==1
   // from boost/config
   #define BOOST_TEST_ATTRIBUTE_UNUSED BOOST_ATTRIBUTE_UNUSED
 #else
@@ -35,7 +43,7 @@
 #endif
 
 // BOOST_TEST_OVERRIDE <-> BOOST_OVERRIDE
-#if defined(BOOST_TEST_USE_BOOST)
+#if BOOST_TEST_USE_BOOST==1
   // from boost/config
   #define BOOST_TEST_OVERRIDE BOOST_OVERRIDE
 #else
@@ -43,7 +51,7 @@
 #endif
 
 // BOOST_TEST_CURRENT_FUNCTION <-> BOOST_CURRENT_FUNCTION
-#if defined(BOOST_TEST_USE_BOOST)
+#if BOOST_TEST_USE_BOOST==1
   #include <boost/current_function.hpp>
   #define BOOST_TEST_CURRENT_FUNCTION BOOST_CURRENT_FUNCTION
 #else
@@ -51,15 +59,15 @@
 #endif
 
 // BOOST_TEST_VERSION <-> BOOST_VERSION
-#if defined(BOOST_TEST_USE_BOOST)
+#if BOOST_TEST_USE_BOOST==1
   #include <boost/version.hpp>
   #define BOOST_TEST_VERSION BOOST_VERSION
 #else
-  #define BOOST_TEST_VERSION 107400
+  #define BOOST_TEST_VERSION 107401
 #endif
 
 // BOOST_TEST_DEDUCED_TYPENAME <-> BOOST_DEDUCED_TYPENAME
-#if defined(BOOST_TEST_USE_BOOST)
+#if BOOST_TEST_USE_BOOST==1
   #define BOOST_TEST_DEDUCED_TYPENAME BOOST_DEDUCED_TYPENAME
   #define BOOST_TEST_CTOR_TYPENAME BOOST_CTOR_TYPENAME
 #else
@@ -75,7 +83,7 @@
 // ************************************************************************** //
 
 // BOOST_TEST_FUNCTION <-> std::function/boost::function
-#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
+#if BOOST_TEST_USE_BOOST==1
   #include <boost/function/function0.hpp>
   #include <boost/function/function1.hpp>
   #include <boost/function/function2.hpp>
@@ -87,7 +95,7 @@
 
 
 // enable if
-#if defined(BOOST_TEST_USE_BOOST)
+#if BOOST_TEST_USE_BOOST==1
   #include <boost/utility/enable_if.hpp>
   #define BOOST_TEST_ENABLE_IF boost::enable_if_c
 #else
@@ -96,7 +104,7 @@
 #endif
 
 // boost::reference_wrapper
-#if defined(BOOST_TEST_USE_BOOST)
+#if BOOST_TEST_USE_BOOST==1
   #include <boost/core/ref.hpp>
   #define BOOST_TEST_REFERENCE_WRAPPER boost::reference_wrapper
   #define BOOST_TEST_REF boost::ref
@@ -107,7 +115,7 @@
 #endif
 
 // make_shared
-#if defined(BOOST_TEST_USE_BOOST)
+#if BOOST_TEST_USE_BOOST==1
   #include <boost/make_shared.hpp>
 
   #define BOOST_TEST_SHARE_PTR boost::shared_ptr
@@ -125,7 +133,7 @@
 // ************************************************************************** //
 
 // true_type
-#if defined(BOOST_TEST_USE_BOOST)
+#if BOOST_TEST_USE_BOOST==1
   #include <boost/mpl/bool.hpp>
   namespace boost { namespace unit_test {
     typedef mpl::true_  bt_true_type;
@@ -151,7 +159,10 @@ struct bt_bool<false> : bt_false_type {
 
 # include <cassert>
 # define BOOST_TEST_ASSERT(expr) assert(expr)
+# define BOOST_TEST_ASSERT_MSG(expr, msg) assert((expr)&&(msg))
 
+
+#define BOOST_TEST_PLATFORM BOOST_PLATFORM
 
 // static_assert with or without message
 // addressof
@@ -160,7 +171,6 @@ struct bt_bool<false> : bt_false_type {
 // BOOST_NO_EXCEPTIONS
 // BOOST_NORETURN
 
-// BOOST_PLATFORM
 // BOOST_COMPILER
 // BOOST_STDLIB
 // BOOST_FALLTHROUGH

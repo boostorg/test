@@ -1,7 +1,7 @@
 //  (C) Copyright Gennadiy Rozental 2001-2014.
 //  (C) Copyright Gennadiy Rozental & Ullrich Koethe 2001.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
@@ -133,7 +133,7 @@ struct account_test {
 struct account_test_suite : public test_suite {
     account_test_suite( double init_value ) : test_suite("account_test_suite") {
         // add member function test cases to a test suite
-        boost::shared_ptr<account_test> instance( new account_test( init_value ) );
+        BOOST_TEST_SHARE_PTR<account_test> instance( new account_test( init_value ) );
 
         test_case* init_test_case     = BOOST_CLASS_TEST_CASE( &account_test::test_init, instance );
         test_case* deposit_test_case  = BOOST_CLASS_TEST_CASE( &account_test::test_deposit, instance );

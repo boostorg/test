@@ -62,6 +62,7 @@
 #include <numeric>
 #include <cmath>
 #include <iterator>
+#include <algorithm>
 
 #ifdef BOOST_NO_STDC_NAMESPACE
 namespace std { using ::time; using ::srand; }
@@ -1611,7 +1612,7 @@ struct swap_on_delete {
 struct register_observer_helper {
   register_observer_helper(test_observer& observer)
   : m_observer(observer)
-  { 
+  {
     register_obs();
   }
 
@@ -1629,7 +1630,7 @@ struct register_observer_helper {
     m_registered = true;
     register_observer( m_observer );
   }
-  
+
 
   test_observer& m_observer;
   bool m_registered;

@@ -32,6 +32,9 @@
 // Boost
 #include <boost/io/ios_state.hpp>
 
+// transform
+#include <algorithm>
+
 typedef ::boost::io::ios_base_all_saver io_saver_type;
 
 #include <boost/test/detail/suppress_warnings.hpp>
@@ -138,8 +141,8 @@ struct unit_test_log_impl {
     log_entry_data      m_entry_data;
 
     bool has_entry_in_progress() const {
-        for( vp_formatter_data_t::const_iterator it(m_active_log_formatter_data.begin()), ite(m_active_log_formatter_data.end()); 
-             it < ite; 
+        for( vp_formatter_data_t::const_iterator it(m_active_log_formatter_data.begin()), ite(m_active_log_formatter_data.end());
+             it < ite;
              ++it)
         {
             unit_test_log_data_helper_impl& current_logger_data = **it;
@@ -206,7 +209,7 @@ unit_test_log_t::configure( )
     // test_start pushes the necessary log information when the test module is starting, and implies configure.
     // configure: should be called each time the set of loggers, stream or configuration is changed.
     s_log_impl().m_active_log_formatter_data.clear();
-    for( unit_test_log_impl::v_formatter_data_t::iterator it(s_log_impl().m_log_formatter_data.begin()), 
+    for( unit_test_log_impl::v_formatter_data_t::iterator it(s_log_impl().m_log_formatter_data.begin()),
                                                           ite(s_log_impl().m_log_formatter_data.end());
         it < ite;
         ++it)
@@ -641,7 +644,7 @@ unit_test_log_t::set_threshold_level( output_format log_format, log_level lev )
     {
         unit_test_log_data_helper_impl& current_logger_data = *it;
         if( current_logger_data.m_format == log_format) {
-            ret = current_logger_data.m_log_formatter->get_log_level(); 
+            ret = current_logger_data.m_log_formatter->get_log_level();
             current_logger_data.m_log_formatter->set_log_level( lev );
             break;
         }
@@ -688,7 +691,7 @@ unit_test_log_t::add_format( output_format log_format )
 
 unit_test_log_formatter*
 unit_test_log_t::get_formatter( output_format log_format ) {
-    
+
     v_logger_t& vloggers = s_log_impl().m_log_formatter_data;
     for( v_logger_t::iterator it(vloggers.begin()), ite(vloggers.end()); it < ite; ++it)
     {
