@@ -38,12 +38,12 @@ boost::unit_test::make_test_case( boost::unit_test::test_func_t(test_function), 
                                   test_name ,                                   \
                                   __FILE__, __LINE__ )
 
-#define BOOST_TEST_CASE( test_function )                                   \
-BOOST_TEST_CASE_NAME(test_function, BOOST_TEST_STRINGIZE( test_function) )
+#define BOOST_TEST_CASE( test_function )                                        \
+BOOST_TEST_CASE_NAME(test_function, BOOST_TEST_STRINGIZE_CSTRING( test_function) )
 
-#define BOOST_CLASS_TEST_CASE( test_function, tc_instance )                \
-boost::unit_test::make_test_case( (test_function),                         \
-                                  BOOST_TEST_STRINGIZE( test_function ),   \
+#define BOOST_CLASS_TEST_CASE( test_function, tc_instance )                     \
+boost::unit_test::make_test_case( (test_function),                              \
+                                  BOOST_TEST_STRINGIZE_CSTRING( test_function ),\
                                   __FILE__, __LINE__, tc_instance )
 
 // ************************************************************************** //
@@ -275,7 +275,7 @@ BOOST_FIXTURE_TEST_CASE_TEMPLATE( test_name, type_name, TL,             \
 
 #define BOOST_TEST_CASE_TEMPLATE( name, typelist )                      \
     boost::unit_test::ut_detail::template_test_case_gen<name,typelist>( \
-        BOOST_TEST_STRINGIZE( name ), __FILE__, __LINE__ )              \
+        BOOST_TEST_STRINGIZE_CSTRING( name ), __FILE__, __LINE__ )      \
 /**/
 
 // ************************************************************************** //
@@ -382,7 +382,7 @@ BOOST_TEST_APPEND_UNIQUE_ID( BOOST_JOIN( test_name, _registrar ) ) BOOST_ATTRIBU
 // initializing the master test suite name from the user defined macros
 // this function should be seen exactly once.
 #ifdef BOOST_TEST_MODULE
-static const boost::unit_test::framework::impl::master_test_suite_name_setter mtsetter(BOOST_TEST_STRINGIZE( BOOST_TEST_MODULE ).trim( "\"" ));
+static const boost::unit_test::framework::impl::master_test_suite_name_setter mtsetter(BOOST_TEST_STRINGIZE_CSTRING( BOOST_TEST_MODULE ).trim( "\"" ));
 #endif
 
 #ifdef BOOST_TEST_ALTERNATIVE_INIT_API

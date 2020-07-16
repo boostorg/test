@@ -78,11 +78,11 @@ do {                                                                            
 //____________________________________________________________________________//
 
 #define BOOST_WARN( P )                     BOOST_TEST_TOOL_IMPL( 2, \
-    (P), BOOST_TEST_STRINGIZE( P ), WARN, CHECK_PRED, _ )
+    (P), BOOST_TEST_STRINGIZE_CSTRING( P ), WARN, CHECK_PRED, _ )
 #define BOOST_CHECK( P )                    BOOST_TEST_TOOL_IMPL( 2, \
-    (P), BOOST_TEST_STRINGIZE( P ), CHECK, CHECK_PRED, _ )
+    (P), BOOST_TEST_STRINGIZE_CSTRING( P ), CHECK, CHECK_PRED, _ )
 #define BOOST_REQUIRE( P )                  BOOST_TEST_TOOL_IMPL( 2, \
-    (P), BOOST_TEST_STRINGIZE( P ), REQUIRE, CHECK_PRED, _ )
+    (P), BOOST_TEST_STRINGIZE_CSTRING( P ), REQUIRE, CHECK_PRED, _ )
 
 //____________________________________________________________________________//
 
@@ -231,11 +231,11 @@ do {                                                                            
 //____________________________________________________________________________//
 
 #define BOOST_WARN_PREDICATE( P, ARGS )     BOOST_TEST_TOOL_IMPL( 0, \
-    P, BOOST_TEST_STRINGIZE( P ), WARN, CHECK_PRED_WITH_ARGS, ARGS )
+    P, BOOST_TEST_STRINGIZE_CSTRING( P ), WARN, CHECK_PRED_WITH_ARGS, ARGS )
 #define BOOST_CHECK_PREDICATE( P, ARGS )    BOOST_TEST_TOOL_IMPL( 0, \
-    P, BOOST_TEST_STRINGIZE( P ), CHECK, CHECK_PRED_WITH_ARGS, ARGS )
+    P, BOOST_TEST_STRINGIZE_CSTRING( P ), CHECK, CHECK_PRED_WITH_ARGS, ARGS )
 #define BOOST_REQUIRE_PREDICATE( P, ARGS )  BOOST_TEST_TOOL_IMPL( 0, \
-    P, BOOST_TEST_STRINGIZE( P ), REQUIRE, CHECK_PRED_WITH_ARGS, ARGS )
+    P, BOOST_TEST_STRINGIZE_CSTRING( P ), REQUIRE, CHECK_PRED_WITH_ARGS, ARGS )
 
 //____________________________________________________________________________//
 

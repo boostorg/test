@@ -29,14 +29,14 @@
 
 #define BOOST_PARAM_TEST_CASE( function, begin, end )                      \
 boost::unit_test::make_test_case( function,                                \
-                                  BOOST_TEST_STRINGIZE( function ),        \
+                                  BOOST_TEST_STRINGIZE_CSTRING( function ),\
                                   __FILE__, __LINE__,                      \
                                   (begin), (end) )                         \
 /**/
 
 #define BOOST_PARAM_CLASS_TEST_CASE( function, tc_instance, begin, end )   \
 boost::unit_test::make_test_case( function,                                \
-                                  BOOST_TEST_STRINGIZE( function ),        \
+                                  BOOST_TEST_STRINGIZE_CSTRING( function ),\
                                   __FILE__, __LINE__,                      \
                                   (tc_instance),                           \
                                   (begin), (end) )                         \

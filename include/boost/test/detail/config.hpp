@@ -12,7 +12,7 @@
 #ifndef BOOST_TEST_CONFIG_HPP_071894GER
 #define BOOST_TEST_CONFIG_HPP_071894GER
 
-// Boost wrappers
+// Boost configuration and tools/macros wrapper
 #include <boost/test/utils/boost_helpers.hpp>
 
 #include <boost/detail/workaround.hpp>

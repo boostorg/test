@@ -304,7 +304,7 @@ public:
 
 #if defined(BOOST_TEST_MODULE)
        // we do not want to refer to the master test suite there
-       ostr << '\'' << BOOST_TEST_STRINGIZE( BOOST_TEST_MODULE ).trim( "\"" ) << "' ";
+       ostr << '\'' << BOOST_TEST_STRINGIZE_CSTRING( BOOST_TEST_MODULE ).trim( "\"" ) << "' ";
 #endif
 
        ostr << "in executable '" << m_program_name << "'\n";

@@ -14,9 +14,9 @@
 
 #include <boost/test/utils/basic_cstring/basic_cstring.hpp>
 
-#define BOOST_TEST_L( s )         ::boost::unit_test::const_string( s, sizeof( s ) - 1 )
-#define BOOST_TEST_STRINGIZE( s ) BOOST_TEST_L( BOOST_STRINGIZE( s ) )
-#define BOOST_TEST_EMPTY_STRING   BOOST_TEST_L( "" )
+#define BOOST_TEST_L( s )                   ::boost::unit_test::const_string( s, sizeof( s ) - 1 )
+#define BOOST_TEST_STRINGIZE_CSTRING( s )   BOOST_TEST_L( BOOST_STRINGIZE( s ) )
+#define BOOST_TEST_EMPTY_STRING             BOOST_TEST_L( "" )
 
 #include <boost/test/detail/suppress_warnings.hpp>
 

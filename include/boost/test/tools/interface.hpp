@@ -68,7 +68,7 @@ do {                                                            \
     ::boost::test_tools::tt_detail::                            \
     report_assertion(                                           \
       BOOST_TEST_BUILD_ASSERTION( P ).evaluate(),               \
-      BOOST_TEST_LAZY_MSG( BOOST_TEST_STRINGIZE( P ) ),         \
+      BOOST_TEST_LAZY_MSG( BOOST_TEST_STRINGIZE_CSTRING( P ) ), \
       BOOST_TEST_L(__FILE__),                                   \
       static_cast<std::size_t>(__LINE__),                       \
       ::boost::test_tools::tt_detail::level,                    \
@@ -80,33 +80,33 @@ do {                                                            \
 //____________________________________________________________________________//
 
 // Implementation based on expression template construction with extra tool arguments
-#define BOOST_TEST_TOOL_ET_IMPL_EX( P, level, arg )             \
-do {                                                            \
-    BOOST_TEST_PASSPOINT();                                     \
-                                                                \
-    ::boost::test_tools::tt_detail::                            \
-    report_assertion(                                           \
-      ::boost::test_tools::tt_detail::assertion_evaluate(       \
-        BOOST_TEST_BUILD_ASSERTION( P ) )                       \
-          << arg,                                               \
-      ::boost::test_tools::tt_detail::assertion_text(           \
-          BOOST_TEST_LAZY_MSG( BOOST_TEST_STRINGIZE(P) ),       \
-          BOOST_TEST_LAZY_MSG( arg ) ),                         \
-      BOOST_TEST_L(__FILE__),                                   \
-      static_cast<std::size_t>(__LINE__),                       \
-      ::boost::test_tools::tt_detail::level,                    \
-      ::boost::test_tools::tt_detail::assertion_type()          \
-          << arg,                                               \
-      0 );                                                      \
-} while( ::boost::test_tools::tt_detail::dummy_cond() )         \
+#define BOOST_TEST_TOOL_ET_IMPL_EX( P, level, arg )              \
+do {                                                             \
+    BOOST_TEST_PASSPOINT();                                      \
+                                                                 \
+    ::boost::test_tools::tt_detail::                             \
+    report_assertion(                                            \
+      ::boost::test_tools::tt_detail::assertion_evaluate(        \
+        BOOST_TEST_BUILD_ASSERTION( P ) )                        \
+          << arg,                                                \
+      ::boost::test_tools::tt_detail::assertion_text(            \
+          BOOST_TEST_LAZY_MSG( BOOST_TEST_STRINGIZE_CSTRING(P) ),\
+          BOOST_TEST_LAZY_MSG( arg ) ),                          \
+      BOOST_TEST_L(__FILE__),                                    \
+      static_cast<std::size_t>(__LINE__),                        \
+      ::boost::test_tools::tt_detail::level,                     \
+      ::boost::test_tools::tt_detail::assertion_type()           \
+          << arg,                                                \
+      0 );                                                       \
+} while( ::boost::test_tools::tt_detail::dummy_cond() )          \
 /**/
 
 //____________________________________________________________________________//
 
 #ifdef BOOST_TEST_TOOLS_UNDER_DEBUGGER
 
-#define BOOST_TEST_TOOL_UNIV( level, P )                                    \
-    BOOST_TEST_TOOL_DIRECT_IMPL( P, level, BOOST_TEST_STRINGIZE( P ) )      \
+#define BOOST_TEST_TOOL_UNIV( level, P )                                       \
+    BOOST_TEST_TOOL_DIRECT_IMPL( P, level, BOOST_TEST_STRINGIZE_CSTRING( P ) ) \
 /**/
 
 #define BOOST_TEST_TOOL_UNIV_EX( level, P, ... )                            \
@@ -115,13 +115,13 @@ do {                                                            \
 
 #elif defined(BOOST_TEST_TOOLS_DEBUGGABLE)
 
-#define BOOST_TEST_TOOL_UNIV( level, P )                                    \
-do {                                                                        \
-    if( ::boost::debug::under_debugger() )                                  \
-        BOOST_TEST_TOOL_DIRECT_IMPL( P, level, BOOST_TEST_STRINGIZE( P ) ); \
-    else                                                                    \
-        BOOST_TEST_TOOL_ET_IMPL( P, level );                                \
-} while( ::boost::test_tools::tt_detail::dummy_cond() )                     \
+#define BOOST_TEST_TOOL_UNIV( level, P )                                            \
+do {                                                                                \
+    if( ::boost::debug::under_debugger() )                                          \
+        BOOST_TEST_TOOL_DIRECT_IMPL( P, level, BOOST_TEST_STRINGIZE_CSTRING( P ) ); \
+    else                                                                            \
+        BOOST_TEST_TOOL_ET_IMPL( P, level );                                        \
+} while( ::boost::test_tools::tt_detail::dummy_cond() )                             \
 /**/
 
 #define BOOST_TEST_TOOL_UNIV_EX( level, P, ... )                            \
