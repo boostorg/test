@@ -50,8 +50,8 @@
 #define BOOST_TEST_TOOL_PASS_PRED1( P, ARGS ) P BOOST_PP_SEQ_TO_TUPLE(ARGS)
 #define BOOST_TEST_TOOL_PASS_PRED2( P, ARGS ) P
 
-#define BOOST_TEST_TOOL_PASS_ARG( r, _, arg ) , arg, BOOST_STRINGIZE( arg )
-#define BOOST_TEST_TOOL_PASS_ARG_DSCR( r, _, arg ) , BOOST_STRINGIZE( arg )
+#define BOOST_TEST_TOOL_PASS_ARG( r, _, arg ) , arg, BOOST_TEST_STRINGIZE( arg )
+#define BOOST_TEST_TOOL_PASS_ARG_DSCR( r, _, arg ) , BOOST_TEST_STRINGIZE( arg )
 
 #define BOOST_TEST_TOOL_PASS_ARGS0( ARGS ) \
     BOOST_PP_SEQ_FOR_EACH( BOOST_TEST_TOOL_PASS_ARG, _, ARGS )
@@ -97,20 +97,20 @@ do {                                                                            
 
 //____________________________________________________________________________//
 
-#define BOOST_CHECK_THROW_IMPL( S, E, P, postfix, TL )                                  \
-do {                                                                                    \
-    try {                                                                               \
-        BOOST_TEST_PASSPOINT();                                                         \
-        S;                                                                              \
-        BOOST_TEST_TOOL_IMPL( 2, false, "exception " BOOST_STRINGIZE(E) " expected but not raised", \
-                              TL, CHECK_MSG, _ );                                       \
-    } catch( E const& ex ) {                                                            \
-        boost::ignore_unused( ex );                                                     \
-        BOOST_TEST_TOOL_IMPL( 2, P,                                                     \
-                              "exception \"" BOOST_STRINGIZE( E )"\" raised as expected" postfix,   \
-                              TL, CHECK_MSG, _  );                                      \
-    }                                                                                   \
-} while( ::boost::test_tools::tt_detail::dummy_cond() )                                 \
+#define BOOST_CHECK_THROW_IMPL( S, E, P, postfix, TL )                                                   \
+do {                                                                                                     \
+    try {                                                                                                \
+        BOOST_TEST_PASSPOINT();                                                                          \
+        S;                                                                                               \
+        BOOST_TEST_TOOL_IMPL( 2, false, "exception " BOOST_TEST_STRINGIZE(E) " expected but not raised", \
+                              TL, CHECK_MSG, _ );                                                        \
+    } catch( E const& ex ) {                                                                             \
+        boost::ignore_unused( ex );                                                                      \
+        BOOST_TEST_TOOL_IMPL( 2, P,                                                                      \
+                              "exception \"" BOOST_TEST_STRINGIZE( E )"\" raised as expected" postfix,   \
+                              TL, CHECK_MSG, _  );                                                       \
+    }                                                                                                    \
+} while( ::boost::test_tools::tt_detail::dummy_cond() )                                                  \
 /**/
 
 //____________________________________________________________________________//
@@ -122,25 +122,25 @@ do {                                                                            
 //____________________________________________________________________________//
 
 #define BOOST_WARN_EXCEPTION( S, E, P )     BOOST_CHECK_THROW_IMPL( S, E, P( ex ), \
-              ": validation on the raised exception through predicate \"" BOOST_STRINGIZE(P) "\"", WARN )
+              ": validation on the raised exception through predicate \"" BOOST_TEST_STRINGIZE(P) "\"", WARN )
 #define BOOST_CHECK_EXCEPTION( S, E, P )    BOOST_CHECK_THROW_IMPL( S, E, P( ex ), \
-              ": validation on the raised exception through predicate \"" BOOST_STRINGIZE(P) "\"", CHECK )
+              ": validation on the raised exception through predicate \"" BOOST_TEST_STRINGIZE(P) "\"", CHECK )
 #define BOOST_REQUIRE_EXCEPTION( S, E, P )  BOOST_CHECK_THROW_IMPL( S, E, P( ex ), \
-              ": validation on the raised exception through predicate \"" BOOST_STRINGIZE(P) "\"", REQUIRE )
+              ": validation on the raised exception through predicate \"" BOOST_TEST_STRINGIZE(P) "\"", REQUIRE )
 
 //____________________________________________________________________________//
 
-#define BOOST_CHECK_NO_THROW_IMPL( S, TL )                                              \
-do {                                                                                    \
-    try {                                                                               \
-        S;                                                                              \
-        BOOST_TEST_TOOL_IMPL( 2, true, "no exceptions thrown by " BOOST_STRINGIZE( S ), \
-                              TL, CHECK_MSG, _ );                                       \
-    } catch( ... ) {                                                                    \
-        BOOST_TEST_TOOL_IMPL( 2, false, "unexpected exception thrown by " BOOST_STRINGIZE( S ),    \
-                              TL, CHECK_MSG, _ );                                       \
-    }                                                                                   \
-} while( ::boost::test_tools::tt_detail::dummy_cond() )                                 \
+#define BOOST_CHECK_NO_THROW_IMPL( S, TL )                                                          \
+do {                                                                                                \
+    try {                                                                                           \
+        S;                                                                                          \
+        BOOST_TEST_TOOL_IMPL( 2, true, "no exceptions thrown by " BOOST_TEST_STRINGIZE( S ),        \
+                              TL, CHECK_MSG, _ );                                                   \
+    } catch( ... ) {                                                                                \
+        BOOST_TEST_TOOL_IMPL( 2, false, "unexpected exception thrown by " BOOST_TEST_STRINGIZE( S ),\
+                              TL, CHECK_MSG, _ );                                                   \
+    }                                                                                               \
+} while( ::boost::test_tools::tt_detail::dummy_cond() )                                             \
 /**/
 
 #define BOOST_WARN_NO_THROW( S )            BOOST_CHECK_NO_THROW_IMPL( S, WARN )
@@ -263,7 +263,7 @@ do {                                                                            
 
 //____________________________________________________________________________//
 
-#define BOOST_IS_DEFINED( symb ) ::boost::test_tools::tt_detail::is_defined_impl( #symb, BOOST_STRINGIZE(= symb) )
+#define BOOST_IS_DEFINED( symb ) ::boost::test_tools::tt_detail::is_defined_impl( #symb, BOOST_TEST_STRINGIZE(= symb) )
 
 //____________________________________________________________________________//
 

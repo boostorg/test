@@ -60,7 +60,7 @@ boost::unit_test::make_test_case( (test_function),                              
 #define BOOST_AUTO_TEST_SUITE_WITH_DECOR( suite_name, decorators )      \
 namespace suite_name {                                                  \
 BOOST_AUTO_TU_REGISTRAR( suite_name )(                                  \
-    BOOST_STRINGIZE( suite_name ),                                      \
+    BOOST_TEST_STRINGIZE( suite_name ),                                 \
     __FILE__, __LINE__,                                                 \
     decorators );                                                       \
 /**/
@@ -253,7 +253,7 @@ struct BOOST_AUTO_TC_INVOKER( test_name ) {                             \
 BOOST_AUTO_TU_REGISTRAR( test_name )(                                   \
     boost::unit_test::ut_detail::template_test_case_gen<                \
         BOOST_AUTO_TC_INVOKER( test_name ),TL >(                        \
-          BOOST_STRINGIZE( test_name ), __FILE__, __LINE__ ),           \
+          BOOST_TEST_STRINGIZE( test_name ), __FILE__, __LINE__ ),      \
     boost::unit_test::decorator::collector_t::instance() );             \
                                                                         \
 template<typename type_name>                                            \

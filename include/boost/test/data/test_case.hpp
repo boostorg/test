@@ -240,7 +240,7 @@ make_test_case_gen( const_string tc_name, const_string tc_file, std::size_t tc_l
 // ************************************************************************** //
 
 #define BOOST_DATA_TEST_CASE_PARAM(r, _, i, param)  (BOOST_PP_CAT(Arg, i) const& param)
-#define BOOST_DATA_TEST_CONTEXT(r, _, param)  << BOOST_STRINGIZE(param) << " = " << boost::test_tools::tt_detail::print_helper(param) << "; "
+#define BOOST_DATA_TEST_CONTEXT(r, _, param)  << BOOST_TEST_STRINGIZE(param) << " = " << boost::test_tools::tt_detail::print_helper(param) << "; "
 
 #define BOOST_DATA_TEST_CASE_PARAMS( params )                           \
     BOOST_PP_SEQ_ENUM(                                                  \
@@ -279,7 +279,7 @@ BOOST_AUTO_TEST_SUITE( test_name,                                       \
 BOOST_AUTO_TU_REGISTRAR( BOOST_PP_CAT(test_name, case) )(               \
     boost::unit_test::data::ds_detail::make_test_case_gen<              \
                                       BOOST_PP_CAT(test_name, case)>(   \
-          BOOST_STRINGIZE( test_name ),                                 \
+          BOOST_TEST_STRINGIZE( test_name ),                            \
           __FILE__, __LINE__,                                           \
           boost::unit_test::data::ds_detail::seed{} ->* dataset ),      \
     boost::unit_test::decorator::collector_t::instance() );             \

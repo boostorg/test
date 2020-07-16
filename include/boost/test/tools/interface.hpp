@@ -163,7 +163,7 @@ do {                                                                            
 
 //____________________________________________________________________________//
 
-#define BOOST_TEST_IS_DEFINED( symb ) ::boost::test_tools::tt_detail::is_defined_impl( symb, BOOST_STRINGIZE(= symb) )
+#define BOOST_TEST_IS_DEFINED( symb ) ::boost::test_tools::tt_detail::is_defined_impl( symb, BOOST_TEST_STRINGIZE(= symb) )
 
 //____________________________________________________________________________//
 
@@ -211,54 +211,54 @@ do { try {                                                                  \
 
 #define BOOST_WARN_THROW( S, E )                                            \
     BOOST_CHECK_THROW_IMPL(S, E const&, WARN,                               \
-            false, "exception " BOOST_STRINGIZE(E) " is expected",          \
-            true , "exception " BOOST_STRINGIZE(E) " is caught" )           \
+            false, "exception " BOOST_TEST_STRINGIZE(E) " is expected",     \
+            true , "exception " BOOST_TEST_STRINGIZE(E) " is caught" )      \
 /**/
 #define BOOST_CHECK_THROW( S, E )                                           \
     BOOST_CHECK_THROW_IMPL(S, E const&, CHECK,                              \
-            false, "exception " BOOST_STRINGIZE(E) " is expected",          \
-            true , "exception " BOOST_STRINGIZE(E) " is caught" )           \
+            false, "exception " BOOST_TEST_STRINGIZE(E) " is expected",     \
+            true , "exception " BOOST_TEST_STRINGIZE(E) " is caught" )      \
 /**/
 #define BOOST_REQUIRE_THROW( S, E )                                         \
     BOOST_CHECK_THROW_IMPL(S, E const&, REQUIRE,                            \
-            false, "exception " BOOST_STRINGIZE(E) " is expected",          \
-            true , "exception " BOOST_STRINGIZE(E) " is caught" )           \
+            false, "exception " BOOST_TEST_STRINGIZE(E) " is expected",     \
+            true , "exception " BOOST_TEST_STRINGIZE(E) " is caught" )      \
 /**/
 
 //____________________________________________________________________________//
 
-#define BOOST_WARN_EXCEPTION( S, E, P )                                     \
-    BOOST_CHECK_THROW_IMPL(S, E const& ex, WARN,                            \
-            false, "exception " BOOST_STRINGIZE(E) " is expected",          \
-            P(ex), "incorrect exception " BOOST_STRINGIZE(E) " is caught" ) \
+#define BOOST_WARN_EXCEPTION( S, E, P )                                          \
+    BOOST_CHECK_THROW_IMPL(S, E const& ex, WARN,                                 \
+            false, "exception " BOOST_TEST_STRINGIZE(E) " is expected",          \
+            P(ex), "incorrect exception " BOOST_TEST_STRINGIZE(E) " is caught" ) \
 /**/
-#define BOOST_CHECK_EXCEPTION( S, E, P )                                    \
-    BOOST_CHECK_THROW_IMPL(S, E const& ex, CHECK,                           \
-            false, "exception " BOOST_STRINGIZE(E) " is expected",          \
-            P(ex), "incorrect exception " BOOST_STRINGIZE(E) " is caught" ) \
+#define BOOST_CHECK_EXCEPTION( S, E, P )                                         \
+    BOOST_CHECK_THROW_IMPL(S, E const& ex, CHECK,                                \
+            false, "exception " BOOST_TEST_STRINGIZE(E) " is expected",          \
+            P(ex), "incorrect exception " BOOST_TEST_STRINGIZE(E) " is caught" ) \
 /**/
-#define BOOST_REQUIRE_EXCEPTION( S, E, P )                                  \
-    BOOST_CHECK_THROW_IMPL(S, E const& ex, REQUIRE,                         \
-            false, "exception " BOOST_STRINGIZE(E) " is expected",          \
-            P(ex), "incorrect exception " BOOST_STRINGIZE(E) " is caught" ) \
+#define BOOST_REQUIRE_EXCEPTION( S, E, P )                                       \
+    BOOST_CHECK_THROW_IMPL(S, E const& ex, REQUIRE,                              \
+            false, "exception " BOOST_TEST_STRINGIZE(E) " is expected",          \
+            P(ex), "incorrect exception " BOOST_TEST_STRINGIZE(E) " is caught" ) \
 /**/
 
 //____________________________________________________________________________//
 
 #define BOOST_WARN_NO_THROW( S )                                            \
     BOOST_CHECK_THROW_IMPL(S, ..., WARN,                                    \
-            true , "no exceptions thrown by " BOOST_STRINGIZE( S ),         \
-            false, "exception thrown by " BOOST_STRINGIZE( S ) )            \
+            true , "no exceptions thrown by " BOOST_TEST_STRINGIZE( S ),    \
+            false, "exception thrown by " BOOST_TEST_STRINGIZE( S ) )       \
 /**/
 #define BOOST_CHECK_NO_THROW( S )                                           \
     BOOST_CHECK_THROW_IMPL(S, ..., CHECK,                                   \
-            true , "no exceptions thrown by " BOOST_STRINGIZE( S ),         \
-            false, "exception thrown by " BOOST_STRINGIZE( S ) )            \
+            true , "no exceptions thrown by " BOOST_TEST_STRINGIZE( S ),    \
+            false, "exception thrown by " BOOST_TEST_STRINGIZE( S ) )       \
 /**/
 #define BOOST_REQUIRE_NO_THROW( S )                                         \
     BOOST_CHECK_THROW_IMPL(S, ..., REQUIRE,                                 \
-            true , "no exceptions thrown by " BOOST_STRINGIZE( S ),         \
-            false, "exception thrown by " BOOST_STRINGIZE( S ) )            \
+            true , "no exceptions thrown by " BOOST_TEST_STRINGIZE( S ),    \
+            false, "exception thrown by " BOOST_TEST_STRINGIZE( S ) )       \
 /**/
 
 //____________________________________________________________________________//
@@ -355,7 +355,7 @@ do { try {                                                                  \
 
 //____________________________________________________________________________//
 
-#define BOOST_IS_DEFINED( symb ) ::boost::test_tools::tt_detail::is_defined_impl( #symb, BOOST_STRINGIZE(= symb) )
+#define BOOST_IS_DEFINED( symb ) ::boost::test_tools::tt_detail::is_defined_impl( #symb, BOOST_TEST_STRINGIZE(= symb) )
 
 //____________________________________________________________________________//
 
