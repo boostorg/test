@@ -117,6 +117,7 @@ test-suite "utils-ts"
   [ boost.test-self-test run : utils-ts : runtime-param-test : : : : : : [ requires cxx11_auto_declarations cxx11_function_template_default_args cxx11_lambdas cxx11_hdr_initializer_list cxx11_template_aliases ] ]
   [ boost.test-self-test run : utils-ts : string_cast-test ]
   [ boost.test-self-test run : utils-ts : token_iterator-test ]
+  [ boost.test-self-test run : utils-ts : helper-macros-test ]
 ;
 
 #_________________________________________________________________________________________________#
