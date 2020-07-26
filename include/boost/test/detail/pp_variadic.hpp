@@ -12,8 +12,9 @@
 #ifndef BOOST_TEST_PP_VARIADIC_HPP_021515GER
 #define BOOST_TEST_PP_VARIADIC_HPP_021515GER
 
+#include <boost/test/detail/config.hpp>
 
-#if BOOST_TEST_PP_IMPL
+#if BOOST_TEST_USE_BOOST==0
 
 // BOOST_TEST_PP_NARG returns the number of arguments of a variable argument list
 // https://stackoverflow.com/a/2124385/1617295
@@ -42,17 +43,27 @@
 #define BOOST_TEST_PP_IIF_0(t, f) f
 #define BOOST_TEST_PP_IIF_1(t, f) t
 
-#else
+#else /* BOOST_TEST_USE_BOOST==0 */
 
 // Boost
 #include <boost/preprocessor/control/iif.hpp>
 #include <boost/preprocessor/comparison/equal.hpp>
 #include <boost/preprocessor/variadic/size.hpp>
+#include <boost/preprocessor/cat.hpp>
+
+#define BOOST_TEST_PP_IIF(x, t, f) BOOST_PP_IIF(x, t, f)
+#define BOOST_TEST_PP_EQUAL(a, b) BOOST_PP_EQUAL(a, b)
+
+#if defined(BOOST_PP_VARIADIC_SIZE)
+#  define BOOST_TEST_PP_NARG BOOST_PP_VARIADIC_SIZE
+#endif
 
 
-#define BOOST_TEST_PP_IIF BOOST_PP_IIF
-#define BOOST_TEST_PP_EQUAL BOOST_PP_EQUAL
-#define BOOST_TEST_PP_NARG BOOST_PP_VARIADIC_SIZE
+#if defined(BOOST_PP_IIF_0)
+#warning "coucou1"
+#else
+#warning "coucou2"
+#endif
 
 //____________________________________________________________________________//
 
@@ -79,11 +90,9 @@
 
 //____________________________________________________________________________//
 
-#endif  /* BOOST_PP_VARIADICS */
+#endif /* BOOST_PP_VARIADICS */
 
-
-#endif /* BOOST_TEST_PP_IMPL */
-
+#endif /* BOOST_TEST_USE_BOOST */
 
 #endif // BOOST_TEST_PP_VARIADIC_HPP_021515GER
 
