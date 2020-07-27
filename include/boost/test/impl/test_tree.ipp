@@ -14,7 +14,7 @@
 #define BOOST_TEST_UNIT_TEST_SUITE_IPP_012205GER
 
 // Boost.Test
-#include <boost/detail/workaround.hpp>
+#include <boost/test/detail/config.hpp>
 #include <boost/test/utils/boost_helpers.hpp>
 
 #include <boost/test/framework.hpp>

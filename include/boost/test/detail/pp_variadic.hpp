@@ -58,13 +58,6 @@
 #  define BOOST_TEST_PP_NARG BOOST_PP_VARIADIC_SIZE
 #endif
 
-
-#if defined(BOOST_PP_IIF_0)
-#warning "coucou1"
-#else
-#warning "coucou2"
-#endif
-
 //____________________________________________________________________________//
 
 #if BOOST_PP_VARIADICS

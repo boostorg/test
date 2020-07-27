@@ -12,6 +12,11 @@
 #ifndef BOOST_TEST_BOOST_HELPERS_HPP__
 #define BOOST_TEST_BOOST_HELPERS_HPP__
 
+#if !defined(BOOST_TEST_CONFIG_HPP_071894GER)
+/// @todo make it MSVC as well
+#warning "including without config"
+#endif
+
 #if !defined(BOOST_TEST_USE_BOOST)
     #if (__cplusplus < 201103L)
         #define BOOST_TEST_USE_BOOST 1
@@ -22,16 +27,51 @@
 
 
 // include boost/config if we are using boost
-#if BOOST_TEST_USE_BOOST==0
-  #if (__cplusplus < 201103L)
-    #error "Cannot use BOOST_TEST_USE_BOOST==0 for pre-C++11 compilers"
-  #endif
+#if BOOST_TEST_USE_BOOST==1
   #include <boost/config.hpp>
+#else
+  #if (__cplusplus < 201103L)
+    #error "Cannot use BOOST_TEST_USE_BOOST==1 for pre-C++11 compilers"
+  #endif
 #endif
+
+
+// ************************************************************************** //
+// **************               preprocessor caps              ************** //
+// ************************************************************************** //
+// This definition should be performed very early in the include steps as
+// other boost libraries include the preprocessor library
+#if BOOST_TEST_USE_BOOST==1 && !defined(BOOST_PP_VARIADICS) /* we can change this only if not already defined */
+
+#ifdef __PGI
+#define BOOST_PP_VARIADICS 1
+#endif
+
+#if BOOST_CLANG
+#define BOOST_PP_VARIADICS 1
+#endif
+
+#if defined(BOOST_GCC) && (BOOST_GCC >= 4 * 10000 + 8 * 100)
+#define BOOST_PP_VARIADICS 1
+#endif
+
+#if defined(__NVCC__)
+#define BOOST_PP_VARIADICS 1
+#endif
+
+#endif /* BOOST_TEST_USE_BOOST==1 && !defined(BOOST_PP_VARIADICS) */
+
 
 // ************************************************************************** //
 // **************               macro indirections             ************** //
 // ************************************************************************** //
+
+#if BOOST_TEST_USE_BOOST==1
+  #include <boost/detail/workaround.hpp>
+#else
+  #define BOOST_WORKAROUND(x, y) (x) != 0 && (x y)
+  #define BOOST_TESTED_AT(x) != ((x) - (x))
+#endif
 
 // BOOST_TEST_ATTRIBUTE_UNUSED <-> BOOST_ATTRIBUTE_UNUSED
 #if BOOST_TEST_USE_BOOST==1

@@ -13,9 +13,8 @@
 #define BOOST_TEST_CONFIG_HPP_071894GER
 
 // Boost configuration and tools/macros wrapper
-#include <boost/test/utils/boost_helpers.hpp>
 
-#include <boost/detail/workaround.hpp>
+#include <boost/test/utils/boost_helpers.hpp>
 
 #if defined(_WIN32) && !defined(BOOST_DISABLE_WIN32) && \
     (!defined(__COMO__) && !defined(__MWERKS__)      && \
@@ -32,11 +31,13 @@ class type_info;
 
 //____________________________________________________________________________//
 
+/* Does not seem to be used anywhere
 #if BOOST_WORKAROUND(BOOST_BORLANDC, BOOST_TESTED_AT(0x570)) || \
     BOOST_WORKAROUND(__IBMCPP__, BOOST_TESTED_AT(600))     || \
     (defined __sgi && BOOST_WORKAROUND(_COMPILER_VERSION, BOOST_TESTED_AT(730)))
 #  define BOOST_TEST_SHIFTED_LINE
 #endif
+*/
 
 //____________________________________________________________________________//
 
@@ -129,27 +130,6 @@ class type_info;
 #define BOOST_TEST_MAIN BOOST_TEST_MODULE
 #endif
 
-
-
-#ifndef BOOST_PP_VARIADICS /* we can change this only if not already defined */
-
-#ifdef __PGI
-#define BOOST_PP_VARIADICS 1
-#endif
-
-#if BOOST_CLANG
-#define BOOST_PP_VARIADICS 1
-#endif
-
-#if defined(BOOST_GCC) && (BOOST_GCC >= 4 * 10000 + 8 * 100)
-#define BOOST_PP_VARIADICS 1
-#endif
-
-#if defined(__NVCC__)
-#define BOOST_PP_VARIADICS 1
-#endif
-
-#endif /* ifndef BOOST_PP_VARIADICS */
 
 // some versions of VC exibit a manifest error with this BOOST_UNREACHABLE_RETURN
 #if BOOST_WORKAROUND(BOOST_MSVC, < 1910)
