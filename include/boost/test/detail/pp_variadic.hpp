@@ -21,7 +21,7 @@
 #define BOOST_TEST_PP_NARG(...)     BOOST_TEST_PP_NARG_(__VA_ARGS__,BOOST_TEST_PP_RSEQ_N())
 #define BOOST_TEST_PP_NARG_(...)    BOOST_TEST_PP_ARG_N(__VA_ARGS__)
 #define BOOST_TEST_PP_ARG_N( \
-          _1, _2, _3, _4, _5, _6, _7, _8, _9,_10, \
+         _1, _2, _3, _4, _5, _6, _7, _8, _9,_10, \
          _11,_12,_13,_14,_15,_16,_17,_18,_19,_20, \
          _21,_22,_23,_24,_25,_26,_27,_28,_29,_30, \
          _31,_32,_33,_34,_35,_36,_37,_38,_39,_40, \
