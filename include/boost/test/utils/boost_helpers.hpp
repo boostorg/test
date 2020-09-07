@@ -31,7 +31,7 @@
   #include <boost/config.hpp>
 #else
   #if (__cplusplus < 201103L)
-    #error "Cannot use BOOST_TEST_USE_BOOST==1 for pre-C++11 compilers"
+    #error "Cannot use BOOST_TEST_USE_BOOST==0 for pre-C++11 compilers"
   #endif
 #endif
 
@@ -115,6 +115,11 @@
   #define BOOST_TEST_CTOR_TYPENAME typename
 #endif
 
+
+#if BOOST_TEST_USE_BOOST==0
+#  define BOOST_SYMBOL_EXPORT __attribute__((__visibility__("default")))
+#  define BOOST_SYMBOL_VISIBLE __attribute__((__visibility__("default")))
+#endif
 
 
 
@@ -209,7 +214,20 @@ struct bt_bool<false> : bt_false_type {
 // bind
 
 // BOOST_NO_EXCEPTIONS
+
+
 // BOOST_NORETURN
+#if !defined(BOOST_NORETURN)
+#  if defined(__has_cpp_attribute)
+#    if __has_cpp_attribute(noreturn)
+#      define BOOST_NORETURN [[noreturn]]
+#    endif
+#  elif defined(_MSC_VER)
+#    define BOOST_NORETURN __declspec(noreturn)
+#  elif defined(__GNUC__) || defined(__CODEGEARC__) && defined(__clang__)
+#    define BOOST_NORETURN __attribute__ ((__noreturn__))
+#  endif
+#endif
 
 // BOOST_COMPILER
 // BOOST_STDLIB
