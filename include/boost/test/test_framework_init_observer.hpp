@@ -48,7 +48,7 @@ public:
     bool                has_failed( ) const;
 
 private:
-    bool m_has_failure;
+    bool m_has_failure = false;
 };
 
 } // namespace unit_test
