@@ -18,7 +18,7 @@
 class dataset_loader
 {
 public:
-    enum { arity = 1 };
+    BOOST_STATIC_CONSTEXPR std::size_t arity = 1;
   
     // this constructor access the master test suite
     dataset_loader();
@@ -153,7 +153,7 @@ public:
     data_type m_expected;
     data_type m_input;
   
-    enum { arity = 3 };
+    BOOST_STATIC_CONSTEXPR std::size_t arity = 3;
 
 public:
     dataset_loader_arity3(std::string some_additional) : m_some_additional(some_additional)

@@ -48,7 +48,7 @@ class generated_by {
 public:
     typedef typename Generator::sample sample;
 
-    enum { arity = 1 };
+    BOOST_STATIC_CONSTEXPR std::size_t arity = 1;
 
     struct iterator {
         // Constructor

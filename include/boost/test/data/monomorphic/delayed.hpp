@@ -48,7 +48,7 @@ template <class dataset_t, class ...Args>
 class delayed_dataset
 {
 public:
-    enum { arity = dataset_t::arity };
+    BOOST_STATIC_CONSTEXPR std::size_t arity = dataset_t::arity;
     using iterator = decltype(std::declval<dataset_t>().begin());
 
     delayed_dataset(Args... args)
