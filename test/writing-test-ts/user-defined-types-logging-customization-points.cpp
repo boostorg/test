@@ -40,6 +40,7 @@ BOOST_AUTO_TEST_CASE(test1)
 #ifndef BOOST_TEST_MACRO_LIMITED_SUPPORT
     BOOST_TEST(t == 10);
 #endif
+    BOOST_TEST_MESSAGE("Printing t: " << t);
 }
 
 // on unary expressions as well
@@ -53,4 +54,5 @@ std::ostream &boost_test_print_type(std::ostream &o, const s &) {
 BOOST_AUTO_TEST_CASE( test_logs )
 {
     BOOST_TEST(s());
+    BOOST_TEST_MESSAGE("Printing s(): " << s());
 }
