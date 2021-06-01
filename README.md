@@ -3,7 +3,7 @@
 # What is Boost.Test?
 Boost.Test is a C++03/11/14/17 unit testing library, available on a wide range of platforms and compilers.
 
-The library is part of [Boost](www.boost.org). The latest release
+The library is part of [Boost](http://www.boost.org). The latest release
 of the library is available from the boost web site.
 
 Full instructions for use of this library can be accessed from
