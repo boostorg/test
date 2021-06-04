@@ -47,12 +47,6 @@ function(boost_test_add_library name)
     target_compile_definitions(boost_${name} PUBLIC BOOST_TEST_STATIC_LINK)
   endif()
 
-  if(BOOST_SUPERPROJECT_VERSION AND NOT CMAKE_VERSION VERSION_LESS 3.13)
-
-    boost_install(TARGETS boost_${name} VERSION ${BOOST_SUPERPROJECT_VERSION} HEADER_DIRECTORY include)
-
-  endif()
-
 endfunction()
 
 boost_test_add_library(prg_exec_monitor
@@ -83,10 +77,11 @@ set(SOURCES
   src/xml_report_formatter.cpp
 )
 
-if(NOT BUILD_SHARED_LIBS)
+boost_test_add_library(test_exec_monitor STATIC ${SOURCES} src/test_main.cpp)
+boost_test_add_library(unit_test_framework ${SOURCES})
 
-  boost_test_add_library(test_exec_monitor ${SOURCES} src/test_main.cpp)
+if(BOOST_SUPERPROJECT_VERSION AND NOT CMAKE_VERSION VERSION_LESS 3.13)
+
+  boost_install(TARGETS boost_prg_exec_monitor boost_test_exec_monitor boost_unit_test_framework VERSION ${BOOST_SUPERPROJECT_VERSION} HEADER_DIRECTORY include)
 
 endif()
-
-boost_test_add_library(unit_test_framework ${SOURCES})
