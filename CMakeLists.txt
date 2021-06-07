@@ -6,35 +6,38 @@ cmake_minimum_required(VERSION 3.5...3.16)
 
 project(boost_test VERSION "${BOOST_SUPERPROJECT_VERSION}" LANGUAGES CXX)
 
+# Dependencies (please retain formatting, one target per line, no punct.)
+
+set(_boost_test_dependencies
+  Boost::algorithm
+  Boost::assert
+  Boost::bind
+  Boost::config
+  Boost::core
+  Boost::detail
+  Boost::exception
+  Boost::function
+  Boost::io
+  Boost::iterator
+  Boost::mpl
+  Boost::numeric_conversion
+  Boost::optional
+  Boost::preprocessor
+  Boost::smart_ptr
+  Boost::static_assert
+  Boost::type_traits
+  Boost::utility
+)
+
+# Compiled targets
+
 function(boost_test_add_library name)
 
   add_library(boost_${name} ${ARGN})
-
   add_library(Boost::${name} ALIAS boost_${name})
 
   target_include_directories(boost_${name} PUBLIC include)
-
-  target_link_libraries(boost_${name}
-    PUBLIC
-      Boost::algorithm
-      Boost::assert
-      Boost::bind
-      Boost::config
-      Boost::core
-      Boost::detail
-      Boost::exception
-      Boost::function
-      Boost::io
-      Boost::iterator
-      Boost::mpl
-      Boost::numeric_conversion
-      Boost::optional
-      Boost::preprocessor
-      Boost::smart_ptr
-      Boost::static_assert
-      Boost::type_traits
-      Boost::utility
-  )
+  target_link_libraries(boost_${name} PUBLIC ${_boost_test_dependencies})
 
   target_compile_definitions(boost_${name}
     PUBLIC BOOST_TEST_NO_LIB
@@ -80,8 +83,32 @@ set(SOURCES
 boost_test_add_library(test_exec_monitor STATIC ${SOURCES} src/test_main.cpp)
 boost_test_add_library(unit_test_framework ${SOURCES})
 
+# Header-only targets
+
+function(boost_test_add_included_library name)
+
+  add_library(boost_${name} INTERFACE)
+  add_library(Boost::${name} ALIAS boost_${name})
+
+  target_include_directories(boost_${name} INTERFACE include)
+  target_link_libraries(boost_${name} INTERFACE ${_boost_test_dependencies})
+
+endfunction()
+
+boost_test_add_included_library(included_prg_exec_monitor)
+boost_test_add_included_library(included_test_exec_monitor)
+boost_test_add_included_library(included_unit_test_framework)
+
+# Installation
+
 if(BOOST_SUPERPROJECT_VERSION AND NOT CMAKE_VERSION VERSION_LESS 3.13)
 
-  boost_install(TARGETS boost_prg_exec_monitor boost_test_exec_monitor boost_unit_test_framework VERSION ${BOOST_SUPERPROJECT_VERSION} HEADER_DIRECTORY include)
+  boost_install(
+    TARGETS
+      boost_prg_exec_monitor boost_test_exec_monitor boost_unit_test_framework
+      boost_included_prg_exec_monitor boost_included_test_exec_monitor boost_included_unit_test_framework
+    VERSION ${BOOST_SUPERPROJECT_VERSION}
+    HEADER_DIRECTORY include
+  )
 
 endif()
