@@ -41,7 +41,8 @@ function(boost_test_add_library name)
 
   target_compile_definitions(boost_${name}
     PUBLIC BOOST_TEST_NO_LIB
-    PRIVATE BOOST_TEST_SOURCE
+    # Source files already define BOOST_TEST_SOURCE
+    # PRIVATE BOOST_TEST_SOURCE
   )
 
   if(BUILD_SHARED_LIBS)
