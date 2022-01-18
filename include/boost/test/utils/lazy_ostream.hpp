@@ -14,6 +14,10 @@
 // Boost.Test
 #include <boost/test/detail/config.hpp>
 
+// Boost
+#include <boost/static_assert.hpp>
+#include <boost/type_traits/has_left_shift.hpp>
+
 // STL
 #include <iosfwd>
 
@@ -74,6 +78,8 @@ public:
     , m_prev( prev )
     , m_value( value )
     {
+        BOOST_STATIC_ASSERT_MSG( (boost::has_left_shift<std::ostream,T>::value),
+                                "Type has to implement operator<< to be printable");
     }
 
     std::ostream&   operator()( std::ostream& ostr ) const BOOST_OVERRIDE
