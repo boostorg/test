@@ -1204,6 +1204,7 @@ init( init_unit_test_func init_func, int argc, char* argv[] )
     master_test_suite().argv = argv;
 
     // 70. Invoke test module initialization routine
+    s_frk_state().m_aux_em.p_catch_system_errors.value = runtime_config::get<bool>( runtime_config::btrt_catch_sys_errors );
     BOOST_TEST_I_TRY {
         s_frk_state().m_aux_em.vexecute( boost::bind( &impl::invoke_init_func, init_func ) );
     }
