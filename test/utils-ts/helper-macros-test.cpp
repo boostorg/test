@@ -69,6 +69,17 @@ TRUC7()
     std::cout << "incorrect variadic size" << std::endl;
     return 1;
   }
+    
+    BOOST_TEST_PP_IIF(1,
+                      (std::cout << "this is the true" << std::endl),
+                      (std::cout << "this is the false" << std::endl));
 
+    BOOST_TEST_PP_IIF(0,
+                      (std::cout << "this is the true" << std::endl),
+                      (std::cout << "this is the false" << std::endl));
+    
+    BOOST_TEST_PP_IIF(BOOST_TEST_PP_NARG(a,b,c) == 3,
+                      (std::cout << "this is the true" << std::endl),
+                      (std::cout << "this is the false" << std::endl));
   return 0;
 }

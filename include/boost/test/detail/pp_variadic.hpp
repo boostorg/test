@@ -49,8 +49,24 @@ _49,_50,_51,_52,_53,_54,_55,_56,_57,_58,_59,_60,_61,_62,_63,  N, ...) N
 14,13,12,11,10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0
 
 // BOOST_TEST_PP_IIF(bit, t, f) -> if bit == 1, expands to t, otherwise to f
-#define BOOST_TEST_PP_IIF(bit, t, f) BOOST_TEST_PP_IIF_I(bit, t, f)
-#define BOOST_TEST_PP_IIF_I(bit, t, f) BOOST_TEST_PP_IIF_ ## bit(t, f)
+
+#define CAT(a, ...) PRIMITIVE_CAT(a, __VA_ARGS__)
+#define PRIMITIVE_CAT(a, ...) a ## __VA_ARGS__
+
+#define COMPL(b) PRIMITIVE_CAT(COMPL_, b)
+#define COMPL_0 1
+#define COMPL_1 0
+
+#define CHECK_N(x, n, ...) n
+#define CHECK(...) CHECK_N(__VA_ARGS__, 0,)
+#define PROBE(x) x, 1,
+#define NOT(x) CHECK(PRIMITIVE_CAT(NOT_, x))
+#define NOT_0 PROBE(~)
+#define BOOL(x) COMPL(NOT(x))
+
+
+#define BOOST_TEST_PP_IIF(bit, t, f) BOOST_TEST_PP_IIF_I(BOOL(bit), t, f)
+#define BOOST_TEST_PP_IIF_I(bit, t, f) CAT(BOOST_TEST_PP_IIF_, bit)(t, f)
 #define BOOST_TEST_PP_IIF_0(t, f) f
 #define BOOST_TEST_PP_IIF_1(t, f) t
 
@@ -62,6 +78,7 @@ _49,_50,_51,_52,_53,_54,_55,_56,_57,_58,_59,_60,_61,_62,_63,  N, ...) N
 #include <boost/preprocessor/variadic/size.hpp>
 #include <boost/preprocessor/cat.hpp>
 
+#define BOOST_TEST_PP_IF(x, t, f) BOOST_PP_IF(x, t, f)
 #define BOOST_TEST_PP_IIF(x, t, f) BOOST_PP_IIF(x, t, f)
 #define BOOST_TEST_PP_EQUAL(a, b) BOOST_PP_EQUAL(a, b)
 
@@ -95,6 +112,8 @@ _49,_50,_51,_52,_53,_54,_55,_56,_57,_58,_59,_60,_61,_62,_63,  N, ...) N
 //____________________________________________________________________________//
 
 #endif /* BOOST_PP_VARIADICS */
+
+
 
 #endif /* BOOST_TEST_USE_BOOST */
 
