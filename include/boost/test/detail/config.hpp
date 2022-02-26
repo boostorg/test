@@ -144,6 +144,8 @@ class type_info;
 // note the code should always be compatible with compiled version of boost.test
 // using a pre-c++17 compiler
 
+#define BOOST_NO_CXX17_HDR_STRING_VIEW // todo remove
+
 #ifndef BOOST_NO_CXX17_HDR_STRING_VIEW
 #define BOOST_TEST_STRING_VIEW
 #endif

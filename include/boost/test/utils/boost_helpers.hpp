@@ -20,6 +20,7 @@
 #if !defined(BOOST_TEST_USE_BOOST)
     #if (__cplusplus < 201103L)
         #define BOOST_TEST_USE_BOOST 1
+#error
     #else
         #define BOOST_TEST_USE_BOOST 0
     #endif
@@ -115,6 +116,14 @@
   #define BOOST_TEST_CTOR_TYPENAME typename
 #endif
 
+#if BOOST_TEST_USE_BOOST==1
+    #define BOOST_TEST_DELETED_FUNCTION BOOST_DELETED_FUNCTION
+    #define BOOST_TEST_DEFAULTED_FUNCTION BOOST_DEFAULTED_FUNCTION
+#else
+#   define BOOST_TEST_DELETED_FUNCTION(fun) fun = delete;
+#   define BOOST_TEST_DEFAULTED_FUNCTION(fun, body) fun = default;
+#endif
+
 
 #if BOOST_TEST_USE_BOOST==0
 #  define BOOST_SYMBOL_EXPORT __attribute__((__visibility__("default")))
@@ -142,10 +151,15 @@
 // enable if
 #if BOOST_TEST_USE_BOOST==1
   #include <boost/utility/enable_if.hpp>
+  #include <boost/type_traits/remove_cv.hpp>
   #define BOOST_TEST_ENABLE_IF boost::enable_if_c
+  #define BOOST_TEST_ADD_CONST boost::add_const
+  #define BOOST_TEST_REMOVE_CV boost::remove_cv
 #else
   #include <type_traits>
   #define BOOST_TEST_ENABLE_IF std::enable_if
+  #define BOOST_TEST_ADD_CONST std::add_const
+  #define BOOST_TEST_REMOVE_CV std::remove_cv
 #endif
 
 // boost::reference_wrapper

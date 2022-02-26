@@ -25,7 +25,6 @@
 #endif
 #include <boost/call_traits.hpp>
 #include <boost/type_traits/add_pointer.hpp>
-#include <boost/type_traits/add_const.hpp>
 #include <boost/utility/addressof.hpp>
 
 // STL
@@ -47,7 +46,7 @@ class class_property {
 protected:
     typedef typename call_traits<PropertyType>::const_reference     read_access_t;
     typedef typename call_traits<PropertyType>::param_type          write_param_t;
-    typedef typename add_pointer<typename add_const<PropertyType>::type>::type address_res_t;
+    typedef typename add_pointer<typename BOOST_TEST_ADD_CONST<PropertyType>::type>::type address_res_t;
 public:
     // Constructor
                     class_property() : value( PropertyType() ) {}

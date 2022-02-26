@@ -20,9 +20,6 @@
 #include <boost/test/utils/basic_cstring/basic_cstring_fwd.hpp>
 #include <boost/test/utils/basic_cstring/bcs_char_traits.hpp>
 
-// Boost
-#include <boost/type_traits/remove_cv.hpp>
-
 // STL
 #include <string>
 
@@ -51,7 +48,7 @@ public:
     typedef typename traits_type::std_string            std_string;
 
     typedef CharT                                       value_type;
-    typedef typename remove_cv<value_type>::type        value_ret_type;
+    typedef typename BOOST_TEST_REMOVE_CV<value_type>::type        value_ret_type;
     typedef value_type*                                 pointer;
     typedef value_type const*                           const_pointer;
     typedef value_type&                                 reference;

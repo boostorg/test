@@ -17,8 +17,6 @@
 
 // Boost
 #include <boost/test/detail/config.hpp>
-#include <boost/detail/workaround.hpp>
-#include <boost/type_traits/add_const.hpp>
 
 // STL
 #include <string>                       // std::char_traits
@@ -54,7 +52,7 @@ struct bcs_char_traits_impl
 #if BOOST_WORKAROUND(BOOST_BORLANDC, BOOST_TESTED_AT(0x564))
     typedef CharT const const_char;
 #else
-    typedef typename boost::add_const<CharT>::type const_char;
+    typedef typename BOOST_TEST_ADD_CONST<CharT>::type const_char;
 #endif
     static bool eq( CharT c1, CharT c2 )
     {
