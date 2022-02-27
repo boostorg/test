@@ -50,7 +50,7 @@ template<> struct bcs_base_char<wchar_t const>          { typedef wchar_t type; 
 // ************************************************************************** //
 
 template<typename CharT>
-struct bcs_char_traits_impl
+struct BOOST_SYMBOL_VISIBLE bcs_char_traits_impl
 {
 #if BOOST_WORKAROUND(BOOST_BORLANDC, BOOST_TESTED_AT(0x564))
     typedef CharT const const_char;
@@ -105,7 +105,7 @@ struct bcs_char_traits_impl
 
 #ifdef BOOST_CLASSIC_IOSTREAMS
 template<typename CharT>
-struct char_traits_with_find : std::string_char_traits<CharT> {
+struct BOOST_SYMBOL_VISIBLE char_traits_with_find : std::string_char_traits<CharT> {
     static CharT const* find( CharT const* s, std::size_t n, CharT c )
     {
         while( n > 0 ) {
@@ -127,7 +127,7 @@ template<> struct bcs_char_traits_impl<wchar_t> : public std::char_traits<wchar_
 #endif
 
 template<typename CharT>
-class bcs_char_traits : public bcs_char_traits_impl<CharT> {
+class BOOST_SYMBOL_VISIBLE bcs_char_traits : public bcs_char_traits_impl<CharT> {
     typedef typename ut_detail::bcs_base_char<CharT>::type                              the_base_char;
 public:
 #ifdef BOOST_CLASSIC_IOSTREAMS

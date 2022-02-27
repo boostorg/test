@@ -42,12 +42,12 @@ namespace unit_test {
 // **************                basic_cstring                 ************** //
 // ************************************************************************** //
 
-template<typename CharT>
+template<typename CharT, typename CharTraits /* = ut_detail::bcs_char_traits<CharT> */ >
 class BOOST_SYMBOL_VISIBLE basic_cstring {
-    typedef basic_cstring<CharT>                        self_type;
+    typedef basic_cstring<CharT, CharTraits>            self_type;
 public:
     // Subtypes
-    typedef ut_detail::bcs_char_traits<CharT>           traits_type;
+    typedef CharTraits                                  traits_type;
     typedef typename traits_type::std_string            std_string;
 
     typedef CharT                                       value_type;
@@ -120,10 +120,10 @@ public:
     basic_cstring&  operator=( std_string const& s );
     basic_cstring&  operator=( pointer s );
 
-    template<typename CharT2>
-    basic_cstring&  assign( basic_cstring<CharT2> const& s )
+    template<typename CharT2, typename CharTraits2>
+    basic_cstring&  assign( basic_cstring<CharT2, CharTraits2> const& s )
     {
-        return *this = basic_cstring<CharT>( s.begin(), s.end() );
+        return *this = basic_cstring<CharT, CharTraits>( s.begin(), s.end() );
     }
     template<typename PosType, typename LenType>
     basic_cstring&  assign( self_type const& s, PosType pos, LenType len )
@@ -180,11 +180,13 @@ private:
 // change the API of cstring using BOOST_TEST_STRING_VIEW as the code should remain
 // compatible between boost.test and test module using different compiler options.
 //! @internal
-template <class CharT, class string_view_t = std::basic_string_view<CharT>>
-class BOOST_SYMBOL_VISIBLE stringview_cstring_helper : public basic_cstring<CharT> {
+template <class CharT, class CharTraits, class string_view_t = std::basic_string_view<CharT,CharTraits>>
+class BOOST_SYMBOL_VISIBLE stringview_cstring_helper : public basic_cstring<CharT,CharTraits> {
 public:
+  // we don't support the char_traits, but Traits::char_type must name the same type as CharT
+  // or the program is ill-formed. The comparison will not be with the traits though.
   stringview_cstring_helper(string_view_t const& sv)
-  : basic_cstring<CharT>(const_cast<CharT*>(sv.data()), sv.size())
+  : basic_cstring<CharT, CharTraits>(const_cast<CharT*>(sv.data()), sv.size())
   {}
 };
 #endif
@@ -196,23 +198,23 @@ public:
 
 //____________________________________________________________________________//
 
-template<typename CharT>
-CharT basic_cstring<CharT>::null = 0;
+template<typename CharT, typename CharTraits>
+CharT basic_cstring<CharT, CharTraits>::null = 0;
 
 //____________________________________________________________________________//
 
-template<typename CharT>
-inline typename basic_cstring<CharT>::pointer
-basic_cstring<CharT>::null_str()
+template<typename CharT, typename CharTraits>
+inline typename basic_cstring<CharT, CharTraits>::pointer
+basic_cstring<CharT, CharTraits>::null_str()
 {
     return &null;
 }
 
 //____________________________________________________________________________//
 
-template<typename CharT>
+template<typename CharT, typename CharTraits>
 inline
-basic_cstring<CharT>::basic_cstring()
+basic_cstring<CharT, CharTraits>::basic_cstring()
 : m_begin( null_str() )
 , m_end( m_begin )
 {
@@ -220,9 +222,9 @@ basic_cstring<CharT>::basic_cstring()
 
 //____________________________________________________________________________//
 
-template<typename CharT>
+template<typename CharT, typename CharTraits>
 inline
-basic_cstring<CharT>::basic_cstring(basic_cstring const & s)
+basic_cstring<CharT, CharTraits>::basic_cstring(basic_cstring const & s)
 : m_begin( s.m_begin )
 , m_end( s.m_end )
 {
@@ -230,9 +232,9 @@ basic_cstring<CharT>::basic_cstring(basic_cstring const & s)
 
 //____________________________________________________________________________//
 
-template<typename CharT>
+template<typename CharT, typename CharTraits>
 inline
-basic_cstring<CharT>::basic_cstring( std_string const& s )
+basic_cstring<CharT, CharTraits>::basic_cstring( std_string const& s )
 : m_begin( s.c_str() )
 , m_end( m_begin + s.size() )
 {
@@ -240,9 +242,9 @@ basic_cstring<CharT>::basic_cstring( std_string const& s )
 
 //____________________________________________________________________________//
 
-template<typename CharT>
+template<typename CharT, typename CharTraits>
 inline
-basic_cstring<CharT>::basic_cstring( pointer s )
+basic_cstring<CharT, CharTraits>::basic_cstring( pointer s )
 : m_begin( s ? s : null_str() )
 , m_end  ( m_begin + (s ? traits_type::length( s ) : 0 ) )
 {
@@ -250,9 +252,9 @@ basic_cstring<CharT>::basic_cstring( pointer s )
 
 //____________________________________________________________________________//
 
-template<typename CharT>
+template<typename CharT, typename CharTraits>
 inline
-basic_cstring<CharT>::basic_cstring( pointer first, pointer last )
+basic_cstring<CharT, CharTraits>::basic_cstring( pointer first, pointer last )
 : m_begin( first )
 , m_end( last )
 {
@@ -260,18 +262,18 @@ basic_cstring<CharT>::basic_cstring( pointer first, pointer last )
 
 //____________________________________________________________________________//
 
-template<typename CharT>
-inline typename basic_cstring<CharT>::value_ret_type
-basic_cstring<CharT>::operator[]( size_type index ) const
+template<typename CharT, typename CharTraits>
+inline typename basic_cstring<CharT, CharTraits>::value_ret_type
+basic_cstring<CharT, CharTraits>::operator[]( size_type index ) const
 {
     return m_begin[index];
 }
 
 //____________________________________________________________________________//
 
-template<typename CharT>
-inline typename basic_cstring<CharT>::value_ret_type
-basic_cstring<CharT>::at( size_type index ) const
+template<typename CharT, typename CharTraits>
+inline typename basic_cstring<CharT, CharTraits>::value_ret_type
+basic_cstring<CharT, CharTraits>::at( size_type index ) const
 {
     if( m_begin + index >= m_end )
         return static_cast<value_type>(0);
@@ -281,45 +283,45 @@ basic_cstring<CharT>::at( size_type index ) const
 
 //____________________________________________________________________________//
 
-template<typename CharT>
-inline typename basic_cstring<CharT>::size_type
-basic_cstring<CharT>::size() const
+template<typename CharT, typename CharTraits>
+inline typename basic_cstring<CharT, CharTraits>::size_type
+basic_cstring<CharT, CharTraits>::size() const
 {
     return static_cast<size_type>(m_end - m_begin);
 }
 
 //____________________________________________________________________________//
 
-template<typename CharT>
+template<typename CharT, typename CharTraits>
 inline bool
-basic_cstring<CharT>::is_empty() const
+basic_cstring<CharT, CharTraits>::is_empty() const
 {
     return m_end == m_begin;
 }
 
 //____________________________________________________________________________//
 
-template<typename CharT>
+template<typename CharT, typename CharTraits>
 inline bool
-basic_cstring<CharT>::empty() const
+basic_cstring<CharT, CharTraits>::empty() const
 {
     return is_empty();
 }
 
 //____________________________________________________________________________//
 
-template<typename CharT>
+template<typename CharT, typename CharTraits>
 inline void
-basic_cstring<CharT>::clear()
+basic_cstring<CharT, CharTraits>::clear()
 {
     m_begin = m_end;
 }
 
 //____________________________________________________________________________//
 
-template<typename CharT>
+template<typename CharT, typename CharTraits>
 inline void
-basic_cstring<CharT>::resize( size_type new_len )
+basic_cstring<CharT, CharTraits>::resize( size_type new_len )
 {
     if( m_begin + new_len < m_end )
         m_end = m_begin + new_len;
@@ -327,9 +329,9 @@ basic_cstring<CharT>::resize( size_type new_len )
 
 //____________________________________________________________________________//
 
-template<typename CharT>
-inline basic_cstring<CharT>&
-basic_cstring<CharT>::trim_left( size_type trim_size )
+template<typename CharT, typename CharTraits>
+inline basic_cstring<CharT, CharTraits>&
+basic_cstring<CharT, CharTraits>::trim_left( size_type trim_size )
 {
     m_begin += trim_size;
     if( m_end <= m_begin )
@@ -340,9 +342,9 @@ basic_cstring<CharT>::trim_left( size_type trim_size )
 
 //____________________________________________________________________________//
 
-template<typename CharT>
-inline basic_cstring<CharT>&
-basic_cstring<CharT>::trim_left( iterator it )
+template<typename CharT, typename CharTraits>
+inline basic_cstring<CharT, CharTraits>&
+basic_cstring<CharT, CharTraits>::trim_left( iterator it )
 {
     m_begin = it;
     if( m_end <= m_begin )
@@ -353,9 +355,9 @@ basic_cstring<CharT>::trim_left( iterator it )
 
 //____________________________________________________________________________//
 
-template<typename CharT>
-inline basic_cstring<CharT>&
-basic_cstring<CharT>::trim_left( basic_cstring exclusions )
+template<typename CharT, typename CharTraits>
+inline basic_cstring<CharT, CharTraits>&
+basic_cstring<CharT, CharTraits>::trim_left( basic_cstring exclusions )
 {
     if( exclusions.is_empty() )
         exclusions = default_trim_ex();
@@ -371,9 +373,9 @@ basic_cstring<CharT>::trim_left( basic_cstring exclusions )
 
 //____________________________________________________________________________//
 
-template<typename CharT>
-inline basic_cstring<CharT>&
-basic_cstring<CharT>::trim_right( size_type trim_size )
+template<typename CharT, typename CharTraits>
+inline basic_cstring<CharT, CharTraits>&
+basic_cstring<CharT, CharTraits>::trim_right( size_type trim_size )
 {
     m_end  -= trim_size;
     if( m_end <= m_begin )
@@ -384,9 +386,9 @@ basic_cstring<CharT>::trim_right( size_type trim_size )
 
 //____________________________________________________________________________//
 
-template<typename CharT>
-inline basic_cstring<CharT>&
-basic_cstring<CharT>::trim_right( iterator it )
+template<typename CharT, typename CharTraits>
+inline basic_cstring<CharT, CharTraits>&
+basic_cstring<CharT, CharTraits>::trim_right( iterator it )
 {
     m_end = it;
     if( m_end <= m_begin )
@@ -397,9 +399,9 @@ basic_cstring<CharT>::trim_right( iterator it )
 
 //____________________________________________________________________________//
 
-template<typename CharT>
-inline basic_cstring<CharT>&
-basic_cstring<CharT>::trim_right( basic_cstring exclusions )
+template<typename CharT, typename CharTraits>
+inline basic_cstring<CharT, CharTraits>&
+basic_cstring<CharT, CharTraits>::trim_right( basic_cstring exclusions )
 {
     if(!size()) {
         return *this;
@@ -421,9 +423,9 @@ basic_cstring<CharT>::trim_right( basic_cstring exclusions )
 
 //____________________________________________________________________________//
 
-template<typename CharT>
-inline basic_cstring<CharT>&
-basic_cstring<CharT>::trim( basic_cstring exclusions )
+template<typename CharT, typename CharTraits>
+inline basic_cstring<CharT, CharTraits>&
+basic_cstring<CharT, CharTraits>::trim( basic_cstring exclusions )
 {
     trim_left( exclusions );
     trim_right( exclusions );
@@ -433,9 +435,9 @@ basic_cstring<CharT>::trim( basic_cstring exclusions )
 
 //____________________________________________________________________________//
 
-template<typename CharT>
-inline basic_cstring<CharT>&
-basic_cstring<CharT>::operator=( basic_cstring<CharT> const& s )
+template<typename CharT, typename CharTraits>
+inline basic_cstring<CharT, CharTraits>&
+basic_cstring<CharT, CharTraits>::operator=( basic_cstring<CharT, CharTraits> const& s )
 {
     m_begin = s.m_begin;
     m_end   = s.m_end;
@@ -445,54 +447,54 @@ basic_cstring<CharT>::operator=( basic_cstring<CharT> const& s )
 
 //____________________________________________________________________________//
 
-template<typename CharT>
-inline basic_cstring<CharT>&
-basic_cstring<CharT>::operator=( std_string const& s )
+template<typename CharT, typename CharTraits>
+inline basic_cstring<CharT, CharTraits>&
+basic_cstring<CharT, CharTraits>::operator=( std_string const& s )
 {
     return *this = self_type( s );
 }
 
 //____________________________________________________________________________//
 
-template<typename CharT>
-inline basic_cstring<CharT>&
-basic_cstring<CharT>::operator=( pointer s )
+template<typename CharT, typename CharTraits>
+inline basic_cstring<CharT, CharTraits>&
+basic_cstring<CharT, CharTraits>::operator=( pointer s )
 {
     return *this = self_type( s );
 }
 
 //____________________________________________________________________________//
 
-template<typename CharT>
-inline basic_cstring<CharT>&
-basic_cstring<CharT>::assign( std_string const& s )
+template<typename CharT, typename CharTraits>
+inline basic_cstring<CharT, CharTraits>&
+basic_cstring<CharT, CharTraits>::assign( std_string const& s )
 {
     return *this = self_type( s );
 }
 
 //____________________________________________________________________________//
 
-template<typename CharT>
-inline basic_cstring<CharT>&
-basic_cstring<CharT>::assign( pointer s )
+template<typename CharT, typename CharTraits>
+inline basic_cstring<CharT, CharTraits>&
+basic_cstring<CharT, CharTraits>::assign( pointer s )
 {
     return *this = self_type( s );
 }
 
 //____________________________________________________________________________//
 
-template<typename CharT>
-inline basic_cstring<CharT>&
-basic_cstring<CharT>::assign( pointer f, pointer l )
+template<typename CharT, typename CharTraits>
+inline basic_cstring<CharT, CharTraits>&
+basic_cstring<CharT, CharTraits>::assign( pointer f, pointer l )
 {
     return *this = self_type( f, l );
 }
 
 //____________________________________________________________________________//
 
-template<typename CharT>
+template<typename CharT, typename CharTraits>
 inline void
-basic_cstring<CharT>::swap( basic_cstring<CharT>& s )
+basic_cstring<CharT, CharTraits>::swap( basic_cstring<CharT, CharTraits>& s )
 {
     // do not want to include alogrithm
     pointer tmp1    = m_begin;
@@ -507,45 +509,45 @@ basic_cstring<CharT>::swap( basic_cstring<CharT>& s )
 
 //____________________________________________________________________________//
 
-template<typename CharT>
-inline typename basic_cstring<CharT>::iterator
-basic_cstring<CharT>::begin()
+template<typename CharT, typename CharTraits>
+inline typename basic_cstring<CharT, CharTraits>::iterator
+basic_cstring<CharT, CharTraits>::begin()
 {
     return m_begin;
 }
 
 //____________________________________________________________________________//
 
-template<typename CharT>
-inline typename basic_cstring<CharT>::const_iterator
-basic_cstring<CharT>::begin() const
+template<typename CharT, typename CharTraits>
+inline typename basic_cstring<CharT, CharTraits>::const_iterator
+basic_cstring<CharT, CharTraits>::begin() const
 {
     return m_begin;
 }
 
 //____________________________________________________________________________//
 
-template<typename CharT>
-inline typename basic_cstring<CharT>::iterator
-basic_cstring<CharT>::end()
+template<typename CharT, typename CharTraits>
+inline typename basic_cstring<CharT, CharTraits>::iterator
+basic_cstring<CharT, CharTraits>::end()
 {
     return m_end;
 }
 
 //____________________________________________________________________________//
 
-template<typename CharT>
-inline typename basic_cstring<CharT>::const_iterator
-basic_cstring<CharT>::end() const
+template<typename CharT, typename CharTraits>
+inline typename basic_cstring<CharT, CharTraits>::const_iterator
+basic_cstring<CharT, CharTraits>::end() const
 {
     return m_end;
 }
 
 //____________________________________________________________________________//
 
-template<typename CharT>
-inline typename basic_cstring<CharT>::size_type
-basic_cstring<CharT>::find( basic_cstring<CharT> str ) const
+template<typename CharT, typename CharTraits>
+inline typename basic_cstring<CharT, CharTraits>::size_type
+basic_cstring<CharT, CharTraits>::find( basic_cstring<CharT, CharTraits> str ) const
 {
     if( str.is_empty() || str.size() > size() )
         return npos;
@@ -562,9 +564,9 @@ basic_cstring<CharT>::find( basic_cstring<CharT> str ) const
 
 //____________________________________________________________________________//
 
-template<typename CharT>
-inline typename basic_cstring<CharT>::size_type
-basic_cstring<CharT>::rfind( basic_cstring<CharT> str ) const
+template<typename CharT, typename CharTraits>
+inline typename basic_cstring<CharT, CharTraits>::size_type
+basic_cstring<CharT, CharTraits>::rfind( basic_cstring<CharT, CharTraits> str ) const
 {
     if( str.is_empty() || str.size() > size() )
         return npos;
@@ -583,9 +585,9 @@ basic_cstring<CharT>::rfind( basic_cstring<CharT> str ) const
 
 //____________________________________________________________________________//
 
-template<typename CharT>
-inline basic_cstring<CharT>
-basic_cstring<CharT>::substr( size_type beg_index, size_type end_index ) const
+template<typename CharT, typename CharTraits>
+inline basic_cstring<CharT, CharTraits>
+basic_cstring<CharT, CharTraits>::substr( size_type beg_index, size_type end_index ) const
 {
     return beg_index > size()
             ?       self_type()
@@ -596,9 +598,9 @@ basic_cstring<CharT>::substr( size_type beg_index, size_type end_index ) const
 
 //____________________________________________________________________________//
 
-template<typename CharT>
-inline basic_cstring<CharT>
-basic_cstring<CharT>::default_trim_ex()
+template<typename CharT, typename CharTraits>
+inline basic_cstring<CharT, CharTraits>
+basic_cstring<CharT, CharTraits>::default_trim_ex()
 {
     static CharT ws[3] = { CharT(' '), CharT('\t'), CharT('\n') }; // !! wide case
 
@@ -611,96 +613,97 @@ basic_cstring<CharT>::default_trim_ex()
 // **************             comparison operators             ************** //
 // ************************************************************************** //
 
-template<typename CharT1,typename CharT2>
+template<typename CharT1, typename CharTraits1, typename CharT2, typename CharTraits2>
 inline bool
-operator==( basic_cstring<CharT1> const& s1, basic_cstring<CharT2> const& s2 )
+operator==( basic_cstring<CharT1, CharTraits1> const& s1, basic_cstring<CharT2, CharTraits2> const& s2 )
 {
-    typedef typename basic_cstring<CharT1>::traits_type traits_type;
+    typedef typename basic_cstring<CharT1, CharTraits1>::traits_type traits_type;
     return s1.size() == s2.size() &&
                traits_type::compare( s1.begin(), s2.begin(), s1.size() ) == 0;
 }
 
 //____________________________________________________________________________//
 
-template<typename CharT1,typename CharT2>
+template<typename CharT1, typename CharTraits1, typename CharT2>
 inline bool
-operator==( basic_cstring<CharT1> const& s1, CharT2* s2 )
+operator==( basic_cstring<CharT1, CharTraits1> const& s1, CharT2* s2 )
 {
 #if !defined(__DMC__)
-    return s1 == basic_cstring<CharT2>( s2 );
+    // we can't do better than CharTraits1 here
+    return s1 == basic_cstring<CharT2, CharTraits1>( s2 );
 #else
-    return s1 == basic_cstring<CharT2 const>( s2 );
+    return s1 == basic_cstring<CharT2 const, CharTraits1>( s2 );
 #endif
 }
 
 //____________________________________________________________________________//
 
-template<typename CharT>
+template<typename CharT, typename CharTraits>
 inline bool
-operator==( basic_cstring<CharT> const& s1, typename basic_cstring<CharT>::std_string const& s2 )
+operator==( basic_cstring<CharT, CharTraits> const& s1, typename basic_cstring<CharT, CharTraits>::std_string const& s2 )
 {
-    return s1 == basic_cstring<CharT>( s2 );
+    return s1 == basic_cstring<CharT, CharTraits>( s2 );
 }
 
 //____________________________________________________________________________//
 
-template<typename CharT1,typename CharT2>
+template<typename CharT1,typename CharT2, typename CharTraits2>
 inline bool
-operator==( CharT1* s2, basic_cstring<CharT2> const& s1 )
-{
-    return s1 == s2;
-}
-
-//____________________________________________________________________________//
-
-template<typename CharT>
-inline bool
-operator==( typename basic_cstring<CharT>::std_string const& s2, basic_cstring<CharT> const& s1 )
+operator==( CharT1* s2, basic_cstring<CharT2, CharTraits2> const& s1 )
 {
     return s1 == s2;
 }
 
 //____________________________________________________________________________//
 
-template<typename CharT>
+template<typename CharT, typename CharTraits>
 inline bool
-operator!=( basic_cstring<CharT> const& s1, CharT* s2 )
+operator==( typename basic_cstring<CharT, CharTraits>::std_string const& s2, basic_cstring<CharT, CharTraits> const& s1 )
+{
+    return s1 == s2;
+}
+
+//____________________________________________________________________________//
+
+template<typename CharT, typename CharTraits>
+inline bool
+operator!=( basic_cstring<CharT, CharTraits> const& s1, CharT* s2 )
 {
     return !(s1 == s2);
 }
 
 //____________________________________________________________________________//
 
-template<typename CharT>
+template<typename CharT, typename CharTraits>
 inline bool
-operator!=( CharT* s2, basic_cstring<CharT> const& s1 )
+operator!=( CharT* s2, basic_cstring<CharT, CharTraits> const& s1 )
 {
     return !(s1 == s2);
 }
 
 //____________________________________________________________________________//
 
-template<typename CharT>
+template<typename CharT, typename CharTraits>
 inline bool
-operator!=( basic_cstring<CharT> const& s1, basic_cstring<CharT> const& s2 )
+operator!=( basic_cstring<CharT, CharTraits> const& s1, basic_cstring<CharT, CharTraits> const& s2 )
 {
     return !(s1 == s2);
 }
 
 //____________________________________________________________________________//
 
-template<typename CharT>
+template<typename CharT, typename CharTraits>
 inline bool
-operator!=( basic_cstring<CharT> const& s1, typename basic_cstring<CharT>::std_string const& s2 )
+operator!=( basic_cstring<CharT, CharTraits> const& s1, typename basic_cstring<CharT, CharTraits>::std_string const& s2 )
 {
     return !(s1 == s2);
 }
 
 //____________________________________________________________________________//
 
-template<typename CharT>
+template<typename CharT, typename CharTraits>
 inline bool
-operator!=( typename basic_cstring<CharT>::std_string const& s2, basic_cstring<CharT> const& s1 )
+operator!=( typename basic_cstring<CharT, CharTraits>::std_string const& s2, basic_cstring<CharT, CharTraits> const& s1 )
 {
     return !(s1 == s2);
 }
@@ -711,11 +714,11 @@ operator!=( typename basic_cstring<CharT>::std_string const& s2, basic_cstring<C
 // **************                  first_char                  ************** //
 // ************************************************************************** //
 
-template<typename CharT>
-inline typename basic_cstring<CharT>::value_ret_type
-first_char( basic_cstring<CharT> source )
+template<typename CharT, typename CharTraits>
+inline typename basic_cstring<CharT, CharTraits>::value_ret_type
+first_char( basic_cstring<CharT, CharTraits> source )
 {
-    typedef typename basic_cstring<CharT>::value_ret_type res_type;
+    typedef typename basic_cstring<CharT, CharTraits>::value_ret_type res_type;
 
     return source.is_empty() ? static_cast<res_type>(0) : *source.begin();
 }
@@ -726,11 +729,11 @@ first_char( basic_cstring<CharT> source )
 // **************                  last_char                   ************** //
 // ************************************************************************** //
 
-template<typename CharT>
-inline typename basic_cstring<CharT>::value_ret_type
-last_char( basic_cstring<CharT> source )
+template<typename CharT, typename CharTraits>
+inline typename basic_cstring<CharT, CharTraits>::value_ret_type
+last_char( basic_cstring<CharT, CharTraits> source )
 {
-    typedef typename basic_cstring<CharT>::value_ret_type res_type;
+    typedef typename basic_cstring<CharT, CharTraits>::value_ret_type res_type;
 
     return source.is_empty() ? static_cast<res_type>(0) : *(source.end()-1);
 }
@@ -741,18 +744,18 @@ last_char( basic_cstring<CharT> source )
 // **************                  assign_op                   ************** //
 // ************************************************************************** //
 
-template<typename CharT1, typename CharT2>
+template<typename CharT1, typename CharTraits1, typename CharT2, typename CharTraits2>
 inline void
-assign_op( std::basic_string<CharT1>& target, basic_cstring<CharT2> src, int )
+assign_op( std::basic_string<CharT1>& target, basic_cstring<CharT2, CharTraits2> src, int )
 {
     target.assign( src.begin(), src.size() );
 }
 
 //____________________________________________________________________________//
 
-template<typename CharT1, typename CharT2>
-inline std::basic_string<CharT1>&
-operator+=( std::basic_string<CharT1>& target, basic_cstring<CharT2> const& str )
+template<typename CharT1, typename CharTraits1, typename CharT2, typename CharTraits2>
+inline std::basic_string<CharT1, CharTraits1>&
+operator+=( std::basic_string<CharT1, CharTraits1>& target, basic_cstring<CharT2, CharTraits2> const& str )
 {
     target.append( str.begin(), str.end() );
     return target;
@@ -760,9 +763,9 @@ operator+=( std::basic_string<CharT1>& target, basic_cstring<CharT2> const& str 
 
 //____________________________________________________________________________//
 
-template<typename CharT1, typename CharT2>
-inline std::basic_string<CharT1>
-operator+( std::basic_string<CharT1> const& lhs, basic_cstring<CharT2> const& rhs )
+template<typename CharT1, typename CharTraits1, typename CharT2, typename CharTraits2>
+inline std::basic_string<CharT1, CharTraits1>
+operator+( std::basic_string<CharT1, CharTraits1> const& lhs, basic_cstring<CharT2, CharTraits2> const& rhs )
 {
     std::basic_string<CharT1> res( lhs );
 
