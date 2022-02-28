@@ -49,7 +49,7 @@ public:
     // Subtypes
     typedef CharTraits                                  traits_type;
     
-    typedef typename ut_detail::bcs_char_traits<CharTraits>::std_string std_string;
+    typedef typename ut_detail::bcs_char_traits<CharT>::std_string std_string;
     //typedef typename traits_type::std_string            std_string;
 
     typedef CharT                                       value_type;
