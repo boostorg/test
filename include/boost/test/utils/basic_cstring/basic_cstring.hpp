@@ -48,7 +48,7 @@ class BOOST_SYMBOL_VISIBLE basic_cstring {
 public:
     // Subtypes
     typedef CharTraits                                  traits_type;
-    
+
     typedef typename ut_detail::bcs_char_traits<CharT>::std_string std_string;
     //typedef typename traits_type::std_string            std_string;
 
@@ -615,11 +615,12 @@ basic_cstring<CharT, CharTraits>::default_trim_ex()
 // **************             comparison operators             ************** //
 // ************************************************************************** //
 
-template<typename CharT1, typename CharTraits1, typename CharT2, typename CharTraits2>
+// char traits should be the same
+template<typename CharT1, typename CharT2, typename CharTraits>
 inline bool
-operator==( basic_cstring<CharT1, CharTraits1> const& s1, basic_cstring<CharT2, CharTraits2> const& s2 )
+operator==( basic_cstring<CharT1, CharTraits> const& s1, basic_cstring<CharT2, CharTraits> const& s2 )
 {
-    typedef typename basic_cstring<CharT1, CharTraits1>::traits_type traits_type;
+    typedef typename basic_cstring<CharT1, CharTraits>::traits_type traits_type;
     return s1.size() == s2.size() &&
                traits_type::compare( s1.begin(), s2.begin(), s1.size() ) == 0;
 }

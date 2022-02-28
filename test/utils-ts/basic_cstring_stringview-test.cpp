@@ -10,10 +10,15 @@
 
 // Boost.Test
 #define BOOST_TEST_MODULE string_view_with_custom_traits
-#include <boost/test/unit_test.hpp>
-#include <boost/test/tools/output_test_stream.hpp>
+#include <boost/test/included/unit_test.hpp>
+
+#include "../framework-ts/logger-for-tests.hpp"
+
+
+#include <string_view>
 
 using namespace boost::unit_test;
+
 using boost::test_tools::output_test_stream;
 
 struct custom_char_traits : std::char_traits<char> {};
@@ -60,7 +65,7 @@ void check( output_test_stream& output,
 
       output << "* " << log_format << "-format  *******************************************************************";
       output << std::endl;
-  
+
       framework::finalize_setup_phase( id );
       framework::run( id, false ); // do not continue the test tree to have the test_log_start/end
       output << std::endl;
@@ -91,7 +96,7 @@ BOOST_AUTO_TEST_CASE( test_stringview_honors_chartraits )
 
     test_case* tc1 = BOOST_TEST_CASE(custom_char_traits_compare);
     test_case* tc2 = BOOST_TEST_CASE(std_char_traits_compare);
-    
+
     test_suite* ts_main = BOOST_TEST_SUITE( "fake master test suite" );
         ts_main->add( tc1 );
         ts_main->add( tc2 );

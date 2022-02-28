@@ -38,7 +38,7 @@ if(NOT MSVC)
   check_cxx_compiler_flag(-std=c++0x HAS_CXX0X_FLAG)
   if(HAS_CXX11_FLAG)
     message(STATUS "Compiling with C++11 support")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
   elseif(HAS_CXX0X_FLAG)
     #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
   endif()
@@ -100,9 +100,9 @@ add_library(boost_test_framework
             ${BOOST_UTF_HEADERS}
             ${BOOST_UTF_SRC})
 #target_compile_definitions(boost_test_framework PUBLIC "-DBOOST_TEST_DYN_LINK=0")
-target_include_directories(boost_test_framework 
-    PUBLIC 
-        ${BOOST_TEST_ROOT_DIR}/include/ 
+target_include_directories(boost_test_framework
+    PUBLIC
+        ${BOOST_TEST_ROOT_DIR}/include/
         ${BOOST_ROOT_DIR_ABS}/)
 set_target_properties(boost_test_framework PROPERTIES FOLDER "UTF")
 
@@ -111,9 +111,9 @@ add_library(boost_test_framework_shared
             ${BOOST_UTF_HEADERS}
             ${BOOST_UTF_SRC})
 target_compile_definitions(boost_test_framework_shared PUBLIC "-DBOOST_TEST_DYN_LINK=1")
-target_include_directories(boost_test_framework_shared 
-    PUBLIC 
-        ${BOOST_TEST_ROOT_DIR}/include/ 
+target_include_directories(boost_test_framework_shared
+    PUBLIC
+        ${BOOST_TEST_ROOT_DIR}/include/
         ${BOOST_ROOT_DIR_ABS}/)
 set_target_properties(boost_test_framework_shared PROPERTIES FOLDER "UTF")
 

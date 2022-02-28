@@ -25,11 +25,11 @@ namespace unit_test {
 
 namespace ut_detail {
     template <class CharT>
-    struct BOOST_SYMBOL_VISIBLE bcs_char_traits_impl;
+    class BOOST_SYMBOL_VISIBLE bcs_char_traits;
 }
 
 template<typename CharT,
-         typename CharTraits = ut_detail::bcs_char_traits_impl<CharT> >
+         typename CharTraits = ut_detail::bcs_char_traits<CharT> >
 class BOOST_SYMBOL_VISIBLE basic_cstring;
 
 typedef basic_cstring<char const>   const_string;

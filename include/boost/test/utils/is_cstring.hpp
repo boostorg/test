@@ -90,9 +90,9 @@ template <typename T, typename char_traits>
 struct deduce_cstring_transform_impl< std::basic_string_view<T, char_traits>, false > {
 private:
     using sv_t = std::basic_string_view<T, char_traits> ;
-  
+
 public:
-    using type = stringview_cstring_helper<typename boost::add_const<T>::type, sv_t>;
+    using type = stringview_cstring_helper<typename boost::add_const<T>::type, char_traits, sv_t>;
 };
 #endif
 
@@ -115,8 +115,8 @@ template<typename T>
 struct is_cstring_comparable< std::basic_string_view<T, std::char_traits<T> >, false > : public mpl::true_ {};
 #endif
 
-template<typename T>
-struct is_cstring_comparable< boost::unit_test::basic_cstring<T>, false > : public mpl::true_ {};
+template<typename T, typename CharTraits>
+struct is_cstring_comparable< boost::unit_test::basic_cstring<T, CharTraits>, false > : public mpl::true_ {};
 
 template <class T>
 struct deduce_cstring_transform {
