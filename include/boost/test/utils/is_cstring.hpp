@@ -86,7 +86,7 @@ struct deduce_cstring_transform_impl< std::basic_string<T, std::char_traits<T> >
 };
 
 #if defined(BOOST_TEST_STRING_VIEW)
-template <typename T, typename char_traits = std::char_traits<T>>
+template <typename T, typename char_traits>
 struct deduce_cstring_transform_impl< std::basic_string_view<T, char_traits>, false > {
 private:
     using sv_t = std::basic_string_view<T, char_traits> ;

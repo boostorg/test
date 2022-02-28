@@ -111,7 +111,7 @@ test-suite "utils-ts"
 :
   [ boost.test-self-test run : utils-ts : algorithm-test ]
   [ boost.test-self-test run : utils-ts : basic_cstring-test ]
-  [ boost.test-self-test run : utils-ts : basic_cstring_stringview-test : : : : : : [ requires cxx17_stringview ] ]
+  [ boost.test-self-test run : utils-ts : basic_cstring_stringview-test : : : : : : [ requires cxx17_hdr_string_view ] ]
   [ boost.test-self-test run : utils-ts : class_properties-test ]
   [ boost.test-self-test run : utils-ts : foreach-test ]
   [ boost.test-self-test run : utils-ts : named_params-test ]

@@ -48,7 +48,9 @@ class BOOST_SYMBOL_VISIBLE basic_cstring {
 public:
     // Subtypes
     typedef CharTraits                                  traits_type;
-    typedef typename traits_type::std_string            std_string;
+    
+    typedef typename ut_detail::bcs_char_traits<CharTraits>::std_string std_string;
+    //typedef typename traits_type::std_string            std_string;
 
     typedef CharT                                       value_type;
     typedef typename remove_cv<value_type>::type        value_ret_type;
@@ -746,7 +748,7 @@ last_char( basic_cstring<CharT, CharTraits> source )
 
 template<typename CharT1, typename CharTraits1, typename CharT2, typename CharTraits2>
 inline void
-assign_op( std::basic_string<CharT1>& target, basic_cstring<CharT2, CharTraits2> src, int )
+assign_op( std::basic_string<CharT1, CharTraits1>& target, basic_cstring<CharT2, CharTraits2> src, int )
 {
     target.assign( src.begin(), src.size() );
 }
