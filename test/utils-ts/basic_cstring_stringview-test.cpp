@@ -11,6 +11,10 @@
 // Boost.Test
 #define BOOST_TEST_MODULE string_view_with_custom_traits
 #include <boost/test/unit_test.hpp>
+#include <boost/test/tools/output_test_stream.hpp>
+
+using namespace boost::unit_test;
+using boost::test_tools::output_test_stream;
 
 struct custom_char_traits : std::char_traits<char> {};
 
