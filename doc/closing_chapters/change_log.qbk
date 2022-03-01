@@ -9,6 +9,7 @@
 
 Boost.Test releases:
 
+* [link ref_CHANGE_LOG_3_15 Boost.Test v3.15 / boost 1.79]
 * [link ref_CHANGE_LOG_3_14 Boost.Test v3.14 / boost 1.74]
 * [link ref_CHANGE_LOG_3_13 Boost.Test v3.13 / boost 1.73]
 * [link ref_CHANGE_LOG_3_12 Boost.Test v3.12 / boost 1.72]
@@ -24,6 +25,16 @@ Boost.Test releases:
 * [link ref_CHANGE_LOG_3_2 Boost.Test v3.2 / boost 1.61]
 * [link ref_CHANGE_LOG_3_1 Boost.Test v3.1 / boost 1.60]
 * [link ref_CHANGE_LOG_3_0 Boost.Test v3 / boost 1.59]
+
+[#ref_CHANGE_LOG_3_15][h4 Boost.Test v3.15 / boost 1.79]
+
+[h5 New features]
+
+[h5 Bugfixes and feature requests]
+
+# [github_issue 272] Uninitialized memory in `framework_init_observer_t`
+
+# [pull_request 286] fix uninitilized variable in `framework_init_observer_t`
 
 [#ref_CHANGE_LOG_3_14][h4 Boost.Test v3.14 / boost 1.74]
 
