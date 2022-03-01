@@ -35,6 +35,7 @@ Boost.Test releases:
 # [github_issue 272] Uninitialized memory in `framework_init_observer_t`
 
 # [pull_request 286] fix uninitilized variable in `framework_init_observer_t`
+# [pull_request 301] UB comparing unrelated pointers in `priority_order`
 
 [#ref_CHANGE_LOG_3_14][h4 Boost.Test v3.14 / boost 1.74]
 
