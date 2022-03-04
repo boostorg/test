@@ -36,6 +36,7 @@ Boost.Test releases:
 
 # [pull_request 286] fix uninitilized variable in `framework_init_observer_t`
 # [pull_request 301] UB comparing unrelated pointers in `priority_order`
+# [pull_request 281] Export `execution_aborted` exception to allow catching it from outside the DLL 
 
 [#ref_CHANGE_LOG_3_14][h4 Boost.Test v3.14 / boost 1.74]
 
