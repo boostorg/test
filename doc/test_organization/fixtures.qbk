@@ -264,8 +264,8 @@ entry/exit] fixture (executed once), where in this case the test-suite is the
 The __UTF__ global fixture design is based on the
 [link boost_test.tests_organization.fixtures.models generic test class fixture model]. The global
 fixture design allows any number of global fixtures to be defined in any test file that constitutes a test module.
-Though some initialization can be implemented in the test module initialization function, there are several
-reasons to prefer the global fixture approach:
+Though some initialization can be implemented in the [link boost_test.adv_scenarios.test_module_init_overview test module initialization function], 
+there are several reasons to prefer the global fixture approach:
 
 * There is no place for `cleanup`/`teardown` operations in the initialization function.
 * Unlike the initialization function, the global fixture construction, `setup` and `teardown` methods invocation are guarded by the
@@ -298,7 +298,10 @@ To define a global test module fixture you need:
   }
 ``
 
-The statement, that performs global fixture definition, has to reside at a test file scope.
+[caution The statement defining the global fixture has to reside in a single compilation unit (no header).]
+
+[caution Beware of other fixtures in other compilation units having the same name: if the fixtures have
+ different definition, this leads to an ODR violation.]
 
 [bt_example fixture_04..Global fixture..run-fail]
 
