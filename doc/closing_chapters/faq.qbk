@@ -21,6 +21,28 @@ To create a test case, use the macro
 
 For more details see the Unit Test Framework __BOOST_AUTO_TEST_CASE__ documentation.
 
+[h3 Is Boost.Test thread safe?]
+Short answer: no, but we welcome patches!
+
+Longer answer: Boost.Test currently has no synchronization mechanisms in place to avoid any race when
+multiple threads are calling the assertion macros. For instance this code
+
+``
+BOOST_TEXT_CASE(test_parallel)
+{
+    std::vector<std::string> vect(10);
+    std::for_each(
+        std::execution::par_unseq,
+        vect.begin(),
+        vect.end(),
+        [](auto const& str)
+        {
+            BOOST_TEST(str == "");
+        });
+}
+``
+will not work as expected as the assertion `BOOST_TEST` will be called from multiple threads.
+
 [h3 How to create test suite using the Unit Test Framework?]
 To create a test suite use the macro
 
