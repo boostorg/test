@@ -1007,7 +1007,7 @@ TEST_CASE( test_BOOST_TEST_fpv_comp_on_collections )
 
     // custom and lexico
     BOOST_TEST( v1  <= v2,  "'custom error message v1  <= v2   ' " << v1[0]  << " != " << v2[0]   << tt::lexicographic() );
-    BOOST_TEST( v1  <  v2,  "'custom error message v1  <  v2   ' " << v1f[0] << " != " << v2f[0]  << tt::lexicographic() );
+    BOOST_TEST( v1  <  v2,  "'custom error message v1  <  v2   ' " << v1[0]  << " != " << v2[0]   << tt::lexicographic() );
     BOOST_TEST( v2  <= v3,  "'custom error message v2  <= v3   ' " << v1[0]  << " >  " << v2[0]   << tt::lexicographic() );
     BOOST_TEST( v2  <  v3,  "'custom error message v2  <  v3   ' " << v1[0]  << " >= " << v2[0]   << tt::lexicographic() );
     BOOST_TEST( v3  <= v2,  "'custom error message v3  <= v2   ' " << v1[0]  << " >  " << v2[0]   << tt::lexicographic() );
@@ -1015,13 +1015,13 @@ TEST_CASE( test_BOOST_TEST_fpv_comp_on_collections )
 
     // custom, tolerance and lexico
     BOOST_TEST( v1  <= v2,  "'custom error message v1  <= v2   tolerance<double>       ' " << v1[0]  << " != " << v2[0]   << tt::tolerance( 1e-3 )  << tt::lexicographic() );
-    BOOST_TEST( v1  <  v2,  "'custom error message v1  <  v2   tolerance<double>       ' " << v1f[0] << " != " << v2f[0]  << tt::tolerance( 1e-3 )  << tt::lexicographic() );
+    BOOST_TEST( v1  <  v2,  "'custom error message v1  <  v2   tolerance<double>       ' " << v1[0]  << " != " << v2[0]   << tt::tolerance( 1e-3 )  << tt::lexicographic() );
     BOOST_TEST( v2  <= v3,  "'custom error message v2  <= v3   tolerance<double>       ' " << v1[0]  << " >  " << v2[0]   << tt::tolerance( 1e-3 )  << tt::lexicographic() );
     BOOST_TEST( v2  <  v3,  "'custom error message v2  <  v3   tolerance<double>       ' " << v1[0]  << " >= " << v2[0]   << tt::tolerance( 1e-3 )  << tt::lexicographic() );
     BOOST_TEST( v3  <= v2,  "'custom error message v3  <= v2   tolerance<double>       ' " << v1[0]  << " >  " << v2[0]   << tt::tolerance( 1e-3 )  << tt::lexicographic() );
     BOOST_TEST( v3  <  v2,  "'custom error message v3  <  v2   tolerance<double>       ' " << v1[0]  << " >= " << v2[0]   << tt::tolerance( 1e-3 )  << tt::lexicographic() );
     BOOST_TEST( v1  <= v2,  "'custom error message v1  <= v2   high_tolerance<double>  ' " << v1[0]  << " != " << v2[0]   << tt::tolerance( 1e-2 )  << tt::lexicographic() ); // high tolerance
-    BOOST_TEST( v1  <  v2,  "'custom error message v1  <  v2   high_tolerance<double>  ' " << v1f[0] << " != " << v2f[0]  << tt::tolerance( 1e-2 )  << tt::lexicographic() );
+    BOOST_TEST( v1  <  v2,  "'custom error message v1  <  v2   high_tolerance<double>  ' " << v1[0]  << " != " << v2[0]   << tt::tolerance( 1e-2 )  << tt::lexicographic() );
     BOOST_TEST( v2  <= v3,  "'custom error message v2  <= v3   high_tolerance<double>  ' " << v1[0]  << " >  " << v2[0]   << tt::tolerance( 1e-2 )  << tt::lexicographic() );
     BOOST_TEST( v2  <  v3,  "'custom error message v2  <  v3   high_tolerance<double>  ' " << v1[0]  << " >= " << v2[0]   << tt::tolerance( 1e-2 )  << tt::lexicographic() );
     BOOST_TEST( v3  <= v2,  "'custom error message v3  <= v2   high_tolerance<double>  ' " << v1[0]  << " >  " << v2[0]   << tt::tolerance( 1e-2 )  << tt::lexicographic() );
@@ -1029,13 +1029,13 @@ TEST_CASE( test_BOOST_TEST_fpv_comp_on_collections )
 
     // swapping custom and tolerance
     BOOST_TEST( v1  <= v2,  tt::tolerance( 1e-3 )  << "'custom error message v1  <= v2   tolerance<double>       ' " << v1[0]  << " != " << v2[0]   << tt::lexicographic() );
-    BOOST_TEST( v1  <  v2,  tt::tolerance( 1e-3 )  << "'custom error message v1  <  v2   tolerance<double>       ' " << v1f[0] << " != " << v2f[0]  << tt::lexicographic() );
+    BOOST_TEST( v1  <  v2,  tt::tolerance( 1e-3 )  << "'custom error message v1  <  v2   tolerance<double>       ' " << v1[0]  << " != " << v2[0]   << tt::lexicographic() );
     BOOST_TEST( v2  <= v3,  tt::tolerance( 1e-3 )  << "'custom error message v2  <= v3   tolerance<double>       ' " << v1[0]  << " >  " << v2[0]   << tt::lexicographic() );
     BOOST_TEST( v2  <  v3,  tt::tolerance( 1e-3 )  << "'custom error message v2  <  v3   tolerance<double>       ' " << v1[0]  << " >= " << v2[0]   << tt::lexicographic() );
     BOOST_TEST( v3  <= v2,  tt::tolerance( 1e-3 )  << "'custom error message v3  <= v2   tolerance<double>       ' " << v1[0]  << " >  " << v2[0]   << tt::lexicographic() );
     BOOST_TEST( v3  <  v2,  tt::tolerance( 1e-3 )  << "'custom error message v3  <  v2   tolerance<double>       ' " << v1[0]  << " >= " << v2[0]   << tt::lexicographic() );
     BOOST_TEST( v1  <= v2,  tt::tolerance( 1e-2 )  << "'custom error message v1  <= v2   high_tolerance<double>  ' " << v1[0]  << " != " << v2[0]   << tt::lexicographic() ); // high tolerance
-    BOOST_TEST( v1  <  v2,  tt::tolerance( 1e-2 )  << "'custom error message v1  <  v2   high_tolerance<double>  ' " << v1f[0] << " != " << v2f[0]  << tt::lexicographic() );
+    BOOST_TEST( v1  <  v2,  tt::tolerance( 1e-2 )  << "'custom error message v1  <  v2   high_tolerance<double>  ' " << v1[0]  << " != " << v2[0]   << tt::lexicographic() );
     BOOST_TEST( v2  <= v3,  tt::tolerance( 1e-2 )  << "'custom error message v2  <= v3   high_tolerance<double>  ' " << v1[0]  << " >  " << v2[0]   << tt::lexicographic() );
     BOOST_TEST( v2  <  v3,  tt::tolerance( 1e-2 )  << "'custom error message v2  <  v3   high_tolerance<double>  ' " << v1[0]  << " >= " << v2[0]   << tt::lexicographic() );
     BOOST_TEST( v3  <= v2,  tt::tolerance( 1e-2 )  << "'custom error message v3  <= v2   high_tolerance<double>  ' " << v1[0]  << " >  " << v2[0]   << tt::lexicographic() );
