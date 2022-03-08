@@ -24,7 +24,7 @@ jobs:
             buildtype: "boost"
             packages: "g++-4.8"
             packages_to_remove: ""
-            os: "ubuntu-16.04"
+            os: "ubuntu-20.04"
             container: "ubuntu:14.04"
             cxx: "g++"
             sources: ""
@@ -36,7 +36,8 @@ jobs:
             buildtype: "boost"
             packages: "g++-5"
             packages_to_remove: ""
-            os: "ubuntu-16.04"
+            os: "ubuntu-20.04"
+            container: "ubuntu:16.04"
             cxx: "g++"
             sources: ""
             llvm_os: ""
@@ -47,7 +48,8 @@ jobs:
             buildtype: "boost"
             packages: "g++-5"
             packages_to_remove: ""
-            os: "ubuntu-16.04"
+            os: "ubuntu-20.04"
+            container: "ubuntu:16.04"
             cxx: "g++"
             sources: ""
             llvm_os: ""
@@ -58,7 +60,7 @@ jobs:
             buildtype: "boost"
             packages: "g++-6"
             packages_to_remove: ""
-            os: "ubuntu-16.04"
+            os: "ubuntu-20.04"
             container: "ubuntu:14.04"
             cxx: "g++"
             sources: ""
@@ -70,7 +72,7 @@ jobs:
             buildtype: "boost"
             packages: "g++-6"
             packages_to_remove: ""
-            os: "ubuntu-16.04"
+            os: "ubuntu-20.04"
             container: "ubuntu:14.04"
             cxx: "g++"
             sources: ""
@@ -82,7 +84,8 @@ jobs:
             buildtype: "boost"
             packages: "g++-7"
             packages_to_remove: ""
-            os: "ubuntu-16.04"
+            os: "ubuntu-20.04"
+            container: "ubuntu:16.04"
             cxx: "g++"
             sources: ""
             llvm_os: ""
@@ -93,7 +96,8 @@ jobs:
             buildtype: "boost"
             packages: "g++-7"
             packages_to_remove: ""
-            os: "ubuntu-16.04"
+            os: "ubuntu-20.04"
+            container: "ubuntu:16.04"
             cxx: "g++"
             sources: ""
             llvm_os: ""
@@ -104,7 +108,8 @@ jobs:
             buildtype: "boost"
             packages: "g++-8"
             packages_to_remove: ""
-            os: "ubuntu-16.04"
+            os: "ubuntu-20.04"
+            container: "ubuntu:16.04"
             cxx: "g++"
             sources: ""
             llvm_os: ""
@@ -115,7 +120,8 @@ jobs:
             buildtype: "boost"
             packages: "g++-8"
             packages_to_remove: ""
-            os: "ubuntu-16.04"
+            os: "ubuntu-20.04"
+            container: "ubuntu:16.04"
             cxx: "g++"
             sources: ""
             llvm_os: ""
@@ -126,7 +132,7 @@ jobs:
             buildtype: "boost"
             packages: "clang-3.4"
             packages_to_remove: ""
-            os: "ubuntu-16.04"
+            os: "ubuntu-20.04"
             container: "ubuntu:14.04"
             cxx: "g++"
             sources: ""
@@ -138,7 +144,7 @@ jobs:
             buildtype: "boost"
             packages: "clang-3.8 libstdc++-6-dev"
             packages_to_remove: ""
-            os: "ubuntu-16.04"
+            os: "ubuntu-20.04"
             container: "ubuntu:14.04"
             cxx: "g++"
             sources: ""
@@ -150,7 +156,7 @@ jobs:
             buildtype: "boost"
             packages: "clang-3.8 libstdc++-6-dev"
             packages_to_remove: ""
-            os: "ubuntu-16.04"
+            os: "ubuntu-20.04"
             container: "ubuntu:14.04"
             cxx: "g++"
             sources: ""
@@ -162,7 +168,7 @@ jobs:
             buildtype: "boost"
             packages: "clang-4.0 libstdc++-6-dev"
             packages_to_remove: ""
-            os: "ubuntu-16.04"
+            os: "ubuntu-20.04"
             container: "ubuntu:14.04"
             cxx: "g++"
             sources: ""
@@ -174,7 +180,7 @@ jobs:
             buildtype: "boost"
             packages: "clang-4.0 libstdc++-6-dev"
             packages_to_remove: ""
-            os: "ubuntu-16.04"
+            os: "ubuntu-20.04"
             container: "ubuntu:14.04"
             cxx: "g++"
             sources: ""
@@ -186,7 +192,7 @@ jobs:
             buildtype: "boost"
             packages: "clang-5.0 libstdc++-7-dev"
             packages_to_remove: ""
-            os: "ubuntu-16.04"
+            os: "ubuntu-20.04"
             container: "ubuntu:14.04"
             cxx: "g++"
             sources: ""
@@ -198,7 +204,7 @@ jobs:
             buildtype: "boost"
             packages: "clang-5.0 libstdc++-7-dev"
             packages_to_remove: ""
-            os: "ubuntu-16.04"
+            os: "ubuntu-20.04"
             container: "ubuntu:14.04"
             cxx: "g++"
             sources: ""
@@ -210,7 +216,7 @@ jobs:
             buildtype: "boost"
             packages: "clang-6.0 libc++-dev libstdc++-8-dev valgrind"
             packages_to_remove: ""
-            os: "ubuntu-16.04"
+            os: "ubuntu-20.04"
             container: "ubuntu:14.04"
             cxx: "g++"
             sources: ""
@@ -222,7 +228,7 @@ jobs:
             buildtype: "boost"
             packages: "clang-6.0 libc++-dev libstdc++-8-dev valgrind"
             packages_to_remove: ""
-            os: "ubuntu-16.04"
+            os: "ubuntu-20.04"
             container: "ubuntu:14.04"
             cxx: "g++"
             sources: ""
@@ -234,7 +240,7 @@ jobs:
             buildtype: "boost"
             packages: "clang-6.0 libc++-dev libstdc++-8-dev valgrind"
             packages_to_remove: ""
-            os: "ubuntu-16.04"
+            os: "ubuntu-20.04"
             container: "ubuntu:14.04"
             cxx: "g++"
             sources: ""
@@ -247,7 +253,7 @@ jobs:
             buildtype: "boost"
             packages: "clang-6.0 libc++-dev libstdc++-8-dev valgrind"
             packages_to_remove: ""
-            os: "ubuntu-16.04"
+            os: "ubuntu-20.04"
             container: "ubuntu:14.04"
             cxx: "g++"
             sources: ""
@@ -260,7 +266,8 @@ jobs:
             buildtype: "6d5a3a255d-bbb3de2b00"
             packages: "g++-7"
             packages_to_remove: ""
-            os: "ubuntu-16.04"
+            os: "ubuntu-20.04"
+            container: "ubuntu:16.04"
             cxx: "g++"
             sources: ""
             llvm_os: ""
@@ -273,7 +280,8 @@ jobs:
             buildtype: "boost"
             packages: "g++-8"
             packages_to_remove: ""
-            os: "ubuntu-16.04"
+            os: "ubuntu-20.04"
+            container: "ubuntu:16.04"
             cxx: "g++"
             sources: ""
             llvm_os: ""
@@ -284,13 +292,14 @@ jobs:
             cxxstd: "11"
             defines: "define=BOOST_NO_STRESS_TEST=1"
             cxxflags: "cxxflags=-fno-omit-frame-pointer cxxflags=-fsanitize=undefined cxxflags=-fno-sanitize-recover=undefined cxxflags=-fsanitize-recover=integer-divide-by-zero cxxflags=-fsanitize-recover=float-divide-by-zero"
-            linkflags: "linkflags=-fsanitize=undefined linkflags=-fno-sanitize-recover=undefined linkflags=-fsanitize-recover=integer-divide-by-zero linkflags=-fsanitize-recover=float-divide-by-zero linkflags=-fuse-ld=gold"
+            # linkflags: "linkflags=-fsanitize=undefined linkflags=-fno-sanitize-recover=undefined linkflags=-fsanitize-recover=integer-divide-by-zero linkflags=-fsanitize-recover=float-divide-by-zero linkflags=-fuse-ld=gold"
+            b2_linkflags: "linkflags=-fsanitize=undefined linkflags=-fno-sanitize-recover=undefined linkflags=-fsanitize-recover=integer-divide-by-zero linkflags=-fsanitize-recover=float-divide-by-zero linkflags=-fuse-ld=gold"
             ubsan_options: "print_stacktrace=1"
           - name: "COMMENT=valgrind TOOLSET=clang-6.0 CXXSTD=11 Job 22"
             buildtype: "boost"
             packages: "clang-6.0 libc++-dev libstdc++-8-dev valgrind"
             packages_to_remove: ""
-            os: "ubuntu-16.04"
+            os: "ubuntu-20.04"
             container: "ubuntu:14.04"
             cxx: "g++"
             sources: ""
@@ -308,7 +317,8 @@ jobs:
             buildtype: "6d5a3a255d-cce9827eb5"
             packages: "g++-7"
             packages_to_remove: ""
-            os: "ubuntu-16.04"
+            os: "ubuntu-20.04"
+            container: "ubuntu:16.04"
             cxx: "g++"
             sources: ""
             llvm_os: ""
@@ -327,10 +337,12 @@ jobs:
       - name: If running in container, upgrade packages
         if: matrix.container != ''
         run: |
-            sudo apt-get -o Acquire::Retries=3 update && DEBIAN_FRONTEND=noninteractive apt-get -y install tzdata && apt-get -o Acquire::Retries=3 install -y sudo software-properties-common wget curl apt-transport-https make apt-file sudo unzip libssl-dev build-essential autotools-dev autoconf automake g++ libc++-helpers python python-pip ruby cpio gcc-multilib g++-multilib pkgconf python3 python3-pip ccache libpython-dev
+            apt-get -o Acquire::Retries=3 update && DEBIAN_FRONTEND=noninteractive apt-get -y install tzdata && apt-get -o Acquire::Retries=3 install -y sudo software-properties-common wget curl apt-transport-https make apt-file sudo unzip libssl-dev build-essential autotools-dev autoconf automake g++ libc++-helpers python ruby cpio gcc-multilib g++-multilib pkgconf python3 ccache libpython-dev
             sudo apt-add-repository ppa:git-core/ppa
             sudo apt-get -o Acquire::Retries=3 update && apt-get -o Acquire::Retries=3 -y install git
-            sudo python -m pip install --upgrade pip==20.3.4
+            python_version=$(python3 -c 'import sys; print("{0.major}.{0.minor}".format(sys.version_info))')
+            sudo wget https://bootstrap.pypa.io/pip/$python_version/get-pip.py
+            sudo python3 get-pip.py
             sudo /usr/local/bin/pip install cmake
 
       - uses: actions/checkout@v2
@@ -352,6 +364,7 @@ jobs:
           DEFINES: ${{ matrix.defines }}
           B2_VARIANT: ${{ matrix.b2_variant }}
           LINKFLAGS: ${{ matrix.linkflags }}
+          B2_LINKFLAGS: ${{ matrix.b2_linkflags }}
           UBSAN_OPTIONS: ${{ matrix.ubsan_options }}
           TESTFLAGS: ${{ matrix.testflags }}
           VALGRIND_OPTS: ${{ matrix.valgrind_opts }}
@@ -401,7 +414,7 @@ jobs:
 
           echo '==================================> INSTALL'
 
-          git clone https://github.com/jeking3/boost-ci.git boost-ci
+          git clone https://github.com/boostorg/boost-ci.git boost-ci
           cp -pr boost-ci/ci boost-ci/.codecov.yml .
 
           if [ "$TRAVIS_OS_NAME" == "osx" ]; then
@@ -423,7 +436,7 @@ jobs:
 
           echo '==================================> INSTALL'
 
-          git clone https://github.com/jeking3/boost-ci.git boost-ci
+          git clone https://github.com/boostorg/boost-ci.git boost-ci
           cp -pr boost-ci/ci boost-ci/.codecov.yml .
 
           if [ "$TRAVIS_OS_NAME" == "osx" ]; then
@@ -443,10 +456,11 @@ jobs:
           ci/travis/codecov.sh
 
           elif [ "$JOB_BUILDTYPE" == "6d5a3a255d-cce9827eb5" ]; then
+          set -xe
 
           echo '==================================> INSTALL'
 
-          git clone https://github.com/jeking3/boost-ci.git boost-ci
+          git clone https://github.com/boostorg/boost-ci.git boost-ci
           cp -pr boost-ci/ci boost-ci/.codecov.yml .
 
           if [ "$TRAVIS_OS_NAME" == "osx" ]; then
@@ -460,8 +474,10 @@ jobs:
           . ./ci/common_install.sh
 
           echo '==================================> SCRIPT'
+          set -xe
 
-          if  [ -n "${COVERITY_SCAN_NOTIFICATION_EMAIL}" -a \( "$TRAVIS_BRANCH" = "develop" -o "$TRAVIS_BRANCH" = "master" \) -a \("$GITHUB_EVENT_NAME" = "push" -o "$GITHUB_EVENT_NAME" = "cron" \) ] ; then
+          if  [ -n "${COVERITY_SCAN_NOTIFICATION_EMAIL}" -a \( "$TRAVIS_BRANCH" = "develop" -o "$TRAVIS_BRANCH" = "master" \) -a \( "$GITHUB_EVENT_NAME" = "push" -o "$GITHUB_EVENT_NAME" = "cron" \) ] ; then
+          echo "running coverity"
           cd $BOOST_ROOT/libs/$SELF
           ci/travis/coverity.sh
           fi
