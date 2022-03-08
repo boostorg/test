@@ -28,7 +28,7 @@ Longer answer: Boost.Test currently has no synchronization mechanisms in place t
 multiple threads are calling the assertion macros. For instance this code
 
 ``
-BOOST_TEXT_CASE(test_parallel)
+BOOST_TEST_CASE(test_parallel)
 {
     std::vector<std::string> vect(10);
     std::for_each(
