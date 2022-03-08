@@ -17,10 +17,13 @@
 #include <vector>
 
 struct dummy_class {
-    operator bool() const { return true; }
+    dummy_class(int i = 0): value(i) {}
+    operator bool() const { return bool(value); }
 
-    bool operator==(dummy_class const&) const { return true;  }
-    bool operator!=(dummy_class const&) const { return false; }
+    bool operator==(dummy_class const &r) const { return value == r.value;  }
+    bool operator!=(dummy_class const &r) const { return value != r.value;; }
+    
+    int value;
 };
 
 BOOST_TEST_DONT_PRINT_LOG_VALUE(dummy_class)
@@ -31,23 +34,26 @@ BOOST_AUTO_TEST_CASE(single_object)
 {
   dummy_class actual, expected;
   BOOST_TEST(actual == expected);
+
+  std::unique_ptr<dummy_class> nothing(nullptr);
+  BOOST_TEST(nothing == nullptr);
+
+    std::unique_ptr<dummy_class> d1(new dummy_class(1));
+    std::unique_ptr<dummy_class> d2(new dummy_class(1));
+  BOOST_TEST(d1 == d2);
 }
 
 //____________________________________________________________________________//
 
 // this one tests for contexts printing in dataset tests
-std::vector<dummy_class> generate_vector()
+std::unique_ptr<dummy_class> generate_ptr()
 {
-  std::vector<dummy_class> out;
-  out.push_back(dummy_class());
-  out.push_back(dummy_class());
-  out.push_back(dummy_class());
-  return out;
+  return std::make_unique_ptr(new dummy_class());
 }
 
 //____________________________________________________________________________//
 
-BOOST_DATA_TEST_CASE( test_data_case, boost::unit_test::data::make(generate_vector()))
+BOOST_DATA_TEST_CASE( test_data_case, boost::unit_test::data::make(generate_ptr()))
 {
   BOOST_TEST(sample);
 }
