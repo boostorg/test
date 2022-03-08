@@ -151,7 +151,7 @@ The interface of the /dataset/ should implement the two following functions/fiel
 * `iterator begin()` where /iterator/ is a forward iterator,
 * `boost::unit_test::data::size_t size() const` indicates the size of the dataset. The returned type is a dedicated
   class [classref boost::unit_test::data::size_t size_t] that can indicate an /infinite/ dataset size.
-* an enum called `arity` indicating the arity of the samples returned by the dataset
+* a `static const int` data member called `arity` indicating the arity of the samples returned by the dataset
 
 Once a dataset class `D` is declared, it should be registered to the framework by specializing the template class
 ``boost::unit_test::data::monomorphic::is_dataset``

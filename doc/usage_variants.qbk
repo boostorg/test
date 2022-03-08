@@ -26,7 +26,7 @@ and there is no need to link with any library. There are several ways to perform
 the initialization, but the simplest way is the following:
 ``
   #define __BOOST_TEST_MODULE__ test module name
-  #include <boost/test/included/unit_test.hpp>
+  #include <boost/test/included/unit_test.hpp> /* path is different than the other variants! */
 ``
 __BOOST_TEST_MODULE__ macro needs to be defined *before* the include and should indicate
 the name of the test module. This name can include spaces and does not need to be wrapped in quotes.

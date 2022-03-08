@@ -369,29 +369,29 @@ BOOST_TEST_CASE_TEMPLATE_FUNCTION( trim_test, CharT )
 
     bcs0 = TEST_STRING;
     bcs0.trim_right( bcs0.size() - bcs0.find( LITERAL( "t_s" ) ) - 3 );
-    BOOST_TEST( bcs0 == LITERAL( "test_s" ) );
+    BOOST_TEST( bcs0 == const_cast<CharT const*>(LITERAL( "test_s" ) ));
 
     bcs0.trim_left( bcs0.find( LITERAL( "t_s" ) ) );
-    BOOST_TEST( bcs0 == LITERAL( "t_s" ) );
+    BOOST_TEST( bcs0 == const_cast<CharT const*>(LITERAL( "t_s" )) );
 
     LOCAL_DEF( bcs1, "abcd   " );
     LOCAL_DEF( bcs2, "     abcd" );
     LOCAL_DEF( bcs3, "  abcd  " );
 
     bcs1.trim_right();
-    BOOST_TEST( bcs1 == LITERAL( "abcd" ) );
+    BOOST_TEST( bcs1 == const_cast<CharT const*>(LITERAL( "abcd" )) );
 
     bcs2.trim_left();
-    BOOST_TEST( bcs2 == LITERAL( "abcd" ) );
+    BOOST_TEST( bcs2 == const_cast<CharT const*>(LITERAL( "abcd" )) );
 
     bcs3.trim( LITERAL( "\"" ) );
-    BOOST_TEST( bcs3 == LITERAL( "  abcd  " ) );
+    BOOST_TEST( bcs3 == const_cast<CharT const*>(LITERAL( "  abcd  " )) );
 
     bcs3.trim();
-    BOOST_TEST( bcs3 == LITERAL( "abcd" ) );
+    BOOST_TEST( bcs3 == const_cast<CharT const*>(LITERAL( "abcd" )) );
 
     bcs3.trim();
-    BOOST_TEST( bcs3 == LITERAL( "abcd" ) );
+    BOOST_TEST( bcs3 == const_cast<CharT const*>(LITERAL( "abcd" )) );
 }
 
 //____________________________________________________________________________//

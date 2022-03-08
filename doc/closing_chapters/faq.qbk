@@ -10,13 +10,9 @@
 [h3 Where the latest version of the Boost Test Library is located?]
 The latest version of Boost Test Library is available online at [@http://www.boost.org/libs/test].
 
-[h3 I found a bug. Where can I report it?]
-You can send a bug report to the boost users' mailing list and/or fill a ticket here [@https://svn.boost.org/trac/boost/].
-
-
-[h3 I have a request for a new feature. Where can I ask for it?]
-You can send a request to the boost developers' mailing list and/or and/or fill a ticket here [@https://svn.boost.org/trac/boost/].
-
+[h3 Bug report of feature request: what should I do?]
+You can send a bug report or a feature request to the boost users' mailing list boost-users@lists.boost.org and/or fill 
+a ticket on the GitHub issues of the project [@https://github.com/boostorg/test].
 
 [h3 How to create test case using the Unit Test Framework?]
 To create a test case, use the macro
@@ -24,6 +20,28 @@ To create a test case, use the macro
   __BOOST_AUTO_TEST_CASE__( test_function );
 
 For more details see the Unit Test Framework __BOOST_AUTO_TEST_CASE__ documentation.
+
+[h3 Is Boost.Test thread safe?]
+Short answer: no, but we welcome patches!
+
+Longer answer: Boost.Test currently has no synchronization mechanisms in place to avoid any race when
+multiple threads are calling the assertion macros. For instance this code
+
+``
+BOOST_TEST_CASE(test_parallel)
+{
+    std::vector<std::string> vect(10);
+    std::for_each(
+        std::execution::par_unseq,
+        vect.begin(),
+        vect.end(),
+        [](auto const& str)
+        {
+            BOOST_TEST(str == "");
+        });
+}
+``
+will not work as expected as the assertion `BOOST_TEST` will be called from multiple threads.
 
 [h3 How to create test suite using the Unit Test Framework?]
 To create a test suite use the macro

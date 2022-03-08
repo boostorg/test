@@ -3,7 +3,7 @@
 # What is Boost.Test?
 Boost.Test is a C++03/11/14/17 unit testing library, available on a wide range of platforms and compilers.
 
-The library is part of [Boost](www.boost.org). The latest release
+The library is part of [Boost](http://www.boost.org). The latest release
 of the library is available from the boost web site.
 
 Full instructions for use of this library can be accessed from
@@ -49,7 +49,9 @@ Please read [this document](CONTRIBUTE.md) to get started.
 
 # Build Status
 
-Branch          | Travis | Appveyor | codecov.io | Deps | Docs | Tests |
-:-------------: | ------ | -------- | ---------- | ---- | ---- | ----- |
-[`master`](https://github.com/boostorg/test/tree/master)   | [![Build Status](https://travis-ci.org/boostorg/test.svg?branch=master)](https://travis-ci.org/boostorg/test)  | [![Build status](https://ci.appveyor.com/api/projects/status/n6ajg604w9gdbn8f/branch/master?svg=true)](https://ci.appveyor.com/project/raffienficiaud/test/branch/master)   | [![codecov](https://codecov.io/gh/boostorg/test/branch/master/graph/badge.svg)](https://codecov.io/gh/boostorg/test/branch/master)   | [![Deps](https://img.shields.io/badge/deps-master-brightgreen.svg)](https://pdimov.github.io/boostdep-report/master/test.html)   | [![Documentation](https://img.shields.io/badge/docs-master-brightgreen.svg)](http://www.boost.org/doc/libs/master/doc/html/test.html)   | [![Enter the Matrix](https://img.shields.io/badge/matrix-master-brightgreen.svg)](http://www.boost.org/development/tests/master/developer/test.html)
-[`develop`](https://github.com/boostorg/test/tree/develop) | [![Build Status](https://travis-ci.org/boostorg/test.svg?branch=develop)](https://travis-ci.org/boostorg/test) | [![Build status](https://ci.appveyor.com/api/projects/status/n6ajg604w9gdbn8f/branch/develop?svg=true)](https://ci.appveyor.com/project/raffienficiaud/test/branch/develop) | [![codecov](https://codecov.io/gh/boostorg/test/branch/develop/graph/badge.svg)](https://codecov.io/gh/boostorg/test/branch/develop) | [![Deps](https://img.shields.io/badge/deps-develop-brightgreen.svg)](https://pdimov.github.io/boostdep-report/develop/test.html) | [![Documentation](https://img.shields.io/badge/docs-develop-brightgreen.svg)](http://www.boost.org/doc/libs/develop/doc/html/test.html) | [![Enter the Matrix](https://img.shields.io/badge/matrix-develop-brightgreen.svg)](http://www.boost.org/development/tests/develop/developer/test.html)
+Boost.Test uses mostly the facility provided by our wonderful Boost testers (column `Tests` below).
+
+Branch          | Deps | Docs | Tests |
+:-------------: | ---- | ---- | ----- |
+[`master`](https://github.com/boostorg/test/tree/master) | [![Deps](https://img.shields.io/badge/deps-master-brightgreen.svg)](https://pdimov.github.io/boostdep-report/master/test.html)   | [![Documentation](https://img.shields.io/badge/docs-master-brightgreen.svg)](http://www.boost.org/doc/libs/master/doc/html/test.html) | [![Enter the Matrix](https://img.shields.io/badge/matrix-master-brightgreen.svg)](http://www.boost.org/development/tests/master/developer/test.html)
+[`develop`](https://github.com/boostorg/test/tree/develop) | [![Deps](https://img.shields.io/badge/deps-develop-brightgreen.svg)](https://pdimov.github.io/boostdep-report/develop/test.html) | [![Documentation](https://img.shields.io/badge/docs-develop-brightgreen.svg)](http://www.boost.org/doc/libs/develop/doc/html/test.html) | [![Enter the Matrix](https://img.shields.io/badge/matrix-develop-brightgreen.svg)](http://www.boost.org/development/tests/develop/developer/test.html)

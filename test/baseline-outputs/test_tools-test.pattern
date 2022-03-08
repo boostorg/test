@@ -193,17 +193,17 @@ error: in "test_BOOST_TEST_fpv_comp_on_collections": check v1 < v2 has failed
   - mismatch at position 2: [1.1e-05 < 1.11e-05] is false: operation != on arguments yields 'false': relative difference is within tolerance [0.00900901 < 0.01].
 info: check v1f < v2f has passed
 error: in "test_BOOST_TEST_fpv_comp_on_collections": check 'custom error message v1  == v2   tolerance<double>       ' 1.1e-05 != 1.11e-05 has failed
-error: in "test_BOOST_TEST_fpv_comp_on_collections": check 'custom error message v1f == v2f  tolerance<double>       ' 1.1e-05 != 1.11e-05 has failed
+error: in "test_BOOST_TEST_fpv_comp_on_collections": check 'custom error message v1f == v2f  tolerance<double>       ' 1.10000001e-05 != 1.10999999e-05 has failed
 info: check 'custom error message v1  <= v2   tolerance<double>       ' 1.1e-05 >  1.11e-05 has passed
 info: check 'custom error message v1  <  v2   tolerance<double>       ' 1.1e-05 >= 1.11e-05 has passed
 info: check 'custom error message v1  <= v2   high_tolerance<double>  ' 1.1e-05 >  1.11e-05 has passed
 info: check 'custom error message v1  <  v2   high_tolerance<double>  ' 1.1e-05 >= 1.11e-05 has passed
-info: check 'custom error message v1f <  v2f  high_tolerance<double>  ' 1.1e-05 >= 1.11e-05 has passed
+info: check 'custom error message v1f <  v2f  high_tolerance<double>  ' 1.10000001e-05 >= 1.10999999e-05 has passed
 error: in "test_BOOST_TEST_fpv_comp_on_collections": check 'custom error message v1  == v2   tolerance<double>       ' 1.1e-05 != 1.11e-05 has failed
   - mismatch at position 0: [1.1e-05 == 1.11e-05] is false: relative difference exceeds tolerance [0.00909091 > 0.001]
   - mismatch at position 1: [1.1e-05 == 1.11e-05] is false: relative difference exceeds tolerance [0.00909091 > 0.001]
   - mismatch at position 2: [1.1e-05 == 1.11e-05] is false: relative difference exceeds tolerance [0.00909091 > 0.001]
-error: in "test_BOOST_TEST_fpv_comp_on_collections": check 'custom error message v1f == v2f  tolerance<double>       ' 1.1e-05 != 1.11e-05 has failed
+error: in "test_BOOST_TEST_fpv_comp_on_collections": check 'custom error message v1f == v2f  tolerance<double>       ' 1.10000001e-05 != 1.10999999e-05 has failed
   - mismatch at position 0: [1.10000001e-05 == 1.10999999e-05] is false
   - mismatch at position 1: [1.10000001e-05 == 1.10999999e-05] is false
   - mismatch at position 2: [1.10000001e-05 == 1.10999999e-05] is false
@@ -214,12 +214,12 @@ error: in "test_BOOST_TEST_fpv_comp_on_collections": check 'custom error message
   - mismatch at position 0: [1.1e-05 < 1.11e-05] is false: operation != on arguments yields 'false': relative difference is within tolerance [0.00900901 < 0.01].
   - mismatch at position 1: [1.1e-05 < 1.11e-05] is false: operation != on arguments yields 'false': relative difference is within tolerance [0.00900901 < 0.01].
   - mismatch at position 2: [1.1e-05 < 1.11e-05] is false: operation != on arguments yields 'false': relative difference is within tolerance [0.00900901 < 0.01].
-info: check 'custom error message v1f <  v2f  high_tolerance<double>  ' 1.1e-05 >= 1.11e-05 has passed
+info: check 'custom error message v1f <  v2f  high_tolerance<double>  ' 1.10000001e-05 >= 1.10999999e-05 has passed
 error: in "test_BOOST_TEST_fpv_comp_on_collections": check 'custom error message v1  == v2   tolerance<double>       ' 1.1e-05 != 1.11e-05 has failed
   - mismatch at position 0: [1.1e-05 == 1.11e-05] is false: relative difference exceeds tolerance [0.00909091 > 0.001]
   - mismatch at position 1: [1.1e-05 == 1.11e-05] is false: relative difference exceeds tolerance [0.00909091 > 0.001]
   - mismatch at position 2: [1.1e-05 == 1.11e-05] is false: relative difference exceeds tolerance [0.00909091 > 0.001]
-error: in "test_BOOST_TEST_fpv_comp_on_collections": check 'custom error message v1f == v2f  tolerance<double>       ' 1.1e-05 != 1.11e-05 has failed
+error: in "test_BOOST_TEST_fpv_comp_on_collections": check 'custom error message v1f == v2f  tolerance<double>       ' 1.10000001e-05 != 1.10999999e-05 has failed
   - mismatch at position 0: [1.10000001e-05 == 1.10999999e-05] is false
   - mismatch at position 1: [1.10000001e-05 == 1.10999999e-05] is false
   - mismatch at position 2: [1.10000001e-05 == 1.10999999e-05] is false
@@ -230,18 +230,18 @@ error: in "test_BOOST_TEST_fpv_comp_on_collections": check 'custom error message
   - mismatch at position 0: [1.1e-05 < 1.11e-05] is false: operation != on arguments yields 'false': relative difference is within tolerance [0.00900901 < 0.01].
   - mismatch at position 1: [1.1e-05 < 1.11e-05] is false: operation != on arguments yields 'false': relative difference is within tolerance [0.00900901 < 0.01].
   - mismatch at position 2: [1.1e-05 < 1.11e-05] is false: operation != on arguments yields 'false': relative difference is within tolerance [0.00900901 < 0.01].
-info: check 'custom error message v1f <  v2f  high_tolerance<double>  ' 1.1e-05 >= 1.11e-05 has passed
+info: check 'custom error message v1f <  v2f  high_tolerance<double>  ' 1.10000001e-05 >= 1.10999999e-05 has passed
 error: in "test_BOOST_TEST_fpv_comp_on_collections": check 'custom error message v1  == v2  ' 1.1e-05 != 1.11e-05 has failed
   - mismatch at position 0: [1.1e-05 == 1.11e-05] is false
   - mismatch at position 1: [1.1e-05 == 1.11e-05] is false
   - mismatch at position 2: [1.1e-05 == 1.11e-05] is false
-error: in "test_BOOST_TEST_fpv_comp_on_collections": check 'custom error message v1f == v2f ' 1.1e-05 != 1.11e-05 has failed
+error: in "test_BOOST_TEST_fpv_comp_on_collections": check 'custom error message v1f == v2f ' 1.10000001e-05 != 1.10999999e-05 has failed
   - mismatch at position 0: [1.10000001e-05 == 1.10999999e-05] is false
   - mismatch at position 1: [1.10000001e-05 == 1.10999999e-05] is false
   - mismatch at position 2: [1.10000001e-05 == 1.10999999e-05] is false
 info: check 'custom error message v1  <= v2  ' 1.1e-05 >  1.11e-05 has passed
 info: check 'custom error message v1  <  v2  ' 1.1e-05 >= 1.11e-05 has passed
-info: check 'custom error message v1f <  v2f ' 1.1e-05 >= 1.11e-05 has passed
+info: check 'custom error message v1f <  v2f ' 1.10000001e-05 >= 1.10999999e-05 has passed
 info: check v1 <= v2 has passed
 info: check v1 < v2 has passed
 error: in "test_BOOST_TEST_fpv_comp_on_collections": check v2 <= v3 has failed
