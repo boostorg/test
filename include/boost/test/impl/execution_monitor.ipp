@@ -426,48 +426,48 @@ system_signal_exception::report() const
         case ILL_ILLOPC:
             report_error( execution_exception::system_fatal_error,
                           "signal: illegal opcode; address of failing instruction: 0x%08lx",
-                          (uintptr_t) m_sig_info->si_addr );
+                          (unsigned long) m_sig_info->si_addr );
             break;
         case ILL_ILLTRP:
             report_error( execution_exception::system_fatal_error,
                           "signal: illegal trap; address of failing instruction: 0x%08lx",
-                          (uintptr_t) m_sig_info->si_addr );
+                          (unsigned long) m_sig_info->si_addr );
             break;
         case ILL_PRVREG:
             report_error( execution_exception::system_fatal_error,
                           "signal: privileged register; address of failing instruction: 0x%08lx",
-                          (uintptr_t) m_sig_info->si_addr );
+                          (unsigned long) m_sig_info->si_addr );
             break;
         case ILL_BADSTK:
             report_error( execution_exception::system_fatal_error,
                           "signal: internal stack error; address of failing instruction: 0x%08lx",
-                          (uintptr_t) m_sig_info->si_addr );
+                          (unsigned long) m_sig_info->si_addr );
             break;
 #endif
         case ILL_ILLOPN:
             report_error( execution_exception::system_fatal_error,
                           "signal: illegal operand; address of failing instruction: 0x%08lx",
-                          (uintptr_t) m_sig_info->si_addr );
+                          (unsigned long) m_sig_info->si_addr );
             break;
         case ILL_ILLADR:
             report_error( execution_exception::system_fatal_error,
                           "signal: illegal addressing mode; address of failing instruction: 0x%08lx",
-                          (uintptr_t) m_sig_info->si_addr );
+                          (unsigned long) m_sig_info->si_addr );
             break;
         case ILL_PRVOPC:
             report_error( execution_exception::system_fatal_error,
                           "signal: privileged opcode; address of failing instruction: 0x%08lx",
-                          (uintptr_t) m_sig_info->si_addr );
+                          (unsigned long) m_sig_info->si_addr );
             break;
         case ILL_COPROC:
             report_error( execution_exception::system_fatal_error,
                           "signal: co-processor error; address of failing instruction: 0x%08lx",
-                          (uintptr_t) m_sig_info->si_addr );
+                          (unsigned long) m_sig_info->si_addr );
             break;
         default:
             report_error( execution_exception::system_fatal_error,
                           "signal: SIGILL, si_code: %d (illegal instruction; address of failing instruction: 0x%08lx)",
-                          m_sig_info->si_code, (uintptr_t) m_sig_info->si_addr );
+                          m_sig_info->si_code, (unsigned long) m_sig_info->si_addr );
             break;
         }
         break;
@@ -477,47 +477,47 @@ system_signal_exception::report() const
         case FPE_INTDIV:
             report_error( execution_exception::system_error,
                           "signal: integer divide by zero; address of failing instruction: 0x%08lx",
-                          (uintptr_t) m_sig_info->si_addr );
+                          (unsigned long) m_sig_info->si_addr );
             break;
         case FPE_INTOVF:
             report_error( execution_exception::system_error,
                           "signal: integer overflow; address of failing instruction: 0x%08lx",
-                          (uintptr_t) m_sig_info->si_addr );
+                          (unsigned long) m_sig_info->si_addr );
             break;
         case FPE_FLTDIV:
             report_error( execution_exception::system_error,
                           "signal: floating point divide by zero; address of failing instruction: 0x%08lx",
-                          (uintptr_t) m_sig_info->si_addr );
+                          (unsigned long) m_sig_info->si_addr );
             break;
         case FPE_FLTOVF:
             report_error( execution_exception::system_error,
                           "signal: floating point overflow; address of failing instruction: 0x%08lx",
-                          (uintptr_t) m_sig_info->si_addr );
+                          (unsigned long) m_sig_info->si_addr );
             break;
         case FPE_FLTUND:
             report_error( execution_exception::system_error,
                           "signal: floating point underflow; address of failing instruction: 0x%08lx",
-                          (uintptr_t) m_sig_info->si_addr );
+                          (unsigned long) m_sig_info->si_addr );
             break;
         case FPE_FLTRES:
             report_error( execution_exception::system_error,
                           "signal: floating point inexact result; address of failing instruction: 0x%08lx",
-                          (uintptr_t) m_sig_info->si_addr );
+                          (unsigned long) m_sig_info->si_addr );
             break;
         case FPE_FLTINV:
             report_error( execution_exception::system_error,
                           "signal: invalid floating point operation; address of failing instruction: 0x%08lx",
-                          (uintptr_t) m_sig_info->si_addr );
+                          (unsigned long) m_sig_info->si_addr );
             break;
         case FPE_FLTSUB:
             report_error( execution_exception::system_error,
                           "signal: subscript out of range; address of failing instruction: 0x%08lx",
-                          (uintptr_t) m_sig_info->si_addr );
+                          (unsigned long) m_sig_info->si_addr );
             break;
         default:
             report_error( execution_exception::system_error,
                           "signal: SIGFPE, si_code: %d (errnoneous arithmetic operations; address of failing instruction: 0x%08lx)",
-                          m_sig_info->si_code, (uintptr_t) m_sig_info->si_addr );
+                          m_sig_info->si_code, (unsigned long) m_sig_info->si_addr );
             break;
         }
         break;
@@ -528,18 +528,18 @@ system_signal_exception::report() const
         case SEGV_MAPERR:
             report_error( execution_exception::system_fatal_error,
                           "memory access violation at address: 0x%08lx: no mapping at fault address",
-                          (uintptr_t) m_sig_info->si_addr );
+                          (unsigned long) m_sig_info->si_addr );
             break;
         case SEGV_ACCERR:
             report_error( execution_exception::system_fatal_error,
                           "memory access violation at address: 0x%08lx: invalid permissions",
-                          (uintptr_t) m_sig_info->si_addr );
+                          (unsigned long) m_sig_info->si_addr );
             break;
 #endif
         default:
             report_error( execution_exception::system_fatal_error,
                           "signal: SIGSEGV, si_code: %d (memory access violation at address: 0x%08lx)",
-                          m_sig_info->si_code, (uintptr_t) m_sig_info->si_addr );
+                          m_sig_info->si_code, (unsigned long) m_sig_info->si_addr );
             break;
         }
         break;
@@ -550,23 +550,23 @@ system_signal_exception::report() const
         case BUS_ADRALN:
             report_error( execution_exception::system_fatal_error,
                           "memory access violation at address: 0x%08lx: invalid address alignment",
-                          (uintptr_t) m_sig_info->si_addr );
+                          (unsigned long) m_sig_info->si_addr );
             break;
         case BUS_ADRERR:
             report_error( execution_exception::system_fatal_error,
                           "memory access violation at address: 0x%08lx: non-existent physical address",
-                          (uintptr_t) m_sig_info->si_addr );
+                          (unsigned long) m_sig_info->si_addr );
             break;
         case BUS_OBJERR:
             report_error( execution_exception::system_fatal_error,
                           "memory access violation at address: 0x%08lx: object specific hardware error",
-                          (uintptr_t) m_sig_info->si_addr );
+                          (unsigned long) m_sig_info->si_addr );
             break;
 #endif
         default:
             report_error( execution_exception::system_fatal_error,
                           "signal: SIGSEGV, si_code: %d (memory access violation at address: 0x%08lx)",
-                          m_sig_info->si_code, (uintptr_t) m_sig_info->si_addr );
+                          m_sig_info->si_code, (unsigned long) m_sig_info->si_addr );
             break;
         }
         break;
