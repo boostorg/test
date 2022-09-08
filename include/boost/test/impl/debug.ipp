@@ -297,6 +297,8 @@ process_info::process_info( int pid )
 
     m_binary_path_buff[num_read] = 0;
     m_binary_path.assign( m_binary_path_buff, num_read );
+#else
+    (void) pid;  // silence 'unused variable' warning
 #endif
 }
 
