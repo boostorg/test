@@ -399,15 +399,22 @@ jobs:
             [ -d "$cmake_test_folder" ] || cmake_test_folder="$BOOST_ROOT/libs/$SELF/test/cmake_subdir_test"
             cd "$cmake_test_folder"
             mkdir __build_cmake_subdir_test__ && cd __build_cmake_subdir_test__
-            cmake -G "${{matrix.generator}}" -DBOOST_CI_INSTALL_TEST=OFF -DCMAKE_BUILD_TYPE=${{matrix.build_type}} -DBUILD_SHARED_LIBS=${{matrix.build_shared}} ..
+            extra_args=""
+            # On Windows DLLs need to be either in PATH or in the same folder as the executable, so put all binaries into the same folder
+            if [[ "$RUNNER_OS" == "Windows" ]] && [[ "${{matrix.build_shared}}" == "ON" ]]; then
+                extra_args="-DCMAKE_RUNTIME_OUTPUT_DIRECTORY='$(pwd)/bin'"
+            fi
+            cmake -G "${{matrix.generator}}" -DBOOST_CI_INSTALL_TEST=OFF -DCMAKE_BUILD_TYPE=${{matrix.build_type}} -DBUILD_SHARED_LIBS=${{matrix.build_shared}} $extra_args ..
             cmake --build . --config ${{matrix.build_type}} -j$B2_JOBS
             ctest --output-on-failure --build-config ${{matrix.build_type}}
 
       - name: Install Library
         run: |
+            BCM_INSTALL_PATH=/tmp/boost_install
+            echo "BCM_INSTALL_PATH=$BCM_INSTALL_PATH" >> $GITHUB_ENV
             cd "$BOOST_ROOT"
             mkdir __build_cmake_install_test__ && cd __build_cmake_install_test__
-            cmake -G "${{matrix.generator}}" -DCMAKE_BUILD_TYPE=${{matrix.build_type}} -DBOOST_INCLUDE_LIBRARIES=$SELF -DBUILD_SHARED_LIBS=${{matrix.build_shared}} -DCMAKE_INSTALL_PREFIX=~/.local -DBoost_VERBOSE=ON -DBoost_DEBUG=ON ..
+            cmake -G "${{matrix.generator}}" -DCMAKE_BUILD_TYPE=${{matrix.build_type}} -DBOOST_INCLUDE_LIBRARIES=$SELF -DBUILD_SHARED_LIBS=${{matrix.build_shared}} -DCMAKE_INSTALL_PREFIX="$BCM_INSTALL_PATH" -DBoost_VERBOSE=ON -DBoost_DEBUG=ON ..
             cmake --build . --target install --config ${{matrix.build_type}} -j$B2_JOBS
       - name: Run CMake install tests
         run: |
@@ -415,6 +422,14 @@ jobs:
             [ -d "$cmake_test_folder" ] || cmake_test_folder="$BOOST_ROOT/libs/$SELF/test/cmake_install_test"
             cd "$cmake_test_folder"
             mkdir __build_cmake_install_test__ && cd __build_cmake_install_test__
-            cmake -G "${{matrix.generator}}" -DBOOST_CI_INSTALL_TEST=ON -DCMAKE_BUILD_TYPE=${{matrix.build_type}} -DBUILD_SHARED_LIBS=${{matrix.build_shared}} -DCMAKE_PREFIX_PATH=~/.local ..
+            cmake -G "${{matrix.generator}}" -DBOOST_CI_INSTALL_TEST=ON -DCMAKE_BUILD_TYPE=${{matrix.build_type}} -DBUILD_SHARED_LIBS=${{matrix.build_shared}} -DCMAKE_PREFIX_PATH="$BCM_INSTALL_PATH" ..
             cmake --build . --config ${{matrix.build_type}} -j$B2_JOBS
+            if [[ "${{matrix.build_shared}}" == "ON" ]]; then
+                # Make sure shared libs can be found at runtime
+                if [ "$RUNNER_OS" == "Windows" ]; then
+                    export PATH="$BCM_INSTALL_PATH/bin:$PATH"
+                else
+                    export LD_LIBRARY_PATH="$BCM_INSTALL_PATH/lib:$LD_LIBRARY_PATH"
+                fi
+            fi
             ctest --output-on-failure --build-config ${{matrix.build_type}}
