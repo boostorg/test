@@ -249,62 +249,6 @@ jobs:
         with:
           files: __out/cobertura.xml
 
-  MSYS2:
-    defaults:
-      run:
-        shell: msys2 {0}
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - { sys: MINGW32, compiler: gcc, cxxstd: '03' }
-          - { sys: MINGW64, compiler: gcc, cxxstd: '11' }
-
-    runs-on: windows-latest
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Setup MSYS2 environment
-        uses: msys2/setup-msys2@v2
-        with:
-          msystem: ${{matrix.sys}}
-          update: true
-          install: git python
-          pacboy: gcc:p cmake:p ninja:p
-
-      - name: Fetch Boost.CI
-        uses: actions/checkout@v3
-        with:
-          repository: boostorg/boost-ci
-          ref: master
-          path: boost-ci-cloned
-      - name: Get CI scripts folder
-        run: |
-            # Copy ci folder if not testing Boost.CI
-            [[ "$GITHUB_REPOSITORY" =~ "boost-ci" ]] || cp -r boost-ci-cloned/ci .
-            rm -rf boost-ci-cloned
-
-      - name: Setup Boost
-        env:
-          B2_COMPILER: ${{matrix.compiler}}
-          B2_CXXSTD: ${{matrix.cxxstd}}
-          B2_SANITIZE: ${{matrix.sanitize}}
-          B2_STDLIB: ${{matrix.stdlib}}
-        run: ci/github/install.sh
-
-      - name: Run tests
-        run: ci/build.sh
-
-      # Run also the CMake tests to avoid having to setup another matrix for CMake on MSYS
-      - name: Run CMake tests
-        run: |
-            cd "$BOOST_ROOT"
-            mkdir __build_cmake_test__ && cd __build_cmake_test__
-            cmake -G Ninja -DCMAKE_BUILD_TYPE=Debug -DBOOST_INCLUDE_LIBRARIES=$SELF -DBUILD_SHARED_LIBS=ON -DBUILD_TESTING=ON -DBoost_VERBOSE=ON ..
-            cmake --build . --target tests --config Debug -j$B2_JOBS
-            ctest --output-on-failure --build-config Debug
-
   CMake:
     defaults:
       run:
