@@ -46,6 +46,7 @@ else()
       container_hash
       conversion
       date_time
+      describe
       dynamic_bitset
       function_types
       functional
