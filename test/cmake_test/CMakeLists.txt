@@ -44,8 +44,6 @@ else()
       throw_exception
       tuple
       unordered
-      integer
-      type_index
       typeof
       conversion
       function_types
@@ -54,8 +52,9 @@ else()
       move
       container_hash
       functional
-      winapi
+      integer
       mp11
+      describe
     )
 
     foreach(dep IN LISTS deps)
