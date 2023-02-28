@@ -37,43 +37,24 @@ else()
       utility
 
       # Secondary dependencies
-      align
       array
-      atomic
-      chrono
       concept_check
-      container
-      container_hash
-      conversion
-      date_time
-      describe
-      dynamic_bitset
-      function_types
-      functional
-      fusion
-      integer
-      intrusive
-      lexical_cast
-      math
-      move
-      mp11
-      multiprecision
-      predef
-      random
       range
-      ratio
-      rational
       regex
-      system
-      thread
       throw_exception
-      tokenizer
       tuple
-      type_index
-      typeof
       unordered
-      variant2
-      winapi
+      typeof
+      conversion
+      function_types
+      fusion
+      predef
+      move
+      container_hash
+      functional
+      integer
+      mp11
+      describe
     )
 
     foreach(dep IN LISTS deps)
