@@ -26,7 +26,7 @@ concurrency:
 env:
   GIT_FETCH_JOBS: 8
   NET_RETRY_COUNT: 5
-  DEFAULT_BUILD_VARIANT: debug,release
+  DEFAULT_BUILD_VARIANT: release
 
 jobs:
   posix:
