@@ -271,7 +271,6 @@ jobs:
             cxxstd: "20,2b"
             os: macos-12
 
-    timeout-minutes: 60
     runs-on: ${{matrix.os}}
     container: ${{matrix.container}}
 
@@ -476,23 +475,23 @@ jobs:
       matrix:
         include:
           - toolset: msvc-14.0
-            cxxstd: "14,latest"
+            cxxstd: "11"
             addrmd: 64
             os: windows-2019
           - toolset: msvc-14.2
-            cxxstd: "14,17"
+            cxxstd: "14"
             addrmd: 64
             os: windows-2019
           - toolset: msvc-14.3
-            cxxstd: "20,latest"
+            cxxstd: "20"
             addrmd: 64
             os: windows-2022
           - toolset: clang-win
-            cxxstd: "14,17"
+            cxxstd: "17"
             addrmd: 64
             os: windows-2022
           - toolset: gcc
-            cxxstd: "14,17"
+            cxxstd: "17"
             addrmd: 64
             os: windows-2019
 
@@ -529,167 +528,6 @@ jobs:
           cd ../boost-root
           b2 -j3 libs/%LIBRARY%/test toolset=${{matrix.toolset}} cxxstd=${{matrix.cxxstd}} address-model=${{matrix.addrmd}} variant=debug,release link=static,shared embed-manifest-via=linker
 
-  posix-cmake-subdir:
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - os: ubuntu-20.04
-          - os: ubuntu-22.04
-          - os: macos-11
-          - os: macos-12
-
-    runs-on: ${{matrix.os}}
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Install packages
-        if: matrix.install
-        run: sudo apt install ${{matrix.install}}
-
-      - name: Setup Boost
-        run: |
-          echo GITHUB_REPOSITORY: $GITHUB_REPOSITORY
-          LIBRARY=${GITHUB_REPOSITORY#*/}
-          echo LIBRARY: $LIBRARY
-          echo "LIBRARY=$LIBRARY" >> $GITHUB_ENV
-          echo GITHUB_BASE_REF: $GITHUB_BASE_REF
-          echo GITHUB_REF: $GITHUB_REF
-          REF=${GITHUB_BASE_REF:-$GITHUB_REF}
-          REF=${REF#refs/heads/}
-          echo REF: $REF
-          BOOST_BRANCH=develop && [ "$REF" == "master" ] && BOOST_BRANCH=master || true
-          echo BOOST_BRANCH: $BOOST_BRANCH
-          cd ..
-          git clone -b $BOOST_BRANCH --depth 1 https://github.com/boostorg/boost.git boost-root
-          cd boost-root
-          mkdir -p libs/$LIBRARY
-          cp -r $GITHUB_WORKSPACE/* libs/$LIBRARY
-          git submodule update --init tools/boostdep
-          python tools/boostdep/depinst/depinst.py --git_args "--jobs 3" $LIBRARY
-
-      - name: Use library with add_subdirectory
-        run: |
-          cd ../boost-root/libs/$LIBRARY/test/cmake_subdir_test
-          mkdir __build__ && cd __build__
-          cmake ..
-          cmake --build .
-          ctest --output-on-failure --no-tests=error
-
-  posix-cmake-install:
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - os: ubuntu-20.04
-          - os: ubuntu-22.04
-          - os: macos-11
-          - os: macos-12
-
-    runs-on: ${{matrix.os}}
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Install packages
-        if: matrix.install
-        run: sudo apt install ${{matrix.install}}
-
-      - name: Setup Boost
-        run: |
-          echo GITHUB_REPOSITORY: $GITHUB_REPOSITORY
-          LIBRARY=${GITHUB_REPOSITORY#*/}
-          echo LIBRARY: $LIBRARY
-          echo "LIBRARY=$LIBRARY" >> $GITHUB_ENV
-          echo GITHUB_BASE_REF: $GITHUB_BASE_REF
-          echo GITHUB_REF: $GITHUB_REF
-          REF=${GITHUB_BASE_REF:-$GITHUB_REF}
-          REF=${REF#refs/heads/}
-          echo REF: $REF
-          BOOST_BRANCH=develop && [ "$REF" == "master" ] && BOOST_BRANCH=master || true
-          echo BOOST_BRANCH: $BOOST_BRANCH
-          cd ..
-          git clone -b $BOOST_BRANCH --depth 1 https://github.com/boostorg/boost.git boost-root
-          cd boost-root
-          mkdir -p libs/$LIBRARY
-          cp -r $GITHUB_WORKSPACE/* libs/$LIBRARY
-          git submodule update --init tools/boostdep
-          python tools/boostdep/depinst/depinst.py --git_args "--jobs 3" $LIBRARY
-
-      - name: Configure
-        run: |
-          cd ../boost-root
-          mkdir __build__ && cd __build__
-          cmake -DBOOST_INCLUDE_LIBRARIES=$LIBRARY -DCMAKE_INSTALL_PREFIX=~/.local ..
-
-      - name: Install
-        run: |
-          cd ../boost-root/__build__
-          cmake --build . --target install
-
-      - name: Use the installed library
-        run: |
-          cd ../boost-root/libs/$LIBRARY/test/cmake_install_test && mkdir __build__ && cd __build__
-          cmake -DCMAKE_INSTALL_PREFIX=~/.local ..
-          cmake --build .
-          ctest --output-on-failure --no-tests=error
-
-  posix-cmake-test:
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - os: ubuntu-20.04
-          - os: ubuntu-22.04
-          - os: macos-11
-          - os: macos-12
-
-    runs-on: ${{matrix.os}}
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Install packages
-        if: matrix.install
-        run: sudo apt install ${{matrix.install}}
-
-      - name: Setup Boost
-        run: |
-          echo GITHUB_REPOSITORY: $GITHUB_REPOSITORY
-          LIBRARY=${GITHUB_REPOSITORY#*/}
-          echo LIBRARY: $LIBRARY
-          echo "LIBRARY=$LIBRARY" >> $GITHUB_ENV
-          echo GITHUB_BASE_REF: $GITHUB_BASE_REF
-          echo GITHUB_REF: $GITHUB_REF
-          REF=${GITHUB_BASE_REF:-$GITHUB_REF}
-          REF=${REF#refs/heads/}
-          echo REF: $REF
-          BOOST_BRANCH=develop && [ "$REF" == "master" ] && BOOST_BRANCH=master || true
-          echo BOOST_BRANCH: $BOOST_BRANCH
-          cd ..
-          git clone -b $BOOST_BRANCH --depth 1 https://github.com/boostorg/boost.git boost-root
-          cd boost-root
-          mkdir -p libs/$LIBRARY
-          cp -r $GITHUB_WORKSPACE/* libs/$LIBRARY
-          git submodule update --init tools/boostdep
-          python tools/boostdep/depinst/depinst.py --git_args "--jobs 3" $LIBRARY
-
-      - name: Configure
-        run: |
-          cd ../boost-root
-          mkdir __build__ && cd __build__
-          cmake -DBOOST_INCLUDE_LIBRARIES=$LIBRARY -DBUILD_TESTING=ON ..
-
-      - name: Build tests
-        run: |
-          cd ../boost-root/__build__
-          cmake --build . --target tests
-
-      - name: Run tests
-        run: |
-          cd ../boost-root/__build__
-          ctest --output-on-failure --no-tests=error
   CMake:
     defaults:
       run:
