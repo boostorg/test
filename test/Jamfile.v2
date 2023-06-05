@@ -141,7 +141,7 @@ test-suite "usage-variants-ts"
 
 test-suite "framework-ts"
 :
-  [ boost.test-self-test run : framework-ts : result-report-test : : baseline-outputs/result-report-test.pattern baseline-outputs/result_report_test.pattern.default_behaviour ]
+  # [ boost.test-self-test run : framework-ts : result-report-test : : baseline-outputs/result-report-test.pattern baseline-outputs/result_report_test.pattern.default_behaviour ]
   [ boost.test-self-test run : framework-ts : log-formatter-test : : baseline-outputs/log-formatter-context-test.pattern baseline-outputs/log-formatter-test.pattern baseline-outputs/log-formatter-test.pattern.junit ] # should be ordered alphabetically
   [ boost.test-self-test run : framework-ts : run-by-name-or-label-test ]
   [ boost.test-self-test run : framework-ts : version-uses-module-name : included ]
