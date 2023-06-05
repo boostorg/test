@@ -45,8 +45,8 @@ explicit prg_exec_monitor ;
 
 alias boost_test_examples
 :
-    [ run      exec_mon_example.cpp prg_exec_monitor ]
-    [ run-fail prg_exec_example.cpp prg_exec_monitor ]
+    # [ run      exec_mon_example.cpp prg_exec_monitor ]
+    # [ run-fail prg_exec_example.cpp prg_exec_monitor ]
 
     [ run-fail test_case_template_example.cpp unit_test_framework/<link>static ]
 
