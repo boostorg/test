@@ -194,7 +194,7 @@ namespace { void _set_se_translator( void* ) {} }
 #  include <boost/core/demangle.hpp>
 #endif
 
-#if !defined(BOOST_MSVC) || (defined(BOOST_MSVC) && BOOST_MSVC >= 1800)
+#if !defined(BOOST_MSSTL_VERSION) || (BOOST_MSSTL_VERSION >= 120)
 #  include <inttypes.h>
 #  define BOOST_TEST_PRIxPTR PRIxPTR
 #else
