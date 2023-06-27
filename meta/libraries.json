@@ -12,5 +12,6 @@
     "maintainers": [
         "Gennadiy Rozental <rogeeff -at- gmail.com>",
         "Raffi Enficiaud <raffi.enficiaud -at- free.fr>"
-    ]
+    ],
+    "cxxstd": "03"
 }

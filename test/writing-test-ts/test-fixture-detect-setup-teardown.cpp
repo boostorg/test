@@ -70,3 +70,63 @@ BOOST_AUTO_TEST_CASE( fixture_setup_teardown_detect_both_from_child )
 }
 
 #endif
+
+int check_gf_1 = 0;
+
+struct global_fixture_1 {
+    global_fixture_1() {
+        check_gf_1 = 2;
+    }
+    void setup() {
+        check_gf_1 += 40;
+    }
+    void teardown() {
+        check_gf_1 -= 40;
+    }
+    ~global_fixture_1() {
+        if(check_gf_1 != 0) {
+            // exits with errors
+            std::exit(1);
+        }
+    }
+};
+
+BOOST_TEST_GLOBAL_FIXTURE(global_fixture_1);
+
+BOOST_AUTO_TEST_CASE( check_global_fixture_entered )
+{
+    BOOST_CHECK(check_gf_1 == 42);
+    check_gf_1 -= 2;
+}
+
+int check_gf_2 = 0;
+
+namespace random_namespace {
+    struct global_fixture_2 {
+        global_fixture_2() {
+            check_gf_2 = 2;
+        }
+        void setup() {
+            check_gf_2 += 40;
+        }
+        void teardown() {
+            check_gf_2 -= 40;
+        }
+        ~global_fixture_2() {
+            if(check_gf_2 != 0) {
+                // exits with errors
+                std::exit(1);
+            }
+        }
+    };
+}
+
+namespace random_namespace {
+    BOOST_TEST_GLOBAL_FIXTURE(global_fixture_2);
+}
+
+BOOST_AUTO_TEST_CASE( check_global_fixture_in_namespace_entered )
+{
+    BOOST_CHECK(check_gf_2 == 42);
+    check_gf_2 -= 2;
+}

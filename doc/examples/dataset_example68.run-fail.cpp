@@ -18,7 +18,7 @@ namespace bdata = boost::unit_test::data;
 class fibonacci_dataset {
 public:
     // the type of the samples is deduced
-    enum { arity = 1 };
+    static const int arity = 1;
 
     struct iterator {
 

@@ -13,6 +13,7 @@
 
 // Boost.Test
 #include <boost/test/detail/config.hpp>
+#include <boost/test/tools/detail/print_helper.hpp>
 
 // STL
 #include <iosfwd>
@@ -34,8 +35,16 @@ public:
 
     static lazy_ostream&    instance()                                              { return inst; }
 
+    #if !defined(BOOST_EMBTC)
+      
     friend std::ostream&    operator<<( std::ostream& ostr, lazy_ostream const& o ) { return o( ostr ); }
 
+    #else
+      
+    friend std::ostream&    operator<<( std::ostream& ostr, lazy_ostream const& o );
+
+    #endif
+      
     // access method
     bool                    empty() const                                           { return m_empty; }
 
@@ -50,6 +59,12 @@ private:
     static lazy_ostream     inst;
 };
 
+#if defined(BOOST_EMBTC)
+
+    inline std::ostream&    operator<<( std::ostream& ostr, lazy_ostream const& o ) { return o( ostr ); }
+
+#endif
+    
 //____________________________________________________________________________//
 
 template<typename PrevType, typename T, typename StorageT=T const&>
@@ -62,9 +77,9 @@ public:
     {
     }
 
-    virtual std::ostream&   operator()( std::ostream& ostr ) const
+    std::ostream&   operator()( std::ostream& ostr ) const BOOST_OVERRIDE
     {
-        return m_prev(ostr) << m_value;
+        return m_prev(ostr) << test_tools::tt_detail::print_helper(m_value);
     }
 private:
     // Data members
