@@ -131,11 +131,11 @@ struct nil {
 #else
     operator T const&() const
 #endif
-    { nfp_detail::report_access_to_invalid_parameter(true); static T* v = 0; return *v; }
+    { nfp_detail::report_access_to_invalid_parameter(true); static T* v = 0; BOOST_TEST_UNREACHABLE_RETURN(*v); }
 
     template<typename T>
     T any_cast() const
-    { nfp_detail::report_access_to_invalid_parameter(true); static typename remove_reference<T>::type* v = 0; return *v; }
+    { nfp_detail::report_access_to_invalid_parameter(true); static typename remove_reference<T>::type* v = 0; BOOST_TEST_UNREACHABLE_RETURN(*v); }
 
     template<typename Arg1>
     nil operator()( Arg1 const& )
