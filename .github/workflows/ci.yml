@@ -38,31 +38,22 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - toolset: gcc-4.6
-            cxxstd: "03"
-            address_model: 64
-            os: ubuntu-latest
-            container: ubuntu:16.04
-            install:
-              - g++-4.6
-            sources:
-              - "ppa:ubuntu-toolchain-r/test"
           - toolset: gcc-4.8
-            cxxstd: "03"
+            cxxstd: "11"
             address_model: 64
             os: ubuntu-latest
             container: ubuntu:18.04
             install:
               - g++-4.8
           - toolset: gcc-5
-            cxxstd: "03,11"
+            cxxstd: "11"
             address_model: 64
             os: ubuntu-latest
             container: ubuntu:16.04
             install:
               - g++-5-multilib
           - toolset: gcc-5
-            cxxstd: "03-gnu,11-gnu"
+            cxxstd: "11-gnu"
             address_model: 64
             os: ubuntu-latest
             container: ubuntu:16.04
@@ -136,29 +127,22 @@ jobs:
 
           # Linux, clang
           - toolset: clang
-            compiler: clang++-3.7
-            cxxstd: "03"
-            os: ubuntu-latest
-            container: ubuntu:16.04
-            install:
-              - clang-3.7
-          - toolset: clang
             compiler: clang++-3.8
-            cxxstd: "03,11"
+            cxxstd: "11"
             os: ubuntu-latest
             container: ubuntu:16.04
             install:
               - clang-3.8
           - toolset: clang
             compiler: clang++-3.9
-            cxxstd: "03,11,14"
+            cxxstd: "11,14"
             os: ubuntu-latest
             container: ubuntu:18.04
             install:
               - clang-3.9
           - toolset: clang
             compiler: clang++-4.0
-            cxxstd: "03,11"
+            cxxstd: "11"
             os: ubuntu-latest
             container: ubuntu:18.04
             install:
