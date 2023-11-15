@@ -198,31 +198,31 @@ jobs:
               - clang-11
           - toolset: clang
             compiler: clang++-12
-            cxxstd: "20,2b"
+            cxxstd: "20"
             os: ubuntu-22.04
             install:
               - clang-12
           - toolset: clang
             compiler: clang++-13
-            cxxstd: "20,2b"
+            cxxstd: "20"
             os: ubuntu-22.04
             install:
               - clang-13
           - toolset: clang
             compiler: clang++-14
-            cxxstd: "20,2b"
+            cxxstd: "20"
             os: ubuntu-22.04
             install:
               - clang-14
           - toolset: clang
             compiler: clang++-14
-            cxxstd: "20-gnu,2b-gnu"
+            cxxstd: "20-gnu"
             os: ubuntu-22.04
             install:
               - clang-14
           - toolset: clang
             compiler: clang++-15
-            cxxstd: "20,2b"
+            cxxstd: "20"
             os: ubuntu-22.04
             install:
               - clang-15
@@ -232,7 +232,7 @@ jobs:
               - "https://apt.llvm.org/llvm-snapshot.gpg.key"
           - toolset: clang
             compiler: clang++-15
-            cxxstd: "20,2b"
+            cxxstd: "20"
             os: ubuntu-22.04
             install:
               - clang-15
@@ -261,7 +261,7 @@ jobs:
             cxxstd: "11,14"
             os: macos-11
           - toolset: clang
-            cxxstd: "20,2b"
+            cxxstd: "20"
             os: macos-12
 
     runs-on: ${{matrix.os}}
