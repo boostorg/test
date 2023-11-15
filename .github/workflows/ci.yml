@@ -38,13 +38,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - toolset: gcc-4.8
-            cxxstd: "11"
-            address_model: 64
-            os: ubuntu-latest
-            container: ubuntu:18.04
-            install:
-              - g++-4.8
           - toolset: gcc-5
             cxxstd: "11"
             address_model: 64
