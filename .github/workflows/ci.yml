@@ -185,31 +185,31 @@ jobs:
               - clang-10
           - toolset: clang
             compiler: clang++-11
-            cxxstd: "17,20"
+            cxxstd: "17"
             os: ubuntu-22.04
             install:
               - clang-11
           - toolset: clang
             compiler: clang++-12
-            cxxstd: "20"
+            cxxstd: "17"
             os: ubuntu-22.04
             install:
               - clang-12
           - toolset: clang
             compiler: clang++-13
-            cxxstd: "20"
+            cxxstd: "17"
             os: ubuntu-22.04
             install:
               - clang-13
           - toolset: clang
             compiler: clang++-14
-            cxxstd: "20"
+            cxxstd: "17"
             os: ubuntu-22.04
             install:
               - clang-14
           - toolset: clang
             compiler: clang++-14
-            cxxstd: "20-gnu"
+            cxxstd: "17-gnu"
             os: ubuntu-22.04
             install:
               - clang-14
