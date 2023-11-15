@@ -405,7 +405,7 @@ jobs:
           cp -r $GITHUB_WORKSPACE/* libs/$LIBRARY
           git submodule update --init tools/boostdep
           DEPINST_ARGS+=("$LIBRARY")
-          python tools/boostdep/depinst/depinst.py "${DEPINST_ARGS[@]}"
+          python tools/boostdep/depinst/depinst.py -I doc/examples "${DEPINST_ARGS[@]}"
           if [ -z "${{matrix.cmake_tests}}" ]
           then
               ./bootstrap.sh
@@ -504,7 +504,7 @@ jobs:
           cd boost-root
           xcopy /s /e /q %GITHUB_WORKSPACE% libs\%LIBRARY%\
           git submodule update --init tools/boostdep
-          python tools/boostdep/depinst/depinst.py --git_args "--jobs 3" %LIBRARY%
+          python tools/boostdep/depinst/depinst.py -I doc/examples --git_args "--jobs 3" %LIBRARY%
           cmd /c bootstrap
           b2 -d0 headers
 
