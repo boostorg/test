@@ -202,7 +202,7 @@ namespace { void _set_se_translator( void* ) {} }
 #      define BOOST_TEST_DEFINED_STDC_FORMAT_MACROS
 #    endif
 #  endif
-#  include <inttypes.h>
+#  include <cinttypes>
 #  define BOOST_TEST_PRIxPTR PRIxPTR
 #  ifdef BOOST_TEST_DEFINED_STDC_FORMAT_MACROS
 #    undef __STDC_FORMAT_MACROS
