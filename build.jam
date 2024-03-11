@@ -1,0 +1,56 @@
+# Copyright René Ferdinand Rivera Morell 2023
+# Distributed under the Boost Software License, Version 1.0.
+# (See accompanying file LICENSE_1_0.txt or copy at
+# http://www.boost.org/LICENSE_1_0.txt)
+
+import project ;
+
+project /boost/test
+    : common-requirements
+        <source>/boost/algorithm//boost_algorithm
+        <source>/boost/assert//boost_assert
+        <source>/boost/bind//boost_bind
+        <source>/boost/config//boost_config
+        <source>/boost/core//boost_core
+        <source>/boost/detail//boost_detail
+        <source>/boost/exception//boost_exception
+        <source>/boost/function//boost_function
+        <source>/boost/io//boost_io
+        <source>/boost/iterator//boost_iterator
+        <source>/boost/mpl//boost_mpl
+        <source>/boost/numeric_conversion//boost_numeric_conversion
+        <source>/boost/optional//boost_optional
+        <source>/boost/preprocessor//boost_preprocessor
+        <source>/boost/smart_ptr//boost_smart_ptr
+        <source>/boost/static_assert//boost_static_assert
+        <source>/boost/type_traits//boost_type_traits
+        <source>/boost/utility//boost_utility
+        <include>include
+    ;
+
+explicit
+    [ alias boost_test ]
+    [ alias boost_prg_exec_monitor : build//boost_prg_exec_monitor ]
+    [ alias boost_test_exec_monitor : build//boost_test_exec_monitor ]
+    [ alias boost_unit_test_framework : build//boost_unit_test_framework ]
+    [ alias prg_exec_monitor : boost_prg_exec_monitor ]
+    [ alias test_exec_monitor : boost_test_exec_monitor ]
+    [ alias unit_test_framework : boost_unit_test_framework ]
+    [ alias boost_included_prg_exec_monitor ]
+    [ alias boost_included_test_exec_monitor ]
+    [ alias boost_included_unit_test_framework ]
+    [ alias included_prg_exec_monitor : boost_included_prg_exec_monitor ]
+    [ alias included_test_exec_monitor : boost_included_test_exec_monitor ]
+    [ alias included_unit_test_framework : boost_included_unit_test_framework ]
+    [ alias all : example test
+        boost_prg_exec_monitor
+        boost_test_exec_monitor
+        boost_unit_test_framework ]
+    ;
+
+call-if : boost-library test
+    : install
+        boost_prg_exec_monitor
+        boost_test_exec_monitor
+        boost_unit_test_framework
+    ;

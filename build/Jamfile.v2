@@ -6,11 +6,11 @@
 
 import os ;
 
-import ../../predef/check/predef
+import predef
     : check
     : predef-check ;
 
-project boost/test
+project
     : source-location ../src
     : requirements <link>shared:<define>BOOST_TEST_DYN_LINK=1
                    <toolset>borland:<cxxflags>-w-8080
@@ -113,7 +113,3 @@ lib boost_unit_test_framework
 alias minimal ;
 
 alias included ;
-
-boost-install boost_prg_exec_monitor
-              boost_test_exec_monitor
-              boost_unit_test_framework ;
