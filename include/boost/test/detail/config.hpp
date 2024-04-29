@@ -136,7 +136,7 @@ class type_info;
 #define BOOST_PP_VARIADICS 1
 #endif
 
-#if BOOST_CLANG
+#ifdef BOOST_CLANG
 #define BOOST_PP_VARIADICS 1
 #endif
 
