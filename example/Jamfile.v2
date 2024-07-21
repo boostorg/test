@@ -61,7 +61,7 @@ alias boost_test_examples
     [ run      unit_test_example_08.cpp unit_test_framework ]
     [ run      unit_test_example_09_1.cpp
                unit_test_example_09_2.cpp unit_test_framework ]
-    [ run-fail unit_test_example_10.cpp unit_test_framework/<link>static : : : <source>/boost/lexical_cast//boost_lexical_cast ]
+    [ run-fail unit_test_example_10.cpp unit_test_framework/<link>static : : : <library>/boost/lexical_cast//boost_lexical_cast ]
     [ run-fail unit_test_example_11.cpp unit_test_framework/<link>static ]
     [ link     unit_test_example_12.cpp unit_test_framework/<link>static ]
     [ run      unit_test_example_13.cpp ]
