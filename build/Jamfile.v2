@@ -12,6 +12,7 @@ import predef
 
 project
     : source-location ../src
+    : common-requirements <library>$(boost_dependencies)
     : requirements <link>shared:<define>BOOST_TEST_DYN_LINK=1
                    <toolset>borland:<cxxflags>-w-8080
                    <target-os>cygwin:<define>_POSIX_C_SOURCE=200112L

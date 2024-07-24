@@ -5,40 +5,42 @@
 
 require-b2 5.2 ;
 
+constant boost_dependencies :
+    /boost/algorithm//boost_algorithm
+    /boost/assert//boost_assert
+    /boost/bind//boost_bind
+    /boost/config//boost_config
+    /boost/core//boost_core
+    /boost/detail//boost_detail
+    /boost/exception//boost_exception
+    /boost/function//boost_function
+    /boost/io//boost_io
+    /boost/iterator//boost_iterator
+    /boost/mpl//boost_mpl
+    /boost/numeric_conversion//boost_numeric_conversion
+    /boost/optional//boost_optional
+    /boost/preprocessor//boost_preprocessor
+    /boost/smart_ptr//boost_smart_ptr
+    /boost/static_assert//boost_static_assert
+    /boost/type_traits//boost_type_traits
+    /boost/utility//boost_utility ;
+
 project /boost/test
     : common-requirements
-        <library>/boost/algorithm//boost_algorithm
-        <library>/boost/assert//boost_assert
-        <library>/boost/bind//boost_bind
-        <library>/boost/config//boost_config
-        <library>/boost/core//boost_core
-        <library>/boost/detail//boost_detail
-        <library>/boost/exception//boost_exception
-        <library>/boost/function//boost_function
-        <library>/boost/io//boost_io
-        <library>/boost/iterator//boost_iterator
-        <library>/boost/mpl//boost_mpl
-        <library>/boost/numeric_conversion//boost_numeric_conversion
-        <library>/boost/optional//boost_optional
-        <library>/boost/preprocessor//boost_preprocessor
-        <library>/boost/smart_ptr//boost_smart_ptr
-        <library>/boost/static_assert//boost_static_assert
-        <library>/boost/type_traits//boost_type_traits
-        <library>/boost/utility//boost_utility
         <include>include
     ;
 
 explicit
-    [ alias boost_test ]
+    [ alias boost_test : : : : <library>$(boost_dependencies) ]
     [ alias boost_prg_exec_monitor : build//boost_prg_exec_monitor ]
     [ alias boost_test_exec_monitor : build//boost_test_exec_monitor ]
     [ alias boost_unit_test_framework : build//boost_unit_test_framework ]
     [ alias prg_exec_monitor : boost_prg_exec_monitor ]
     [ alias test_exec_monitor : boost_test_exec_monitor ]
     [ alias unit_test_framework : boost_unit_test_framework ]
-    [ alias boost_included_prg_exec_monitor ]
-    [ alias boost_included_test_exec_monitor ]
-    [ alias boost_included_unit_test_framework ]
+    [ alias boost_included_prg_exec_monitor : : : : <library>$(boost_dependencies) ]
+    [ alias boost_included_test_exec_monitor : : : : <library>$(boost_dependencies) ]
+    [ alias boost_included_unit_test_framework : : : : <library>$(boost_dependencies) ]
     [ alias included_prg_exec_monitor : boost_included_prg_exec_monitor ]
     [ alias included_test_exec_monitor : boost_included_test_exec_monitor ]
     [ alias included_unit_test_framework : boost_included_unit_test_framework ]
@@ -54,3 +56,4 @@ call-if : boost-library test
         boost_test_exec_monitor
         boost_unit_test_framework
     ;
+
