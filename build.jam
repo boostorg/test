@@ -41,6 +41,7 @@ explicit
     [ alias boost_included_prg_exec_monitor : : : : <library>$(boost_dependencies) ]
     [ alias boost_included_test_exec_monitor : : : : <library>$(boost_dependencies) ]
     [ alias boost_included_unit_test_framework : : : : <library>$(boost_dependencies) ]
+    [ alias included : : : : <library>$(boost_dependencies) ]
     [ alias included_prg_exec_monitor : boost_included_prg_exec_monitor ]
     [ alias included_test_exec_monitor : boost_included_test_exec_monitor ]
     [ alias included_unit_test_framework : boost_included_unit_test_framework ]
