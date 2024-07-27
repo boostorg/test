@@ -21,6 +21,9 @@
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
+// Boost
+#include <boost/predef.h>
+
 // C Runtime
 #include <stdlib.h>
 
@@ -40,10 +43,14 @@ namespace env_detail {
 inline std::pair<cstring,bool>
 sys_read_var( cstring var_name )
 {
+#if BOOST_PLAT_WINDOWS_RUNTIME
+    return std::make_pair( cstring(nullptr), false );
+#else
     using namespace std;
     char const* res = getenv( var_name.begin() );
 
     return std::make_pair( cstring(res), res != NULL );
+#endif
 }
 
 #ifdef BOOST_MSVC
