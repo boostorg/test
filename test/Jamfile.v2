@@ -18,6 +18,7 @@ project
     : requirements
     ;
 
+import-search /boost/predef/tools/check ;
 import predef
     : check require
     : predef-check predef-require ;

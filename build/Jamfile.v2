@@ -6,6 +6,7 @@
 
 import os ;
 
+import-search /boost/predef/tools/check ;
 import predef
     : check
     : predef-check ;
