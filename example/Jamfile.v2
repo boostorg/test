@@ -26,6 +26,7 @@ ECHO $(HAS_UBSAN:J) ;
 project
     :
     : requirements
+      <library>/boost/test//boost_test
       <toolset>clang:<cxxflags>-Wno-c99-extensions <define>$(HAS_UBSAN:J)
     ;
 

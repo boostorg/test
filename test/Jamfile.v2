@@ -16,6 +16,7 @@ import config : requires ;
 
 project
     : requirements
+        <library>/boost/test//boost_test
     ;
 
 import-search /boost/predef/tools/check ;
