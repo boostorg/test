@@ -251,9 +251,6 @@ jobs:
               - libc++abi-14-dev
 
           - toolset: clang
-            cxxstd: "11,14"
-            os: macos-12
-          - toolset: clang
             cxxstd: "20"
             os: macos-13
           - toolset: clang
