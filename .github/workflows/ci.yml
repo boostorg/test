@@ -291,7 +291,7 @@ jobs:
               fi
               if [[ "${{matrix.container}}" == "ubuntu:1"* ]]; then
                 # Node 20 doesn't work with Ubuntu 16/18  glibc: https://github.com/actions/checkout/issues/1590
-                curl -sL https://unofficial-builds.nodejs.org/download/release/v20.9.0/node-v20.9.0-linux-x64-glibc-217.tar.xz | tar -xJ --strip-components 1 -C /node20217
+                curl -sL https://archives.boost.io/misc/node/node-v20.9.0-linux-x64-glibc-217.tar.xz | tar -xJ --strip-components 1 -C /node20217
               fi
           fi
           git config --global pack.threads 0
