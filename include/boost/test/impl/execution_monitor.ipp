@@ -207,7 +207,18 @@ namespace { void _set_se_translator( void* ) {} }
 #  ifdef BOOST_TEST_DEFINED_STDC_FORMAT_MACROS
 #    undef __STDC_FORMAT_MACROS
 #  endif
-#else
+#endif
+// If any modern toolchain did not pick up a definition from above it will here
+#ifndef BOOST_TEST_PRIxPTR
+#  ifdef __has_include
+#    if __has_include(<cinttypes>)
+#      include <cinttypes>
+#      define BOOST_TEST_PRIxPTR PRIxPTR
+#    endif
+#  endif
+#endif
+// Last resort
+#ifndef BOOST_TEST_PRIxPTR
 #  define BOOST_TEST_PRIxPTR "08lx"
 #endif
 
