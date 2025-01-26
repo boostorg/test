@@ -195,8 +195,8 @@ namespace { void _set_se_translator( void* ) {} }
 #endif
 
 #if (!defined(BOOST_MSSTL_VERSION) || (BOOST_MSSTL_VERSION >= 120)) && (!defined(__GLIBC__) || ((__GLIBC__ > 2) || ((__GLIBC__ == 2) && (__GLIBC_MINOR__ >= 2))))
-// glibc 2.2 - 2.17 required __STDC_FORMAT_MACROS to be defined for use of PRIxPTR
-#  if defined(__GLIBC__) && !((__GLIBC__ > 2) || ((__GLIBC__ == 2) && (__GLIBC_MINOR__ >= 18)))
+// glibc 2.2 - 2.17 required __STDC_FORMAT_MACROS to be defined for use of PRIxPTR, as well as some versions of macOS.
+#  if (defined(__GLIBC__) && !((__GLIBC__ > 2) || ((__GLIBC__ == 2) && (__GLIBC_MINOR__ >= 18)))) || defined(__APPLE__)
 #    ifndef __STDC_FORMAT_MACROS
 #      define __STDC_FORMAT_MACROS 1
 #      define BOOST_TEST_DEFINED_STDC_FORMAT_MACROS
