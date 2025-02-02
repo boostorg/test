@@ -17,6 +17,7 @@
 
 // STL
 #include <iosfwd>
+#include <cstddef>
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
