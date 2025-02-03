@@ -30,7 +30,7 @@ namespace data {
 // **************                    size_t                    ************** //
 // ************************************************************************** //
 
-//! Utility for handling the size of a datasets
+//! Utility for handling the size of a dataset
 class size_t {
     struct dummy { void nonnull() {} };
     typedef void (dummy::*safe_bool)();
