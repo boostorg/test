@@ -110,13 +110,13 @@ jobs:
             install:
               - g++-12-multilib
           - name: UBSAN
-            toolset: gcc-12
-            cxxstd: "17"
+            toolset: gcc-13
+            cxxstd: "11"
             address_model: 64
             ubsan: 1
-            os: ubuntu-22.04
+            os: ubuntu-24.04
             install:
-              - g++-12-multilib
+              - g++-13-multilib
 
           # Linux, clang
           - toolset: clang
