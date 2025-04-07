@@ -46,6 +46,10 @@ function(boost_test_add_library name)
     # PRIVATE BOOST_TEST_SOURCE
   )
 
+  if(WIN32)
+    target_compile_definitions(boost_${name} PRIVATE _CRT_SECURE_NO_WARNINGS)
+  endif()
+
   if(BUILD_SHARED_LIBS)
     target_compile_definitions(boost_${name} PUBLIC BOOST_TEST_DYN_LINK)
   else()
