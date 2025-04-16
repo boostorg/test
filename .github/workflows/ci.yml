@@ -76,19 +76,22 @@ jobs:
           - toolset: gcc-9
             cxxstd: "17,2a"
             address_model: 64
-            os: ubuntu-20.04
+            os: ubuntu-latest
+            container: ubuntu-20.04
             install:
               - g++-9-multilib
           - toolset: gcc-9
             cxxstd: "17-gnu,2a-gnu"
             address_model: 64
-            os: ubuntu-20.04
+            os: ubuntu-latest
+            container: ubuntu-20.04
             install:
               - g++-9-multilib
           - toolset: gcc-10
             cxxstd: "17,20"
             address_model: 64
-            os: ubuntu-20.04
+            os: ubuntu-latest
+            container: ubuntu-20.04
             install:
               - g++-10-multilib
           - toolset: gcc-11
@@ -174,13 +177,15 @@ jobs:
           - toolset: clang
             compiler: clang++-9
             cxxstd: "17,2a"
-            os: ubuntu-20.04
+            os: ubuntu-latest
+            container: ubuntu-20.04
             install:
               - clang-9
           - toolset: clang
             compiler: clang++-10
             cxxstd: "17,20"
-            os: ubuntu-20.04
+            os: ubuntu-latest
+            container: ubuntu-20.04
             install:
               - clang-10
           - toolset: clang
@@ -531,8 +536,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { os: ubuntu-20.04, build_shared: ON,  build_type: Debug, generator: 'Unix Makefiles' }
-          - { os: ubuntu-20.04, build_shared: OFF, build_type: Debug, generator: 'Unix Makefiles' }
+          - { os: ubuntu-22.04, build_shared: ON,  build_type: Debug, generator: 'Unix Makefiles' }
+          - { os: ubuntu-22.04, build_shared: OFF, build_type: Debug, generator: 'Unix Makefiles' }
           - { os: windows-2019, build_shared: ON,  build_type: Debug, generator: 'Visual Studio 16 2019' }
           - { os: windows-2019, build_shared: OFF, build_type: Debug, generator: 'Visual Studio 16 2019' }
 
