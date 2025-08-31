@@ -43,6 +43,7 @@ Boost.Test releases:
 # [pull_request 275] Replace anonymous `enum` arity with `static constexpr`
 # [pull_request 278] Use `boost_test_print_type` customization point in `lazy_ostream`
 # [pull_request 281] Export `execution_aborted` exception to allow catching it from outside the DLL
+# [pull_request 323] Check that `lazy_ostream` argument is printable
 
 [#ref_CHANGE_LOG_3_14][h4 Boost.Test v3.14 / boost 1.74]
 
