@@ -78,17 +78,17 @@ do {                                                                            
 //____________________________________________________________________________//
 
 #define BOOST_WARN( P )                     BOOST_TEST_TOOL_IMPL( 2, \
-    (P), BOOST_TEST_STRINGIZE( P ), WARN, CHECK_PRED, _ )
+    static_cast<bool>(P), BOOST_TEST_STRINGIZE( P ), WARN, CHECK_PRED, _ )
 #define BOOST_CHECK( P )                    BOOST_TEST_TOOL_IMPL( 2, \
-    (P), BOOST_TEST_STRINGIZE( P ), CHECK, CHECK_PRED, _ )
+    static_cast<bool>(P), BOOST_TEST_STRINGIZE( P ), CHECK, CHECK_PRED, _ )
 #define BOOST_REQUIRE( P )                  BOOST_TEST_TOOL_IMPL( 2, \
-    (P), BOOST_TEST_STRINGIZE( P ), REQUIRE, CHECK_PRED, _ )
+    static_cast<bool>(P), BOOST_TEST_STRINGIZE( P ), REQUIRE, CHECK_PRED, _ )
 
 //____________________________________________________________________________//
 
-#define BOOST_WARN_MESSAGE( P, M )          BOOST_TEST_TOOL_IMPL( 2, (P), M, WARN, CHECK_MSG, _ )
-#define BOOST_CHECK_MESSAGE( P, M )         BOOST_TEST_TOOL_IMPL( 2, (P), M, CHECK, CHECK_MSG, _ )
-#define BOOST_REQUIRE_MESSAGE( P, M )       BOOST_TEST_TOOL_IMPL( 2, (P), M, REQUIRE, CHECK_MSG, _ )
+#define BOOST_WARN_MESSAGE( P, M )          BOOST_TEST_TOOL_IMPL( 2, static_cast<bool>(P), M, WARN, CHECK_MSG, _ )
+#define BOOST_CHECK_MESSAGE( P, M )         BOOST_TEST_TOOL_IMPL( 2, static_cast<bool>(P), M, CHECK, CHECK_MSG, _ )
+#define BOOST_REQUIRE_MESSAGE( P, M )       BOOST_TEST_TOOL_IMPL( 2, static_cast<bool>(P), M, REQUIRE, CHECK_MSG, _ )
 
 //____________________________________________________________________________//
 
