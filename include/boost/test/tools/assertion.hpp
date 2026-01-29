@@ -31,7 +31,7 @@
 #endif
 
 // GCC < 10 workaround for std::optional comparison ambiguity (see below)
-#if defined(__GNUC__) && !defined(__clang__) && (__GNUC__ < 10) && \
+#if ((defined(__GNUC__) && !defined(__clang__) && (__GNUC__ < 10)) || (defined(__clang__) && __clang_major__ < 11)) && \
     (__cplusplus >= 201703L || (defined(_MSVC_LANG) && _MSVC_LANG >= 201703L))
 #include <optional>
 #endif
@@ -52,8 +52,9 @@ namespace assertion {
 template<typename T>
 struct is_std_optional : std::false_type {};
 
-#if defined(__GNUC__) && !defined(__clang__) && (__GNUC__ < 10) && \
+#if ((defined(__GNUC__) && !defined(__clang__) && (__GNUC__ < 10)) || (defined(__clang__) && __clang_major__ < 11)) && \
     (__cplusplus >= 201703L || (defined(_MSVC_LANG) && _MSVC_LANG >= 201703L))
+
 template<typename T>
 struct is_std_optional<std::optional<T>> : std::true_type {};
 template<typename T>
@@ -62,6 +63,7 @@ template<typename T>
 struct is_std_optional<std::optional<T> const&> : std::true_type {};
 template<typename T>
 struct is_std_optional<std::optional<T>&&> : std::true_type {};
+
 #endif
 
 // ************************************************************************** //
@@ -222,7 +224,7 @@ BOOST_TEST_FOR_EACH_CONST_OP( DEFINE_CONST_OPER )
 
 template<typename Lhs, typename Rhs, typename OP> class binary_expr;
 
-#if defined(__GNUC__) && !defined(__clang__) && (__GNUC__ < 10) && \
+#if ((defined(__GNUC__) && !defined(__clang__) && (__GNUC__ < 10)) || (defined(__clang__) && __clang_major__ < 11)) && \
     (__cplusplus >= 201703L || (defined(_MSVC_LANG) && _MSVC_LANG >= 201703L))
 
 // Primary template - empty (for non-optional types)
@@ -311,7 +313,7 @@ public:
 // GCC < 10 workaround: comparison operators with SFINAE to exclude std::optional
 // when ValType is also std::optional. The hidden friend operators in the base class
 // optional_friends_base will handle the optional==optional case instead.
-#if defined(__GNUC__) && !defined(__clang__) && (__GNUC__ < 10) && \
+#if ((defined(__GNUC__) && !defined(__clang__) && (__GNUC__ < 10)) || (defined(__clang__) && __clang_major__ < 11)) && \
     (__cplusplus >= 201703L || (defined(_MSVC_LANG) && _MSVC_LANG >= 201703L))
 #define ADD_OP_SUPPORT_COMP( oper, name, _, _i )                              \
     template<typename T,                                                      \
