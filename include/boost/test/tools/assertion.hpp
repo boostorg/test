@@ -224,7 +224,6 @@ template<typename Lhs, typename Rhs, typename OP> class binary_expr;
 
 #if defined(__GNUC__) && !defined(__clang__) && (__GNUC__ < 10) && \
     (__cplusplus >= 201703L || (defined(_MSVC_LANG) && _MSVC_LANG >= 201703L))
-#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
 
 // Primary template - empty (for non-optional types)
 template<typename ExprType, typename ValType, bool IsOptional = is_std_optional<ValType>::value>
@@ -275,11 +274,6 @@ struct optional_friends_base<ExprType, ValType, true> {
             std::move(lhs), std::move(rhs));
     }
 };
-
-#else // BOOST_NO_CXX11_RVALUE_REFERENCES
-template<typename ExprType, typename ValType, bool IsOptional = false>
-struct optional_friends_base {};
-#endif
 
 #else // Not GCC < 10
 template<typename ExprType, typename ValType, bool IsOptional = false>
