@@ -41,7 +41,7 @@ jobs:
     uses: boostorg/boost-ci/.github/workflows/reusable.yml@master
     # Customization:
     with:
-       enable_reflection: false
+       enable_cygwin: false
        depinst_args: --include doc/examples
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
