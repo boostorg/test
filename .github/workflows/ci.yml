@@ -44,7 +44,7 @@ jobs:
        enable_pr_coverage: false  # Disabled: Too many issues with lcov
        enable_cygwin: false
        depinst_args: --include doc/examples
-       exclude_compiler: 'gcc-4.7,gcc-4.8,gcc-4.9'
+       exclude_compiler: 'gcc-4.7,gcc-4.8,gcc-4.9,clang-3.6'
        max_cxx_stds_per_job: 2
     secrets:
       # CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}  Disabled: Too many issues with lcov
