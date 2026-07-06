@@ -44,6 +44,7 @@ jobs:
        enable_pr_coverage: false  # Disabled: Too many issues with lcov
        enable_cygwin: false
        depinst_args: --include doc/examples
+       max_cxx_stds_per_job: 2
     secrets:
       # CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}  Disabled: Too many issues with lcov
       COVERITY_SCAN_NOTIFICATION_EMAIL: ${{ secrets.COVERITY_SCAN_NOTIFICATION_EMAIL }}
