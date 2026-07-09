@@ -49,11 +49,21 @@ jobs:
        timeout: 360
        max_cxx_stds_per_job: 2  # Too many configurations per job(?)
        exclude_jobs: |
-          compiler: 'clang-11,clang-12', cxxstd: '17,20' # github_issue_475
-          compiler: clang-16, cxxstd: 2b # dataset_example67, /include/c++/14/bits/stl_pair.h:411:14: error: no matching function for call to 'get'
-          compiler: icpx-2025 # Different output leading to fail in test-macro-global-fixture.cpp
-          os: macos-26  # basic_cstring-test: Missing 'std::char_traits<unsigned char>' on ARM
-          os: ubuntu-24.04-arm  # system-exception-test fails
+          compiler: 'gcc-4.8,gcc-4.9'                     # Not C++11 compliant enough for Boost.Test
+          compiler: 'clang-11,clang-12', cxxstd: '17,20'  # github_issue_475
+          compiler: icpx-2025                             # test-macro-global-fixture: Different output
+          compiler: gcc-9, cxxstd: 2a                     # test-macro-global-fixture: Different output
+          compiler: gcc-11, cxxstd: 17                    # test-macro-global-fixture: Different output
+          compiler: clang-15, cxxstd: 11                  # test-macro-global-fixture: Different output
+          compiler: 'clang-3.6,clang-12', cxxstd: 11      # log-formatter-test: Different output
+          compiler: 'clang-3.9,gcc-10', cxxstd: 14        # log-formatter-test: Different output
+          compiler: clang-8, cxxstd: 11                   # Subset of C++ stds as GHA fails w/o showing output
+          os: macos-26                                    # basic_cstring-test: Missing 'std::char_traits<unsigned char>' on ARM
+          os: ubuntu-24.04-arm                            # system-exception-test fails
+          os: macos, sanitize: yes, cxxstd: '11,14,17,20' # Reduce number of configurations
+          os: windows, cxxstd: '11,14'                    # Reduce number of configurations
+          os: windows, address-model: 32                  # Reduce number of configurations, test only 64bit
+          os: ubuntu, sanitize: yes                       # Memory leaks in test-macro-global-fixture, not on macos
     secrets:
       # CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}  Disabled: Too many issues with lcov
       COVERITY_SCAN_NOTIFICATION_EMAIL: ${{ secrets.COVERITY_SCAN_NOTIFICATION_EMAIL }}
