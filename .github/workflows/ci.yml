@@ -41,9 +41,10 @@ jobs:
     uses: boostorg/boost-ci/.github/workflows/reusable.yml@master
     # Customization:
     with:
+       enable_pr_coverage: false  # Disabled: Too many issues with lcov
        enable_cygwin: false
        depinst_args: --include doc/examples
     secrets:
-      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      # CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}  Disabled: Too many issues with lcov
       COVERITY_SCAN_NOTIFICATION_EMAIL: ${{ secrets.COVERITY_SCAN_NOTIFICATION_EMAIL }}
       COVERITY_SCAN_TOKEN: ${{ secrets.COVERITY_SCAN_TOKEN }}
