@@ -51,12 +51,6 @@ jobs:
        exclude_jobs: |
           compiler: 'gcc-4.8,gcc-4.9'                     # Not C++11 compliant enough for Boost.Test
           compiler: 'clang-11,clang-12', cxxstd: '17,20'  # github_issue_475
-          compiler: icpx-2025                             # test-macro-global-fixture: Different output
-          compiler: gcc-9, cxxstd: 2a                     # test-macro-global-fixture: Different output
-          compiler: gcc-11, cxxstd: 17                    # test-macro-global-fixture: Different output
-          compiler: clang-15, cxxstd: 11                  # test-macro-global-fixture: Different output
-          compiler: 'clang-3.6,clang-12', cxxstd: 11      # log-formatter-test: Different output
-          compiler: 'clang-3.9,gcc-10', cxxstd: 14        # log-formatter-test: Different output
           compiler: clang-8, cxxstd: 11                   # Subset of C++ stds as GHA fails w/o showing output
           os: macos-26                                    # basic_cstring-test: Missing 'std::char_traits<unsigned char>' on ARM
           os: ubuntu-24.04-arm                            # system-exception-test fails
