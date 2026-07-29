@@ -16,6 +16,7 @@
 #include <boost/test/tools/assertion.hpp>
 
 #include <boost/test/utils/is_cstring.hpp>
+#include <boost/test/utils/is_forward_iterable.hpp>
 #include <boost/test/utils/basic_cstring/compare.hpp>
 
 // Boost
@@ -37,8 +38,12 @@ namespace op {
 #define DEFINE_CSTRING_COMPARISON( oper, name, rev, name_inverse )  \
 template<typename Lhs,typename Rhs>                                 \
 struct name<Lhs,Rhs,typename boost::enable_if_c<                    \
-    (   unit_test::is_cstring_comparable<Lhs>::value                \
-     && unit_test::is_cstring_comparable<Rhs>::value)               \
+    (   (   unit_test::is_cstring_comparable<Lhs>::value            \
+         && unit_test::is_cstring_comparable<Rhs>::value)           \
+     || (   unit_test::is_cstring_comparable<Lhs>::value            \
+         && unit_test::is_forward_iterable<Rhs>::value)             \
+     || (   unit_test::is_forward_iterable<Lhs>::value              \
+         && unit_test::is_cstring_comparable<Rhs>::value))          \
     >::type >                                                       \
 {                                                                   \
     typedef typename unit_test::deduce_cstring_transform<Lhs>::type lhs_char_type; \

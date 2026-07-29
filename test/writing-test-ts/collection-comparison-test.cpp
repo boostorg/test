@@ -142,6 +142,16 @@ BOOST_AUTO_TEST_CASE( test_collection_of_collection_comp )
 
 //____________________________________________________________________________//
 
+BOOST_AUTO_TEST_CASE( test_string_non_string_per_element )
+{
+    char const* a = "abc";
+    std::vector<int> b{'a', 'b', 'c'};
+    BOOST_TEST( a == b, tt::per_element() );
+    BOOST_TEST( b == a, tt::per_element() );
+}
+
+//____________________________________________________________________________//
+
 // this one does not have const_iterator nor a size, but should be forward iterable
 // and possible to use in the collection comparison
 struct fwd_iterable_custom {
