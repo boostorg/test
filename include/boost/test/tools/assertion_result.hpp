@@ -54,7 +54,7 @@ public:
     {}
 
     template<typename BoolConvertable>
-    assertion_result( BoolConvertable const& pv_ ) : p_predicate_value( !!pv_ ) {}
+    assertion_result( BoolConvertable const& pv_ ) : p_predicate_value( !!static_cast<bool>(pv_) ) {}
 
     // Access methods
     bool                operator!() const           { return !p_predicate_value; }
