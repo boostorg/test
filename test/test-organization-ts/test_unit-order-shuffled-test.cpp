@@ -74,7 +74,8 @@ struct test_tree {
     test_tree() {
         master = BOOST_TEST_SUITE( "master" );
 
-        std::size_t nb_ts = (std::max)(3, std::rand() % 17);
+        // Need sufficiently high number of tests so random shuffling is unlikely to yield the same order
+        std::size_t nb_ts = 7 + (std::rand() % 17);
         std::vector<ut::test_suite*> tsuites(1, master); // master is in there
 
         for(std::size_t s = 0; s < nb_ts; s++)
