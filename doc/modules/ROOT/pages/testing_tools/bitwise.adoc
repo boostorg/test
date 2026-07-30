@@ -1,0 +1,15 @@
+= Bitwise comparison
+:page-aliases: boost_test/testing_tools/extended_comparison/bitwise.adoc
+
+CAUTION: this feature is not available for non C++11 compilers.
+
+The manipulator cpp:boost::test_tools::bitwise[boost::test_tools::bitwise] can be provided to the {boost_test} macro in order to have a bitwise comparison
+of the operands. In that case, the {utf} indicates the bit indices where the two operands do not match.
+
+// tag reference: doc/modules/ROOT/examples/boost_test_bitwise.run-fail.cpp
+:bt-name: boost_test_bitwise
+:bt-rule: run-fail
+:bt-descr: BOOST_TEST bitwise comparison
+include::partial$bt_example.adoc[]
+
+NOTE: the indices start at least significant bit.

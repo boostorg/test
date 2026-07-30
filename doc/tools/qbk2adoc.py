@@ -89,6 +89,10 @@ MACROREF_TARGETS = {
 }
 MACROREF_PAGE = "utf_reference/link_references.adoc"
 
+# parametric_test_case_generation.qbk gives two different tables the same id.
+# The second one lists the random generator's parameters.
+DUPLICATE_TABLE_IDS = {"id_range_parameter_table": "id_random_parameter_table"}
+
 
 # ---------------------------------------------------------------------------
 # Lexing helpers
@@ -448,6 +452,7 @@ class Renderer(object):
         self.examples = set()
         self.imports = set()
         self.snippets = {}    # callout id -> example$ resource path
+        self.table_ids = {}   # table anchor -> times seen
         self.plain = {}       # def name -> plain text, for use inside code
         for name, value in index.defs.items():
             self.plain[name] = self._plain_text(value)
@@ -822,14 +827,29 @@ class Renderer(object):
         rows = [r for r in rows if r]
         if not rows:
             return self.fixme("empty-table", title)
-        ncols = max(len(r) for r in rows)
+        # The header row fixes the column count. One source table has a row
+        # with an extra cell; fold the surplus into the first column rather
+        # than let Asciidoctor drop it.
+        ncols = len(rows[0])
+        for row in rows:
+            while len(row) > ncols:
+                row[0:2] = [row[0] + " / " + row[1]]
+                self.fixmes["table-row-overfull"] += 1
+            while len(row) < ncols:
+                row.append("")
+                self.fixmes["table-row-short"] += 1
         out = []
         if anchor:
+            if anchor in self.table_ids:
+                anchor = DUPLICATE_TABLE_IDS.get(
+                    anchor, "%s-%d" % (anchor, self.table_ids[anchor] + 1))
+                self.fixmes["duplicate-table-id"] += 1
+            self.table_ids[anchor] = self.table_ids.get(anchor, 0) + 1
             out.append("[#%s]\n" % anchor)
         if title:
             out.append(".%s\n" % self.inline(title, page).strip())
         out.append('[%%header%%autowidth,cols="%d*"]\n|===\n' % ncols)
-        for idx, row in enumerate(rows):
+        for row in rows:
             for cell in row:
                 rendered = self.render_body(cell, page, 6, []).strip()
                 if "\n" in rendered:
@@ -837,8 +857,6 @@ class Renderer(object):
                 else:
                     out.append("|%s\n" % rendered.replace("|", "\\|"))
             out.append("\n")
-            if idx == 0 and len(rows) > 1:
-                pass
         out.append("|===\n\n")
         return "".join(out)
 

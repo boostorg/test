@@ -1,0 +1,82 @@
+= Enabling or disabling test unit execution
+:page-aliases: boost_test/tests_organization/enabling.adoc
+
+The {utf} provides a way for enabling or disabling a test unit execution. If a test case is disabled, it will not be
+run by the test runner. If a test suite is disabled, its status is inherited by the test units under its subtree, unless
+otherwise specified.
+
+The run status can be overridden by the command line parameters: by providing the appropriate arguments to the command
+line, a disabled test may still be executed. The xref:runtime_config/test_unit_filtering.adoc[test unit
+filtering] section covers this feature in details.
+
+[WARNING]
+====
+There is a difference between a disabled test and a skipped test:
+
+* a disabled test has a run status set to disabled, and is completely discarded by the {utf}.
+** a skipped test is a test that has a run status set to enabled, but which execution has been skipped at runtime.
+====
+
+== Unconditional run status
+
+Decorator {decorator_disabled} indicates that the test unit's {default_run_status} is _false_. This means that that
+test cases inside this test unit will not be run by default, unless otherwise specified. Decorator {decorator_enabled}
+indicates that the test unit's default run status is _true_. This means that that test cases inside this test unit will
+be run by default, unless otherwise specified.
+
+// tag reference: doc/modules/ROOT/examples/decorator_05.run-fail.cpp
+:bt-name: decorator_05
+:bt-rule: run-fail
+:bt-descr: decorators enabled and disabled
+include::partial$bt_example.adoc[]
+
+Syntactically, it is possible to apply both decorators `enabled` and `disabled` to the same test unit. This is reported
+as set-up error when the test program is run.
+
+== Compilation-time run status
+
+Decorator {decorator_enable_if} indicates that the test unit's {default_run_status} is either _true_ or _false_,
+depending on the value of `Condition`. This means that that test cases inside this test unit will or will not be run by
+default.
+
+// tag reference: doc/modules/ROOT/examples/decorator_06.run-fail.cpp
+:bt-name: decorator_06
+:bt-rule: run-fail
+:bt-descr: decorator enable_if
+include::partial$bt_example.adoc[]
+
+Decorator `enable_if<true>()` is equivalent to decorator `enabled()`. Similarly, `enable_if<false>()` is equivalent to
+decorator `disabled()`.
+
+== Runtime run status
+
+Decorator {decorator_precondition} associates a _predicate_ with a test unit. Before the test unit is executed, the
+predicate is evaluated with the test unit's ID passed as the argument. If it evaluates to `false`, execution of the test
+unit is skipped. Skipping a test suite means skipping the execution of every test unit inside.
+
+[TIP]
+====
+The precondition may return an cpp:boost::test_tools::assertion_result[assertion_result] instead of a boolean.
+ In that case, the message contained in the `assertion_result` will be printed by the {utf}.
+====
+
+// tag reference: doc/modules/ROOT/examples/decorator_08.run-fail.cpp
+:bt-name: decorator_08
+:bt-rule: run-fail
+:bt-descr: decorator precondition
+include::partial$bt_example.adoc[]
+
+In the example above, the user defined a custom predicate `if_either` that evaluates to `true` if at least one of the two
+specified tests passed. (It assumes that the tests are registered in the specific order.)
+
+* Test case `test3` has a precondition that at either `test1` or `test2` passed. The precondition is satisfied,
+therefore `test3` is run (and fails),
+* test case `test4` has a precondition that either `test2` or `test3` passed. Since they both failed, the
+precondition is not satisfied, therefore `test4` is skipped.
+
+[NOTE]
+====
+A {decorator_precondition} that evaluates to `false` does not yield an error and does not fail the attached unit test. However
+ the {utf} returns an error if the test tree is empty (see xref:tests_organization/test_tree_content.adoc[this section]
+ for more details).
+====

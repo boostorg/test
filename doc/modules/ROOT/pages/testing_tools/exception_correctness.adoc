@@ -1,0 +1,49 @@
+= Exception correctness
+:page-aliases: boost_test/testing_tools/exception_correctness.adoc
+
+Any unexpected/uncaught exception raised in the test case body will be intercepted by the Boost.test
+framework and will result in the termination of the test-case with the status `failed`.
+
+// tag reference: doc/modules/ROOT/examples/exception_uncaught.run-fail.cpp
+:bt-name: exception_uncaught
+:bt-rule: run-fail
+:bt-descr: Uncaught exception
+include::partial$bt_example.adoc[]
+
+More control over the exception correctness is often required, for instance to test that
+an expression is raising a specific exception, intentionally.
+
+The {utf} provides several assertions for testing a code with respect to the exceptions correctness.
+The following assertions are available:
+
+* {boost_level_no_throw} checks that no exception is raised from an expression,
+* {boost_level_throw} checks that an expression raises an exception of a specific type
+* {boost_level_exception} checks that an expression raises an exception of a specific type,
+a passes the exception instance to a predicate function for further validation (introspection
+for instance)
+
+The following example demonstrate how to use these tools to test the correct behavior of the API
+of `FileWordHistogram`, in the constructor and the preconditions of the member function.
+
+// tag reference: doc/modules/ROOT/examples/exception_api.run-fail.cpp
+:bt-name: exception_api
+:bt-rule: run-fail
+:bt-descr: Exception correctness of an API
+include::partial$bt_example.adoc[]
+
+[NOTE]
+====
+An `assert(...)` might call `abort()`: the use of the macros above may not be
+      suitable for testing for `assert`'s in a portable manner.
+====
+
+== Bibliographic references
+
+.Publications
+[cols="1,3"]
+|===
+|https://isocpp.org/wiki/faq/exceptions[Exceptions and Error Handling]
+a|
+Standard C++ Foundation
+
+|===

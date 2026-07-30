@@ -1,0 +1,104 @@
+= Summary of the API for writing tests
+:page-aliases: boost_test/testing_tools/summary.adoc
+
+[%header%autowidth,cols="2*"]
+|===
+|Assertions
+|Short description
+
+|{boost_test}, {boost_test_level}
+|General purpose assertion macro.
+
+|{boost_level}
+|Simple validation of a boolean predicate value.
+
+|{boost_level_bitwise_equal}
+|Bitwise equality test of two elements.
+
+|{boost_level_equal}
+|Equality test of two elements.
+
+|{boost_level_equal_collections}
+|Element-wise equality test of two collections.
+
+|{boost_level_close}
+|Floating point comparison using a percentage of deviation.
+
+|{boost_level_close_fraction}
+|Floating point comparison using the fraction of the compared operands.
+
+|{boost_level_exception}
+|Exception detection and validation check.
+
+|{boost_level_ge}
+|Comparison of two values (with convenient reporting).
+
+|{boost_level_gt}
+|Comparison of two values (with convenient reporting).
+
+|{boost_level_le}
+|Comparison of two values (with convenient reporting).
+
+|{boost_level_lt}
+|Comparison of two values (with convenient reporting).
+
+|{boost_level_message}
+|Same as {boost_level} with a custom message in case of failure.
+
+|{boost_level_ne}
+|Comparison of two values (with convenient reporting).
+
+|{boost_level_no_throw}
+|Checks an expression does not throw any exception.
+
+|{boost_level_predicate}
+|Checks a list of arguments against a predicate functor.
+
+|{boost_level_small}
+|Checks a value is small according to a tolerance.
+
+|{boost_level_throw}
+|Checks an expression throws a specific type of expression.
+
+|{boost_auto_test_case_expected_failures}
+|Indicates the number of expected failures for a test case
+
+|{boost_error}
+|Logs an error message, fails but does not abort the current test.
+
+|{boost_fail}
+|Logs an error message, fails and aborts the current test.
+
+|{boost_is_defined}
+|Checks at runtime whether or not the supplied preprocessor symbol is defined.
+
+|===
+
+[%header%autowidth,cols="2*"]
+|===
+|Decorators
+|Short description
+
+|{decorator_expected_failures}
+|Indicates the expected failures of a test unit.
+
+|{decorator_timeout}
+|Sets the maximum amount of time a test unit should take.
+
+|{decorator_tolerance}
+|Sets the floating point comparison tolerance for a test unit.
+
+|===
+
+[%header%autowidth,cols="2*"]
+|===
+|Control macros
+|Short description
+
+|{boost_test_tools_under_debugger}
+|When defined, test assertions are compiled in debugger-friendly mode.
+
+|{boost_test_tools_debuggable}
+|When defined, test assertions are compiled in two modes (debugger-friendly and full-featured), and the version is selected at run-time.
+
+|===

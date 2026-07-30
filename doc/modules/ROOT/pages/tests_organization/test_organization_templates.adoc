@@ -1,0 +1,180 @@
+= Template test cases
+:page-aliases: boost_test/tests_organization/test_cases/test_organization_templates.adoc
+
+In order to test a template based component, it is frequently necessary to perform the same set of checks for a
+component instantiated with different template parameters.
+
+One way to perform the same set of checks for a component instantiated with different template parameters would be:
+
+[source,cpp]
+----
+template <typename T>
+void single_test()
+{
+  BOOST_CHECK( /* test assertion */ );
+}
+
+void combined_test()
+{
+  single_test<int>();
+  single_test<float>();
+  single_test<unsigned char>();
+}
+----
+
+There several problems/inconveniences with above approach, including:
+
+* Fatal error in one of the invocation will stop whole test case and will skip invocations with different types
+* You need to repeat function invocation manually for all the parameters you are interested in
+* You need two functions to implement the test
+
+The {utf} provides a facility, the *template test case*, to create a series of
+test cases based on a list of desired types and _nullary_ function. This facility comes with an
+xref:tests_organization/test_organization_templates.adoc#ref_BOOST_AUTO_TEST_CASE_TEMPLATE[automatic] and
+xref:tests_organization/test_organization_templates.adoc#ref_BOOST_TEST_CASE_TEMPLATE[manual] registration interface.
+
+[TIP]
+====
+The test case template facility is preferable to the approach in example above, since execution of each sub test
+case is guarded and counted separately. It produces a better test log/results report (in example above in case of
+failure you can't say which type is at fault) and allows you to test all types even if one of them causes termination of
+the sub test case.
+====
+
+[#ref_BOOST_AUTO_TEST_CASE_TEMPLATE]
+== Template test case with automated registration
+
+A template test case, registered automatically and in place of its implementation, is declared through the macro
+{boost_auto_test_case_template}:
+
+[source,cpp]
+----
+BOOST_AUTO_TEST_CASE_TEMPLATE(test_case_name, formal_type_parameter_name, collection_of_types);
+----
+
+The arguments are as follow:
+
+. `test_case_name`: the test case template name: unique test cases template identifier
+. `formal_type_parameter_name`: the name of a formal template parameter:
+name of the type the test case template is instantiated with
+. `collection_of_types`: the collection of types to instantiate test case template with.
+This is an *arbitrary MPL sequence* or a sequence of types wrapped in a `std::tuple`
+(since xref:change_log.adoc#ref_CHANGE_LOG_3_7[{utf} v3.7], if supported by the compiler)
+
+The resulting name of the test is a composition of the `test_case_name` parameter and the current
+type being tested. Since xref:change_log.adoc#ref_CHANGE_LOG_3_12[{utf} v3.12], the framework tries to unify
+the name of the resulting type across various platforms such that they are easier to reference
+from the xref:runtime_config/test_unit_filtering.adoc[command line filter].
+
+// tag reference: doc/modules/ROOT/examples/example10.run-fail.cpp
+:bt-name: example10
+:bt-rule: run-fail
+:bt-descr: Test case template with automated registration
+include::partial$bt_example.adoc[]
+
+[WARNING]
+====
+Since xref:change_log.adoc#ref_CHANGE_LOG_3_7[{utf} v3.7], the {utf} does not allow for duplicate test case name
+ under the same test suite. As test names are derived from the types in the `collection_of_types`,
+ this indirectly means that *having a duplicate type* in the
+ `collection_of_types` *yields an error*.
+====
+
+[NOTE]
+====
+If you prefer having the template parameter list directly in the declaration of {boost_auto_test_case_template},
+  you may use the macro http://www.boost.org/doc/libs/release/libs/utility/identity_type/doc/html/index.html[`BOOST_IDENTITY_TYPE`].
+  The previous example gives (note the double parenthesis around the MPL list):
+
+[source,cpp]
+----
+#include <boost/utility/identity_type.hpp>
+
+BOOST_AUTO_TEST_CASE_TEMPLATE(
+  my_test,
+  T,
+  BOOST_IDENTITY_TYPE((boost::mpl::list<
+    int,
+    long,
+    unsigned char
+  >)) )
+{
+  BOOST_TEST( sizeof(T) == (unsigned)4 );
+}
+----
+====
+
+[#ref_BOOST_TEST_CASE_TEMPLATE]
+== Test case template with manual registration
+
+To manually register template test cases, two macros should be used:
+
+* {boost_test_case_template_function} to define the template test case body
+* {boost_test_case_template} to register the test case based on the previous declaration
+
+The macro {boost_test_case_template_function} requires two arguments:
+
+. the name of the test case template and
+. the name of the format type parameter
+
+[source,cpp]
+----
+BOOST_TEST_CASE_TEMPLATE_FUNCTION(test_case_name, type_name);
+----
+
+[source,cpp]
+----
+BOOST_TEST_CASE_TEMPLATE_FUNCTION( test_case_name, type_name )
+{
+  // test case template body
+}
+----
+
+The macro {boost_test_case_template_function} is intended to be used in place of nullary function template
+signature:
+
+[source,cpp]
+----
+template <typename type_name>
+void test_case_name()
+{
+  // test case template body
+}
+----
+
+The only difference is that the {boost_test_case_template_function} makes the test case template name usable in
+the template argument list.
+
+{boost_test_case_template} requires two arguments:
+
+. the name of the test case template and
+. Boost.MPL compatible collection of types to instantiate it with.
+
+The names passed to both macros should be the same.
+
+[source,cpp]
+----
+BOOST_TEST_CASE_TEMPLATE(test_case_name, collection_of_types);
+----
+
+// tag reference: doc/modules/ROOT/examples/example09.run-fail.cpp
+:bt-name: example09
+:bt-rule: run-fail
+:bt-descr: Manually registered test case template
+include::partial$bt_example.adoc[]
+
+{boost_test_case_template} creates an instance of the test case generator. When passed to the method cpp:boost::unit_test::test_suite::add[`test_suite::add`], the generator produces a separate sub test case for each type in
+the supplied collection of types and registers it immediately in the test suite. Each test case is based on the test
+case template body instantiated with a particular test type.
+
+The names for the _sub test cases_ are deduced from the macro argument `test_case_name`. If you prefer to assign
+different test case names, you need to use the underlying link:{base-url}/boost/test/tree/test_unit.hpp[`make_test_case`] interface instead.
+Both test cases creation and registration is performed in the test module initialization function.
+
+[WARNING]
+====
+Since xref:change_log.adoc#ref_CHANGE_LOG_3_7[{utf} v3.7], the {utf} does not allow for duplicate test case name
+ under the same test suite. As test names are derived from the types in the `collection_of_types`,
+ this indirectly means that having a duplicate of types in the
+ `collection_of_types` will yield an error.
+====

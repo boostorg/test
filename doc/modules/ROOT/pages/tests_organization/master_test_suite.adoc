@@ -1,0 +1,89 @@
+= Master test suite
+:page-aliases: boost_test/tests_organization/test_tree/master_test_suite.adoc
+
+As defined in introduction section the master test suite is the *root* node of the test tree. Each test module built
+with the {utf} always has the (unique) master test suite defined. The {utf} maintain the master test suite instance
+internally. All other test units are registered as direct or indirect children of the master test suite.
+
+[source,cpp]
+----
+namespace boost {
+namespace unit_test {
+class master_test_suite_t : public test_suite
+{
+  /// implementation details
+public:
+  int argc;
+  char** argv;
+};
+
+} // namespace unit_test
+} // namespace boost
+----
+
+To access single instance of the master test suite use the following interface:
+
+[source,cpp]
+----
+namespace boost {
+namespace unit_test {
+namespace framework {
+
+master_test_suite_t& master_test_suite();
+
+} // namespace framework
+} // namespace unit_test
+} // namespace boost
+----
+
+== Command line arguments access interface
+
+Master test suite implemented as an extension to the regular test suite, since it maintains references to the
+command line arguments passed to the test module. To access the command line arguments use
+
+[source,cpp]
+----
+boost::unit_test::framework::master_test_suite().argc
+boost::unit_test::framework::master_test_suite().argv
+----
+
+In below example references to the command line arguments are accessible either as an initialization function
+parameters or as members of the master test suite. Both references point to the same values. A test module that
+uses the alternative initialization function specification can only access command line arguments through the
+master test suite.
+
+Returning to the free function example, let's modify initialization function to check for absence of any
+test module arguments.
+
+// tag reference: doc/modules/ROOT/examples/example13.run.cpp
+:bt-name: example13
+:bt-rule: run
+:bt-descr: Command line access in initialization function
+include::partial$bt_example.adoc[]
+
+[#ref_BOOST_TEST_MODULE]
+== Naming the _Master test suite_
+
+The master test suite is created with default name _Master Test Suite_. There are two methods two
+reset the name to a different value: using the macro {boost_test_module}
+and from within the test module initialization function. Former is used for test modules that don't have the
+manually implemented initialization function. Following examples illustrate these methods.
+
+// tag reference: doc/modules/ROOT/examples/example14.run.cpp
+:bt-name: example14
+:bt-rule: run
+:bt-descr: Naming master test suite using the macro {boost_test_module}
+include::partial$bt_example.adoc[]
+
+If the macro {boost_test_module} is defined, the test module initialization
+function is *automatically generated* and the
+macro value becomes the name of the master test suite. The name may include spaces.
+
+// tag reference: doc/modules/ROOT/examples/example15.run.cpp
+:bt-name: example15
+:bt-rule: run
+:bt-descr: Naming master test suite explicitly in the test module initialization function
+include::partial$bt_example.adoc[]
+
+Without the {boost_test_main} and the {boost_test_module} flags defined, the test module initialization
+function has to be manually implemented. The master test suite name can be reset at any point within this function.

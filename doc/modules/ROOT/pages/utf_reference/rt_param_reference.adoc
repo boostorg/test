@@ -1,0 +1,859 @@
+= Runtime parameters reference
+:page-aliases: boost_test/utf_reference/rt_param_reference.adoc
+
+Following sections provide detailed specification for all {utf} runtime parameters. Each parameter specification includes:
+
+* The full parameter name.
+* Description of parameter semantic and default value.
+* Acceptable argument values. The default value for the parameter is bold in the acceptable values list.
+* Command line syntax. The format of all command line arguments is: `<prefix><name>[<separator><value>]`.
+For example: `--param=<value>`.
+`[]` around separator and value indicate that argument value is optional. For example: `-q[ <value>]`.
+* Corresponding environment variable name.
+
+[NOTE]
+====
+All command line argument formats support parameter name guessing. What this means is that is if command like
+format is like this:
+
+....
+--long_parameter_name=<value>
+....
+
+you can in fact use any unambiguous prefix of the parameter name to specify the argument. For example:
+
+....
+--long_param=123
+....
+
+or
+
+....
+--long_p=123.
+....
+
+If parameter name prefix you chose is ambiguous the framework lets you know which parameters match specified
+prefix. For example, try
+
+....
+--log=all
+....
+====
+
+== Parameter value formats
+
+The {utf} runtime parameters take value of the following types: string, boolean, enumeration,
+unsigned, long. Formats required for values of these types are following:
+
+=== String, unsigned, long
+
+[#regular_param_value]
+Values of these types are expected in the same format they are represented in C++.
+
+=== Boolean
+
+[#boolean_param_value]
+Values of these types are options with yes/no or true/false meaning. True values are represented
+by case insensitive strings: "Y", "YES", "TRUE", "1". False values are represented by case
+insensitive strings: "N", "NO", "FALSE", "0".
+
+=== Enumeration
+
+[#enum_param_value]
+Values of an enumeration type are expected as case sensitive strings representing
+enumeration value names. Each parameter with an enumeration value lists all valid names in a
+parameter\`s description.
+
+[#auto_dbg]
+== `auto_start_dbg`
+
+Option _auto_start_dbg_ specifies whether Boost.Test should attempt to attach a debugger when a fatal system
+error occurs. At the moment this feature is only available on a few selected platforms: Win32 and *nix. There is a
+default debugger configured for these platforms. You can manually configure a different debugger.
+For more details on how to configure a debugger see the link:{base-url}/boost/test/debug.hpp[Boost.Test debug API],
+specifically the function cpp:boost::debug::set_debugger[boost::debug::set_debugger].
+
+=== Acceptable values
+
+xref:utf_reference/rt_param_reference.adoc#boolean_param_value[Boolean] with default value *no*.
+
+=== Command line syntax
+
+* `--auto_debug[=<boolean value>]`
+* `-d [<boolean value>]`
+
+=== Environment variable
+
+BOOST_TEST_AUTO_START_DBG
+
+[#build_info]
+== `build_info`
+
+Option _build_info_ instructs the {utf} to display the build information before testing begins.
+This information includes:
+
+* platform
+* compiler
+* STL implementation in use
+* boost version
+
+=== Acceptable values
+
+xref:utf_reference/rt_param_reference.adoc#boolean_param_value[Boolean] with default value *no*.
+
+=== Command line syntax
+
+* `--build_info[=<boolean value>]`
+* `-i [<boolean value>]`
+
+=== Environment variable
+
+BOOST_TEST_BUILD_INFO
+
+[#catch_system]
+== `catch_system_errors`
+
+If option _catch_system_errors_ has value "no" the {utf} does not attempt to catch asynchronous system failures
+(signals on *NIX platforms or structured exceptions on Windows). This can be used for test programs executed
+within an IDE or to get a coredump for a stack analysis. See
+xref:usage_recommendations/index.adoc#ref_usage_recommendations[usage recommendations] pages for more details.
+
+[NOTE]
+====
+If the {utf} detects that the current process is being run under a debugger, the `catch_system_errors` is
+ automatically disabled.
+====
+
+=== Acceptable values
+
+xref:utf_reference/rt_param_reference.adoc#boolean_param_value[Boolean] with default value *no*.
+
+NOTE: The {utf} can be built with flag `BOOST_TEST_DEFAULTS_TO_CORE_DUMP` in which case default changes to *yes*
+
+=== Command line syntax
+
+* `--catch_system_errors[=<boolean value>]`
+* `-s [<boolean value>]`
+
+=== Environment variable
+
+BOOST_TEST_CATCH_SYSTEM_ERRORS
+
+[#color_output]
+== `color_output`
+
+The {utf} is able to produce color output on systems which support it. To disable this behavior, set this option to
+`no`. By default the framework produces color output.
+
+=== Acceptable values
+
+xref:utf_reference/rt_param_reference.adoc#boolean_param_value[Boolean] with default value *yes*.
+
+=== Command line syntax
+
+* `--color_output[=<boolean value>]`
+* `-x [<boolean value>]`
+
+=== Environment variable
+
+BOOST_TEST_COLOR_OUTPUT
+
+[#detect_fp_exceptions]
+== `detect_fp_exceptions`
+
+Option _build_info_ enables/disables hardware traps for the floating point exceptions (if supported on your platform).
+
+=== Acceptable values
+
+xref:utf_reference/rt_param_reference.adoc#boolean_param_value[Boolean] with default value *no*.
+
+=== Command line syntax
+
+* `--detect_fp_exceptions[=<boolean value>]`
+
+=== Environment variable
+
+BOOST_TEST_DETECT_FP_EXCEPTIONS
+
+[#detect_memory_leaks]
+== `detect_memory_leaks`
+
+Parameter _detect_memory_leaks_ enables/disables memory leaks detection (if present in your build configuration).
+This parameter has an optional long integer value. The default value is 1, which enables memory leak detection.
+The value 0 disables memory leak detection. Any value N greater than 1 is treated as leak allocation number and tells the
+framework to setup runtime breakpoint at Nth heap allocation. If value is omitted the default value is assumed.
+
+NOTE: The only platform which supports memory leak detection is Microsoft Visual Studio family of compilers in debug builds.
+
+=== Acceptable values
+
+* 0
+* *1* (default)
+* xref:utf_reference/rt_param_reference.adoc#regular_param_value[long integer value] > 1
+
+=== Command line syntax
+
+* `--detect_memory_leaks[=<alloc order number>]`
+
+=== Environment variable
+
+BOOST_TEST_DETECT_MEMORY_LEAK
+
+[#help]
+== `help`
+
+Parameter _help_ displays help on the framework's parameters. The parameter accepts an optional
+argument value:
+
+* if present, the argument value is interpreted as a parameter name. Name guessing
+works as well (so for example `--help=rand` displays help on the parameter `random`).
+* if the parameter name is unknown or ambiguous, an error is reported,
+* if the argument value is absent, a summary of all framework's parameter is displayed.
+
+=== Acceptable values
+
+An optional parameter name xref:utf_reference/rt_param_reference.adoc#regular_param_value[string].
+
+=== Command line syntax
+
+* `--help[=<parameter name>]`
+
+[#list_content]
+== `list_content`
+
+Lists the name of the xref:section_glossary.adoc#ref_test_unit[test units] contained in the xref:section_glossary.adoc#ref_test_module[test module] and exits (no test is run).
+
+This command line parameter accepts an _optional_ string value indicating the format of the output.
+The framework supports the following two formats:
+
+. HRF (default), standing for _Human Readable Format_,
+. DOT, standing for the http://www.graphviz.org/doc/info/lang.html[Graphviz graph format]. This format may be automatically parsed or rendered.
+
+=== HRF
+
+For HRF, the xref:section_glossary.adoc#ref_test_tree[test tree] (test suites and test cases) is presented in a tree like form with
+each test unit name on a separate line with horizontal indentation in relation to the parent test suite.
+In addition, test units which are enabled by default have an asterisk `+*+` next to the test unit name. For example, the following output:
+
+testsuite1*
+        testcase1*
+        testcase2
+    testsuite2*
+        testcase3*
+
+represents test module consisting of two test suites: `testsuite1` and `testsuite2`, and three test cases: `testcase1`,
+`testcase2`, and `testcase3`. The formatting reflects the test-tree: the first two test cases belong to the first test suite
+and last one belongs to the second. Out of three test cases only two are enabled by default:
+`testcase1` and `testcase3`. `testcase2` is not enabled by default, but can be enabled by using the parameter {param_run_test}.
+
+=== DOT
+
+DOT output generates a graph representing the module's xref:section_glossary.adoc#ref_test_tree[test tree] in a
+http://www.graphviz.org/doc/info/lang.html[dot format].
+This output includes much more information about the test tree including labels, timeouts, expected failures, and dependencies.
+
+The legend is as follow:
+
+* the master test suite is represented as an ellipse
+* a test unit (suite, case) is in a rounded rectangle
+* test unit declaration location, xref:tests_organization/tests_grouping.adoc[labels],
+xref:testing_tools/expected_failures.adoc[expected failures], xref:testing_tools/timeout.adoc[timeouts] are appended,
+* a green box indicates that the test unit that is enabled, otherwise its color is yellow,
+* a plain black arrow goes from a test unit to each of its children, following the test tree (the arrow pointing to the child),
+* a dashed red arrow indicates a runtime dependence on test units, the arrow pointing to the parent in the dependency graph.
+
+=== Acceptable values
+
+xref:utf_reference/rt_param_reference.adoc#enum_param_value[Enumeration] names:
+
+* *HRF* (default)
+* DOT
+
+=== Command line syntax
+
+* `--list_content[=<format>]`
+
+=== Environment variable
+
+BOOST_TEST_LIST_CONTENT
+
+=== Example
+
+The following _deliberately_ complicated example illustrates the purpose of the `--list_content`
+directive. The SVG generated from the produced Graphviz/dot file can be downloaded
+images/boost_runtime_list_content.svg[here].
+
+// tag reference: doc/modules/ROOT/examples/boost_runtime_list_content.run.cpp
+:bt-name: boost_runtime_list_content
+:bt-rule: run
+:bt-descr: `--list_content` illustration
+include::partial$bt_example.adoc[]
+
+image::boost_runtime_list_content.png[width=70%]
+
+[#list_labels]
+== `list_labels`
+
+Lists the labels associated to the xref:section_glossary.adoc#ref_test_unit[test units] in the current
+xref:section_glossary.adoc#ref_test_module[test module] and exits (no test is run).
+
+[TIP]
+====
+See xref:tests_organization/tests_grouping.adoc[this section] for more details on labels and logical grouping
+of test cases.
+====
+
+=== Acceptable values
+
+xref:utf_reference/rt_param_reference.adoc#boolean_param_value[Boolean] with default value *no*.
+
+=== Command line syntax
+
+* `--list_labels[=<boolean value>]`
+
+=== Environment variable
+
+BOOST_TEST_LIST_LABELS
+
+=== Example
+
+The previous example from xref:utf_reference/rt_param_reference.adoc#list_content[`--list_content`] gives
+
+[source,cpp]
+----
+> ./boost_runtime_list_content --list_labels
+Available labels:
+  label1
+  label2
+----
+
+[#log_format]
+== `log_format`
+
+Parameter _log_format_ allows to set the {utf} log format to one of the formats supplied by the framework.
+To specify custom log format use the xref:test_output/logging_api.adoc#ref_log_formatter_api[custom log formatting API].
+
+The only acceptable values for this parameter are the names of the output formats supplied by the
+framework. By default the framework uses human readable format (HRF) for the testing log. This format
+is similar to a compiler error format. Alternatively you can specify XML or JUNIT as a log format which are
+easier to process by testing automation tools.
+
+=== Acceptable values
+
+xref:utf_reference/rt_param_reference.adoc#enum_param_value[Enumeration] names:
+
+* *HRF* (default)
+* XML
+* JUNIT
+
+=== Command line syntax
+
+* `--log_format=<format>`
+* `-f <format>`
+
+=== Environment variable
+
+BOOST_TEST_LOG_FORMAT
+
+[#log_level]
+== `log_level`
+
+Parameter _log_level_ allows to set the {utf} xref:test_output/logging_api.adoc#ref_log_level_explanations[log level]. Log level defines
+the verbosity of the testing log produced by a testing module. The verbosity ranges from a complete log, when all
+assertions (both successful and failing) are reported and all notifications about test units start and finish
+are included, to an empty log, when nothing is reported to a testing log stream.
+
+Log level is set to one of the predefined levels which are organized hierarchically, where each level includes
+all the messages on that level as well as all the messages from levels below. Levels are identified by string
+names, which are listed next.
+
+=== Acceptable values
+
+Following is the list of xref:utf_reference/rt_param_reference.adoc#enum_param_value[enumeration] log_level names ordered from higher to lower level.
+Thus each level includes messages on that level as well as all the messages on levels defined below.
+
+[%header%autowidth,cols="2*"]
+|===
+|Value
+|Included messages
+
+|all (default for JUNIT)
+|All log messages including the passed assertions notification
+
+|success
+|The same as all
+
+|test_suite
+|Test units start/finish notifications
+
+|message
+|User generated messages (using {boost_test_message} tool)
+
+|warning
+a|
+Messages describing failed assertion on `WARN` level (
+    xref:utf_reference/testing_tool_ref.adoc#assertion_boost_test_universal_macro[`BOOST_TEST_WARN`]
+    / `BOOST_WARN_...`
+     tools)
+
+|*error* (default for HRF and XML)
+|Messages describing failed assertion on `CHECK` level ({boost_test} / `BOOST_CHECK_...` tools)
+
+|cpp_exception
+|Messages reporting uncaught C++ exception
+
+|system_error
+|Messages reporting system originated non-fatal errors. For example, timeout or floating point exception.
+
+|fatal_error
+a|
+Messages reporting user or system originated fatal errors. For example, memory access violation. Also
+     all the messages describing failed assertion on `REQUIRE` level ({boost_test_require} / `BOOST_REQUIRE_...` tools)
+
+|nothing
+|No messages are reported.
+
+|===
+
+[CAUTION]
+====
+the JUNIT log format does not accept the log level to change: anything specified by `log_level` will be ignored
+ for the JUNIT format.
+====
+
+=== Command line syntax
+
+* `--log_level=<level>`
+* `-l <level>`
+
+=== Environment variable
+
+BOOST_TEST_LOG_LEVEL
+
+[#log_sink]
+== `log_sink`
+
+Parameter _log_sink_ allows to set the log sink - location where framework writes the testing log to,
+thus it allows to easily redirect the testing log to file or standard streams. By default testing log
+is directed to the standard output stream.
+
+=== Acceptable values
+
+Case sensitive xref:utf_reference/rt_param_reference.adoc#regular_param_value[string]:
+
+[%header%autowidth,cols="2*"]
+|===
+|Value
+|Meaning
+
+|*`stdout`* (default for HRF and XML)
+|Testing log is redirected into standard output stream
+
+|stderr
+|Testing log is redirected into standard error stream
+
+|File name (default for JUNIT)
+|Testing log is redirected into this file
+
+|===
+
+[NOTE]
+====
+For JUnit and if not specified, the log file is generated after the name of the
+ xref:tests_organization/master_test_suite.adoc[master test suite].
+====
+
+=== Command line syntax
+
+* `--log_sink=<stream or file name>`
+* `-k <stream or file name>`
+
+=== Environment variable
+
+BOOST_TEST_LOG_SINK
+
+[#logger]
+== `logger`
+
+The _logger_ parameter allows to fully specify (log format, level and sink) one or several loggers in one command.
+If this parameter is specified, it has precedence over xref:utf_reference/rt_param_reference.adoc#log_format[`log_format`],
+xref:utf_reference/rt_param_reference.adoc#log_level[`log_level`] and xref:utf_reference/rt_param_reference.adoc#log_sink[`log_sink`].
+
+The parameter is _repeatable_: it may appear several times on the command line. It is possible to indicate a set of loggers using the separator ':',
+which is the only way for repeating a logger description through the environment variable.
+
+The parameter is composed of three fields separated by a coma ',' and indicating respectively the log format, level and sink. The log
+format is mandatory. The log level and sink are both optional: if omitted, the default for the specified format will
+be used. The log level and sink accept the same value as their respective command line switch (see
+xref:utf_reference/rt_param_reference.adoc#log_level[`log_level`] and xref:utf_reference/rt_param_reference.adoc#log_sink[`log_sink`]
+for more information).
+
+=== Acceptable values
+
+Case sensitive xref:utf_reference/rt_param_reference.adoc#regular_param_value[string]:
+
+[source,cpp]
+----
+logger_set    ::= (logger ':')* logger
+logger        ::= logger_format (',' log_level? (',' log_sink? )? )?
+logger_format ::= 'HRF' | 'XML' | 'JUNIT'
+log_level     ::= 'all' | 'success' | 'test_suite' | 'message' | 'warning' | 'error' | 'cpp_exception' | 'system_error' | 'fatal_error' | 'nothing'
+log_sink      ::= 'stdout' | 'stderr' | filename
+----
+
+Examples:
+
+* `--logger=HRF,all` will set the `all` log level for the `HRF` log format, and will use the default sink associated to `HRF` (`stdout`)
+* `--logger=JUNIT,,somefile.xml:HRF,warning` will use the default log level associated to the `JUNIT` log format, and will use the file `somefile.xml`
+as the log sink. It will also enable the `HRF` format with log level `warning`. The corresponding sink will be set to the `HRF` default (`stdout`).
+
+=== Command line syntax
+
+* `--logger=<logger_set>`
+
+=== Environment variable
+
+BOOST_TEST_LOGGER
+
+[#output_format]
+== `output_format`
+
+Parameter _output_format_ combines an effect of
+xref:utf_reference/rt_param_reference.adoc#report_format[`report_format`] and
+xref:utf_reference/rt_param_reference.adoc#log_format[`log_format`]
+parameters. This parameter does not have
+a default value. The only acceptable values are string names of output formats (see below).
+
+NOTE: This parameter has precedence over _report_format_ and _log_format_ on the command line.
+
+=== Acceptable values
+
+xref:utf_reference/rt_param_reference.adoc#enum_param_value[Enumeration] name:
+
+* HRF
+* XML
+
+_HRF_ stands for human readable format, while _XML_ is dedicated to  automated output processing
+
+=== Command line syntax
+
+* `--output_format=<format>`
+* `-o <format>`
+
+=== Environment variable
+
+BOOST_TEST_OUTPUT_FORMAT
+
+[#random]
+== `random`
+
+Parameter _random_ instructs the {utf} to execute the test cases in random order. This parameter
+accepts an optional `unsigned integer` argument for the seed of the random generator:
+
+* By default (value `0`), the test cases are executed in some specific order
+defined by the order of test units in the test files, and the dependencies between test units.
+* If the parameter is specified without the argument value, or with value `1`, the testing order is randomized based on current time.
+* Alternatively, any positive value greater than `1` will be used as random seed for the run.
+
+[TIP]
+====
+in case `--random` is specified, the value of the seed is logged using {boost_test_message}, so that it is possible to replay
+ exactly the same sequence of unit test in case of failure. For the seed to be visible in the logs,
+ make sure the proper xref:utf_reference/rt_param_reference.adoc#log_level[`--log_level`] is set.
+====
+
+=== Acceptable values
+
+* *0* (default): no randomization
+* `1`: random seed based on the current time
+* xref:utf_reference/rt_param_reference.adoc#regular_param_value[integer] `value > 1` : seed for the random number generator
+
+=== Command line syntax
+
+* `--random=<seed>`
+
+=== Environment variable
+
+BOOST_TEST_RANDOM
+
+[#report_format]
+== `report_format`
+
+Parameter _report_format_ allows to set the {utf} report format to one of the formats supplied
+by the framework. To specify a custom report format use unit_test_report API.
+
+The only acceptable values for this parameter are the names of the output formats. By default the
+framework uses human readable format (HRF) for results reporting. Alternatively you can specify
+XML as report format. This format is easier to process by testing automation tools.
+
+=== Acceptable values
+
+xref:utf_reference/rt_param_reference.adoc#enum_param_value[Enumeration] names:
+
+* *HRF* (default)
+* XML
+
+=== Command line syntax
+
+* `--report_format=<format>`
+* `-m <format>`
+
+=== Environment variable
+
+BOOST_TEST_REPORT_FORMAT
+
+[#report_level]
+== `report_level`
+
+Parameter _report_level_ allows to set the verbosity level of the testing result report generated by
+the {utf}. Use value "no" to eliminate the results report completely. See the
+xref:test_output/report_formats.adoc#ref_report_formats[report formats] section for description of report formats on different levels.
+
+=== Acceptable values
+
+xref:utf_reference/rt_param_reference.adoc#enum_param_value[Enumeration] report_level names:
+
+* *confirm* (default)
+* no
+* short
+* detailed
+
+=== Command line syntax
+
+* `--report_level=<format>`
+* `-r <format>`
+
+=== Environment variable
+
+BOOST_TEST_REPORT_LEVEL
+
+[#report_memory_leaks_to]
+== `report_memory_leaks_to`
+
+Parameter _report_memory_leaks_to_ allows to specify a file where to report memory leaks to. The
+parameter does not have default value. If it is not specified, memory leaks (if any) are reported
+to the standard error stream.
+
+=== Acceptable values
+
+Arbitrary file name xref:utf_reference/rt_param_reference.adoc#regular_param_value[string].
+
+=== Command line syntax
+
+* `--report_memory_leaks_to=<file name>`
+
+=== Environment variable
+
+BOOST_TEST_REPORT_MEMORY_LEAKS_TO
+
+[#report_sink]
+== `report_sink`
+
+Parameter _report_sink_ allows to set the result report sink - the location where the framework writes
+the result report to, thus it allows to easily redirect the result report to a file or a standard stream.
+By default the testing result report is directed to the standard error stream.
+
+=== Acceptable values
+
+Case sensitive xref:utf_reference/rt_param_reference.adoc#regular_param_value[string]:
+
+* *`stderr`* (default)
+* `stdout`
+* arbitrary file name
+
+=== Command line syntax
+
+* `--report_sink=<stream or file name>`
+* `-e <stream or file name>`
+
+=== Environment variable
+
+BOOST_TEST_REPORT_SINK
+
+[#result_code]
+== `result_code`
+
+The "no" argument value for the option \`result_code instructs the {utf} to always return zero
+result code. This could be used for test programs executed within IDE. By default this parameter has
+value "yes". See the xref:usage_recommendations/index.adoc#ref_usage_recommendations[usage recommendations] section for more details.
+
+=== Acceptable values
+
+xref:utf_reference/rt_param_reference.adoc#boolean_param_value[Boolean] with default value *yes*.
+
+=== Command line syntax
+
+* `--result_code[=<boolean value>]`
+* `-c [<boolean value>]`
+
+=== Environment variable
+
+BOOST_TEST_RESULT_CODE
+
+[#run_test]
+== `run_test`
+
+Parameter _run_test_ allows to filter which test units to execute during testing. The {utf} supports
+both "selection filters", which allow to select which test units to enable from the set of available
+test units, and "disabler filters", which allow to disable some test units. The {utf} also supports
+enabling/disabling test units at compile time. These settings identify the default set of test units
+to run. Parameter _run_test_ is used to change this default. This parameter is repeatable, so you can
+specify more than one filter if necessary.
+It is also possible to use the ':' for separating each filter
+which can be used for filtering the tests with the environment variable `BOOST_TEST_RUN_FILTERS` (as it cannot be
+repeated like `--run_test`).
+
+More details about practical application of this parameter resides in xref:runtime_config/test_unit_filtering.adoc[test unit
+filtering] section.
+
+=== Acceptable values
+
+xref:utf_reference/rt_param_reference.adoc#regular_param_value[String] value representing single filter or a set of filters separated by ':'.
+The following grammar productions describe the syntax of filters:
+
+[source,cpp]
+----
+filter_set    ::= (filter ':')* filter
+filter        ::= relative_spec? test_set
+relative_spec ::= '+' | '!'
+test_set      ::= label | path
+label         ::= '@' identifier
+path          ::= (suite '/')? pattern_list
+pattern_list  ::= (pattern ',')* pattern
+suite         ::= (pattern '/')* pattern
+pattern       ::= '*'? identifier '*'?
+----
+
+[CAUTION]
+====
+the `pattern_list` above indicates test unit inside the same test suite given by `suite`. This means that the syntax
+ "`--run_test=suite1/suite2/A,B,C`" runs the test cases `A`, `B` and `C` that are *inside* `suite1/suite2`. In order to indicate
+ several test units that are not siblings, either repeat the `--run_test` or use `:` to separate the filters.
+====
+
+Regarding the meaning of these values xref:runtime_config/test_unit_filtering.adoc#ref_command_line_control[see here].
+
+=== Command line syntax
+
+* `--run_test=<test unit filter spec>`
+* `-t <test unit filter spec>`
+
+=== Environment variable
+
+BOOST_TEST_RUN_FILTERS
+
+[#save_pattern]
+== `save_pattern`
+
+Option _save_pattern_ facilitates switching mode of operation for testing output streams. See {output_test_stream_tool}
+section for details on these tests.
+
+This parameter serves no particular purpose within the framework itself. It can be used by test modules relying
+on cpp:boost::test_tools::output_test_stream[boost::test_tools::output_test_stream] to implement testing logic. It has two modes of operation:
+
+* save the pattern file (true).
+* and match against a previously stored pattern file (false).
+
+Default mode is 'match' (false).
+
+You can use this parameter to switch between these modes, by passing the parameter value to the `output_test_stream` constructor.
+The value of the command line parameter is available using call like this:
+
+[source,cpp]
+----
+bool is_save_pattern_flag_set = boost::unit_test::runtime_config::save_pattern();
+----
+
+=== Acceptable values
+
+xref:utf_reference/rt_param_reference.adoc#boolean_param_value[Boolean] with default value *no*.
+
+=== Command line syntax
+
+* `--save_pattern[=<boolean value>]`
+
+=== Environment variable
+
+BOOST_TEST_SAVE_PATTERN
+
+[#show_progress]
+== `show_progress`
+
+Option _show_progress_ instructs the {utf} to display test progress information. By default the
+parameter test progress is not shown. More details xref:test_output/test_output_progress.adoc[here].
+
+=== Acceptable values
+
+xref:utf_reference/rt_param_reference.adoc#boolean_param_value[Boolean] with default value *no*.
+
+=== Command line syntax
+
+* `--show_progress[=<boolean value>]`
+* `-p [<boolean value>]`
+
+=== Environment variable
+
+BOOST_TEST_SHOW_PROGRESS
+
+[#use_alt_stack]
+== `use_alt_stack`
+
+Option _use_alt_stack_ instructs the {utf} to use alternative stack for signals processing, on
+platforms where they are supported. More information about this feature is available
+http://www.gnu.org/software/libc/manual/html_node/Signal-Stack.html[here]. The feature is enabled
+by default, but can be disabled using this parameter.
+
+NOTE: If this feature is not supported by your compiler, this command line option will be silently ignored.
+
+[NOTE]
+====
+it is possible to remove the support of the alternative stack with the macro
+xref:utf_reference/link_references.adoc#config_disable_alt_stack[`BOOST_TEST_DISABLE_ALT_STACK`]
+====
+
+=== Acceptable values
+
+xref:utf_reference/rt_param_reference.adoc#boolean_param_value[Boolean] with default value *yes*.
+
+=== Command line syntax
+
+* `--use_alt_stack[=<boolean value>]`
+
+=== Environment variable
+
+BOOST_TEST_USE_ALT_STACK
+
+[#usage]
+== `usage`
+
+If specified option _usage_ instructs the {utf} to displays short usage message about the
+framework's parameters.
+
+=== Command line syntax
+
+* `-? [<boolean value>]`
+
+NOTE: The parameter name is not part of command line format, only short '-?'.
+
+=== Acceptable values
+
+xref:utf_reference/rt_param_reference.adoc#boolean_param_value[Boolean] with default value *no*.
+
+[#wait_for_debugger]
+== `wait_for_debugger`
+
+Option _wait_for_debugger_ instructs the {utf} to pause before starting test units execution,
+so that you can attach a debugger to running test module. By default this parameters turned off.
+
+=== Acceptable values
+
+xref:utf_reference/rt_param_reference.adoc#boolean_param_value[Boolean] with default value *no*.
+
+=== Command line syntax
+
+* `--wait_for_debugger[=<boolean value>]`
+* `-w [<boolean value>]`
+
+=== Environment variable
+
+BOOST_TEST_WAIT_FOR_DEBUGGER

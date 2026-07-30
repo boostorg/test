@@ -1,0 +1,45 @@
+= Test module's initialization
+:page-aliases: boost_test/adv_scenarios/test_module_init_overview.adoc
+
+In order for a unit test module to successfully link and execute, it has to have access to the _test module's initialization
+function_. the module's initialization function is called only once during the execution of the program, just before the
+xref:adv_scenarios/test_module_runner_overview.adoc[_test module runner_] is run. By default, the {utf} provides
+a default definition of initialization function. The only thing you have to do is to instruct the framework in which translation
+unit (`cpp` file) it needs to provide the definition. You do it by defining macro {boost_test_module} in the designated file.
+The default implementation assigns the name to the xref:section_glossary.adoc#ref_test_module[test module] as well as the
+xref:tests_organization/master_test_suite.adoc[master test suite]. The name to be assigned is specified by
+the value of the macro {boost_test_module}.
+
+[IMPORTANT]
+====
+For a test module consisting of multiple source files you have to define {boost_test_module} in a single test file only.
+Otherwise you end up with multiple instances of the initialization function.
+====
+
+There is practically no need to ever alter the default behavior of the test module's initialization function. The {utf} provides
+superior tools for performing customization tasks:
+
+* for automatic registration of test cases and test suites in the test tree, see section xref:tests_organization/index.adoc[Tests organization];
+* in order to assign the custom name to the master test suite define macro {boost_test_module} to desired value;
+* in order to access the command-line parameters (except the ones consumed by the {utf}), use the interface of the
+xref:tests_organization/master_test_suite.adoc[master test suite];
+* in order to perform a global initialization of the state required by the test cases, xref:tests_organization/fixtures.adoc#global[global fixtures]
+offer a superior alternative: you can specify global set-up and tear-down in one place, allow access to the global data from every test case, and guarantee
+that clean-up and tear-down is repeated each time the tests are re-run during the execution of the program;
+* if the need for custom module initialization is only driven by legacy code (written against old versions of the {utf}), it is recommended
+to update your program's code.
+
+The default initialization function provided by the framework is defined with the following signature in the global namespace:
+
+[source,cpp]
+----
+bool init_unit_test();
+----
+
+Return value `true` indicates a successful initialization. Value `false` indicates initialization failure.
+
+For overriding the default definition:
+
+* xref:adv_scenarios/single_header_customizations.adoc#init_func[see here], for header-only usage variant,
+* xref:adv_scenarios/static_lib_customizations.adoc#init_func[see here], for static library usage variant,
+* xref:adv_scenarios/shared_lib_customizations.adoc#init_func[see here], for shared library usage variant.

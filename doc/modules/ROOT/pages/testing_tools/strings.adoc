@@ -1,0 +1,23 @@
+= Strings and C-strings comparison
+:page-aliases: boost_test/testing_tools/extended_comparison/strings.adoc
+
+In the general case, pointers are compared using their value. However when type of the the pointers are `+char*+` or `+wchar_t*+`,
+{boost_test} promotes them as null terminated `char` arrays and string comparison is used instead.
+`std::string` (or any `std::basic_string`) and `std::string_view` (or any `std::basic_string_view`) are eligible for string comparison.
+
+String comparison can be used only if the operands to compare in {boost_test} can both be considered as strings type.
+
+[TIP]
+====
+In this form, the comparison method and reporting can be overridden by providing an additional argument to {boost_test}.
+ See the xref:testing_tools/collections.adoc[collection comparison] section for more details, in particular
+ `boost::test_tools::per_element()` and `boost::test_tools::lexicographic()` modifiers.
+====
+
+// tag reference: doc/modules/ROOT/examples/boost_test_string.run-fail.cpp
+:bt-name: boost_test_string
+:bt-rule: run-fail
+:bt-descr: BOOST_TEST string comparison
+include::partial$bt_example.adoc[]
+
+NOTE: `std::string_view` support added in Boost.Test xref:change_log.adoc#ref_CHANGE_LOG_3_12[Boost 1.72].

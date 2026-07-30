@@ -1,0 +1,4 @@
+= {utf} API reference
+:page-aliases: boost_test/utf_reference.adoc
+
+// The Doxygen-generated reference is replaced by the MrDocs `reference` module.

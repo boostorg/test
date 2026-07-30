@@ -1,0 +1,87 @@
+= Summary of run-time parameters
+:page-aliases: boost_test/runtime_config/summary.adoc
+
+[%header%autowidth,cols="2*"]
+|===
+|Command
+|Short description
+
+|xref:utf_reference/rt_param_reference.adoc#auto_dbg[`auto_start_dbg`]
+|Instructs the framework to automatically attach debugger in case of system failure.
+
+|xref:utf_reference/rt_param_reference.adoc#build_info[`build_info`]
+|Instructs the framework to display library build information.
+
+|xref:utf_reference/rt_param_reference.adoc#catch_system[`catch_system_error`]
+|Instructs the framework to catch system errors.
+
+|xref:utf_reference/rt_param_reference.adoc#color_output[`color_output`]
+|Instructs the framework to produce color output
+
+|xref:utf_reference/rt_param_reference.adoc#detect_fp_exceptions[`detect_fp_exceptions`]
+|Instructs the framework to trap floating point exceptions (on supported platforms).
+
+|xref:utf_reference/rt_param_reference.adoc#detect_memory_leaks[`detect_memory_leaks`]
+|Instructs the framework to detect memory leaks (on supported platforms).
+
+|xref:utf_reference/rt_param_reference.adoc#help[`help`]
+|Provides help on the {utf} parameters.
+
+|xref:utf_reference/rt_param_reference.adoc#list_content[`list_content`]
+|Lists the tests units, their organization in the test tree, their enabled/disabled state...
+
+|xref:utf_reference/rt_param_reference.adoc#list_labels[`list_labels`]
+|Lists the labels defined in the test module.
+
+|xref:utf_reference/rt_param_reference.adoc#log_format[`log_format`]
+|Specifies the log format
+
+|xref:utf_reference/rt_param_reference.adoc#log_level[`log_level`]
+|Specifies the framework's logging level
+
+|xref:utf_reference/rt_param_reference.adoc#log_sink[`log_sink`]
+|Specifies where to write testing log to.
+
+|xref:utf_reference/rt_param_reference.adoc#logger[`logger`]
+|Specifies the log level, format and sink of one or more loggers.
+
+|xref:utf_reference/rt_param_reference.adoc#output_format[`output_format`]
+|Specifies the log format and the report format.
+
+|xref:utf_reference/rt_param_reference.adoc#random[`random`]
+|Instructs the framework to run the tests in random order
+
+|xref:utf_reference/rt_param_reference.adoc#report_format[`report_format`]
+|Specifies the report format.
+
+|xref:utf_reference/rt_param_reference.adoc#report_level[`report_level`]
+|Specifies the level of details carried by the framework's testing result report.
+
+|xref:utf_reference/rt_param_reference.adoc#report_memory_leaks_to[`report_memory_leaks_to`]
+|Specifies file name where memory leaks report should be re-directed to.
+
+|xref:utf_reference/rt_param_reference.adoc#report_sink[`report_sink`]
+|Specifies where to write the testing result report to.
+
+|xref:utf_reference/rt_param_reference.adoc#result_code[`result_code`]
+|Instructs the framework to return or ignore a result code indicating an error in the tests.
+
+|{param_run_test}
+|Allows to filter which test units to execute at runtime.
+
+|xref:utf_reference/rt_param_reference.adoc#save_pattern[`save_pattern`]
+|Facilitates mode switching for testing output streams.
+
+|xref:utf_reference/rt_param_reference.adoc#show_progress[`show_progress`]
+|Instructs the framework to print progress information. More details xref:test_output/test_output_progress.adoc[here].
+
+|xref:utf_reference/rt_param_reference.adoc#use_alt_stack[`use_alt_stack`]
+|Instructs the framework to use an alternative stack for signal processing (on supported platforms).
+
+|xref:utf_reference/rt_param_reference.adoc#usage[`usage`]
+|Displays short usage message.
+
+|xref:utf_reference/rt_param_reference.adoc#wait_for_debugger[`wait_for_debugger`]
+|Instructs the framework to pause test module before testing is started to allow debugger to attach.
+
+|===

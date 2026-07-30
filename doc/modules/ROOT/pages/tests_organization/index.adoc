@@ -1,0 +1,49 @@
+= Declaring and organizing tests
+:page-aliases: boost_test/tests_organization.adoc
+
+If you look at many legacy test modules, big chance is that it's implemented as one big test function that
+consists of a mixture of check and output statements. Is there anything wrong with it? Yes. There are various
+disadvantages in single test function approach:
+
+* One big function tends to become really difficult to manage if the number of checks exceeds a reasonable limit
+(true for any large function). What is tested and where - who knows?
+* Many checks require similar preparations. This results in code repetitions within the test function.
+* If a fatal error or an exception is caused by any checks within the test function the rest of tests are
+skipped and there is no way to prevent this.
+* No way to perform only checks for a particular subsystem of the tested unit.
+* No summary of how different subsystems of the tested unit performed under in the test.
+
+The above points should make it clear that it's preferable to split a xref:section_glossary.adoc#ref_test_module[test module] into smaller *units*.
+These units are the *test cases*, the *test suites* and the *fixtures*.
+
+.Subjects covered by this section
+[cols="1,3"]
+|===
+|Declaration
+a|
+The {utf} supports several methods for declaring a xref:tests_organization/test_cases.adoc[test case].
+    Test cases can be implemented using free function like syntax or based on actual free function, function object,
+    that can be defined with or without parameters/data, or as template functions to be run against various types.
+
+|Organization
+a|
+The {utf} provides facilities to group several test cases into xref:tests_organization/test_suite.adoc[test suites].
+    The test suites can be nested, and the set of test suites and test cases defines the xref:tests_organization/test_tree.adoc[test tree],
+    where the leaves are the test cases.
+    Besides hierarchical structure the {utf} allows you to organize the test tree using xref:tests_organization/tests_grouping.adoc[logical grouping]
+    and xref:tests_organization/tests_dependencies.adoc[dependencies]
+    and provides you with controls to utilize the defined test tree organization the way you want (eg. from command line).
+
+|Attributes
+a|
+It is possible to specify test unit _attributes_ by using xref:tests_organization/decorators.adoc[decorators].
+     Attributes are used for a fine grained control over various aspects of test module execution, such as _logical grouping_,
+    _dependencies_, _expected failures_, etc.
+
+|Setup/teardown test unit actions
+a|
+When several tests shares the same set-up (environment, test data preparation, etc.), the preparation and cleanup code
+     may be factorized in xref:tests_organization/fixtures.adoc[fixtures].
+     In the {utf}, fixtures can be associated to test cases, test suites or globally to the test module.
+
+|===

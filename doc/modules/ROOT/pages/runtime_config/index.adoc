@@ -1,0 +1,43 @@
+= Runtime parameters
+:page-aliases: boost_test/runtime_config.adoc
+
+== Boost.Test runtime parameters
+
+The {utf} supports multiple parameters that affect test module execution. To set the parameter's value you can
+either use a runtime configuration subsystem interface from within the test module initialization function or you can
+specify the value at runtime during test module invocation.
+
+The {utf} provides two ways to set a parameter at runtime: by specifying a command line argument and by setting an
+environment variable. The command line argument always overrides the corresponding environment variable.
+
+During test module initialization the {utf} parses the command line and excludes all parameters that belong to it and
+their values from the argument list. The rest of command line is forwarded to the test module initialization function
+supplied by you. The command line argument format expected by the {utf} is:
+
+....
+--<command_line_argument_name>=<argument_value>
+....
+
+The command line argument name is case sensitive. It is required to match exactly the name in parameter specification.
+There should not be any spaces between '=' and either command line argument name or argument value.
+
+The corresponding environment variable name is also case sensitive and is required to exactly match the name in the
+parameter specification.
+
+All information about the currently supported parameters of the {utf} is summarized in
+the xref:runtime_config/summary.adoc[summary section].
+
+== Test filtering
+
+The {utf} provides an extensive filtering facility making it easy to run a specific test or a subset of tests. The
+xref:runtime_config/test_unit_filtering.adoc[section on filtering] gives all the details for the command line interface.
+
+Additionally, xref:tests_organization/test_suite.adoc[test-suites] and xref:tests_organization/tests_grouping.adoc[labels]
+may be used in order to construct subset of tests in an efficient and easy way, while decorators
+(eg. {decorator_disabled}, {decorator_precondition}) can be used to set the default run status of a test case.
+
+== Custom runtime parameters
+
+It is possible to extend further the command line interface by providing a custom command line interpretation logic. There are several
+ways on how to integrate this logic in the {utf} and this is explained in details in the section
+xref:runtime_config/runtime_custom.adoc[Custom runtime parameters].

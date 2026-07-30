@@ -1,0 +1,45 @@
+= The obsolete initialization function
+:page-aliases: boost_test/adv_scenarios/obsolete_init_func.adoc
+
+For backwards compatibility, the {utf} also allows the customization of an initialization function of a different type.
+This is called the _obsolete initialization function_. Its signature is:
+
+[source,cpp]
+----
+boost::unit_test::test_suite* init_unit_test_suite(int argc, char* argv[]);
+----
+
+The original design of the {utf} required of the programmer to implement it. It was intended to initialize and return
+the {master_test_suite}. No xref:tests_organization/test_organization_nullary.adoc#ref_BOOST_AUTO_TEST_CASE[automatic test case registration] was available at that
+time. The null-pointer value was considered an initialization error.
+
+In the header-only usage variant, you fall back to the obsolete initialization function signature by omitting the
+definition of macro {boost_test_alternative_init_api} in test module code.
+
+// tag reference: doc/modules/ROOT/examples/custom_obsolete_init.run-fail.cpp
+:bt-name: custom_obsolete_init
+:bt-rule: run-fail
+:bt-descr: using obsolete initialization function
+include::partial$bt_example.adoc[]
+
+In the static-library usage variant, you need to omit the definition of macro {boost_test_alternative_init_api} in test
+module and compile the {utf} static library without the compilation flag {boost_test_alternative_init_api} (this is
+the default).
+
+In the shared-library usage variant, it is not possible to use the obsolete initialization function.
+
+Even if you decide to us the obsolete initialization function, it is recommended that:
+
+. You always return a null-pointer value and install the master test suite via
+cpp:boost::unit_test::test_suite::add[`test_suite::add`] as illustrated
+xref:tests_organization/test_organization_nullary.adoc#ref_BOOST_TEST_CASE[here]. The current framework does no longer treat the
+null-pointer value as failure.
+. You signal the failure by throwing cpp:boost::unit_test::framework::setup_error[boost::unit_test::framework::setup_error] exception.
+. You access the command-line arguments through the interface of the {master_test_suite},
+and ignore the function's arguments `argc` and `argv`.
+
+[CAUTION]
+====
+The obsolete initialization function is deprecated as its name indicates. It is recommended to migrate
+ to the new API, and rely on the automated test unit registration and xref:tests_organization/fixtures.adoc[fixtures] (including xref:tests_organization/fixtures.adoc#global[global fixtures]) for other set-up.
+====

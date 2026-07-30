@@ -1,0 +1,63 @@
+= Building the {utf}
+:page-aliases: boost_test/adv_scenarios/build_utf.adoc
+
+In case you would like to use the xref:usage_variants.adoc#shared_lib[shared library variant] or the xref:usage_variants.adoc#static_lib[static library variant] of the {utf}, the library needs to be built.
+Building the {utf} is in fact quite easy.
+
+In the sequel, we define
+
+* $`boost_path` refers to the location where the boost archive was deflated
+* $`boost_installation_prefix` refers to the location where you want to install the {utf}
+
+More documentation about *Boost's build system* can be found http://www.boost.org/more/getting_started/index.html[here].
+
+== Windows
+
+You need to have a compilation toolchain. _Visual Studio Express_ is such one, freely available from the
+Microsoft website. Once installed, open a _Visual Studio Command Line tools_ prompt and build the Boost build program `b2`
+(see the link above). You will then be able to compile the {utf} with different variants.
+
+=== Static variant
+
+For building 32bits libraries, open a console window and enter the following commands:
+
+[source,cpp]
+----
+> cd ``$``boost_path
+> bootstrap.bat
+> b2 address-model=32 architecture=x86 --with-test link=static \
+>                     --prefix=``$``boost_installation_prefix install
+----
+
+For building 64bits libraries, the commands become:
+
+[source,cpp]
+----
+> cd ``$``boost_path
+> bootstrap.bat
+> b2 address-model=64 architecture=x86 --with-test link=static \
+>                    --prefix=``$``boost_installation_prefix install
+----
+
+=== Shared library variant
+
+In order to build the shared library variant, the directive `link=static` should be replaced by `link=shared` on the above command lines.
+For instance, for 64bits builds, the commands become:
+
+[source,cpp]
+----
+> cd ``$``boost_path
+> bootstrap.bat
+> b2 address-model=64 architecture=x86 --with-test link=shared --prefix=``$``boost_installation_prefix install
+----
+
+== Linux/OSX
+
+For Unix/Linux/OSX operating system, the build of the {utf} is very similar to the one on Windows:
+
+[source,cpp]
+----
+> cd ``$``boost_path
+> ./bootstrap.sh
+> ./b2 --with-test --prefix=``$``boost_installation_prefix install
+----

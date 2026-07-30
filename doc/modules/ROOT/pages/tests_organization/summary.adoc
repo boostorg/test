@@ -1,0 +1,85 @@
+= Summary of the API for declaring and organizing tests
+:page-aliases: boost_test/tests_organization/summary.adoc
+
+[%header%autowidth,cols="2*"]
+|===
+|Macro
+|Short description
+
+|{boost_test_case} / {boost_test_case_name}
+|Manual registration of a test case
+
+|{boost_auto_test_case}
+|Automatic declaration and registration of a test case
+
+|{boost_param_test_case}
+|Automatic declaration and registration of a test case with a collection of parameters
+
+|{boost_auto_test_case_template}
+|Automatic declaration and registration of a typed test case
+
+|{boost_test_case_template}
+|Registration of a typed test case with an `boost::mpl` like sequence of types
+
+|{boost_test_case_template_function}
+|Declaration of the body of a typed test case
+
+|{boost_data_test_case}
+|Declaration of the body of a test case on datasets
+
+|{boost_data_test_case_f}
+|Same as {boost_data_test_case} with fixtures support
+
+|{boost_test_dataset_max_arity}
+|Controlling the maximal arity of the data test case declared with {boost_data_test_case}
+
+|{boost_test_suite}
+|Manual creation of a test suite instance
+
+|{boost_auto_test_suite}
+|Automatic declaration of a test suite
+
+|{boost_auto_test_suite_end}
+|Automatic declaration of a test suite
+
+|{boost_test_decorator}
+|Adds decorators to a test unit
+
+|{boost_fixture_test_case}
+|Declares a test case with a fixture
+
+|{boost_fixture_test_suite}
+|Declares a fixture for a test suite (the setup/teardown is called for each test of the test suite)
+
+|{boost_test_global_fixture}
+|Declares a fixture globally to the test module
+
+|===
+
+[%header%autowidth,cols="2*"]
+|===
+|Decorator
+|Short description
+
+|{decorator_depends_on}
+|Creates a dependency (in the execution order and {default_run_status}) from one test case to another.
+
+|{decorator_description}
+|Attaches a semantic string to a test unit, that is visible from the command line interface.
+
+|{decorator_enabled} , {decorator_disabled}
+|Enables or disables unconditionally a test unit. The action of these decorators may be overridden by the command line interface
+
+|{decorator_enable_if}
+|Enables conditionally a test unit. The action of these decorators may be overridden by the command line interface
+
+|{decorator_fixture}
+|Attaches a fixture to a test unit
+
+|{decorator_label}
+|Labels a test unit to form a logical group
+
+|{decorator_precondition}
+|Enables or disables a test unit based on a predicate evaluated just before the execution of the test case.
+
+|===
