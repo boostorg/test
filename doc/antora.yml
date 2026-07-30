@@ -1,0 +1,49 @@
+#
+# Copyright (c) 2003 Boost.Test contributors
+#
+# Distributed under the Boost Software License, Version 1.0. (See accompanying
+# file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+#
+# Official repository: https://github.com/boostorg/test
+#
+
+name: test
+title: Boost.Test
+version: ~
+start_page: index.adoc
+
+asciidoc:
+  attributes:
+    source-language: cpp@
+    table-caption: false
+    # Base of the links to header sources. build_antora.sh overrides this with
+    # the exact commit when it can determine one; this is the fallback for
+    # builds that cannot, such as a local preview.
+    base-url: https://github.com/boostorg/test/blob/master
+    # Issue trackers referenced from the change log.
+    trac-url: https://svn.boost.org/trac/boost/ticket
+    pr-url: https://github.com/boostorg/test/pull
+    issue-url: https://github.com/boostorg/test/issues
+    # >>> BEGIN GENERATED ATTRIBUTES (doc/tools/qbk2adoc.py) <<<
+    # The QuickBook [def] macros were mostly link aliases into the reference
+    # chapter. They are kept as attributes so a reference page can be renamed
+    # in one place instead of at ~2000 call sites.
+    # >>> END GENERATED ATTRIBUTES <<<
+
+nav:
+  - modules/ROOT/nav.adoc
+
+ext:
+  # Re-enabled once doc/mrdocs.yml, doc/CMakeLists.txt and doc/mrdocs.cpp land.
+  # Commenting this out is also the fast inner loop when editing prose: it skips
+  # MrDocs entirely.
+  # cpp-reference:
+  #   config: doc/mrdocs.yml
+  cpp-tagfiles:
+    using-namespaces:
+      - boost::unit_test
+      - boost::unit_test::data
+      - boost::unit_test::data::monomorphic
+      - boost::unit_test::framework
+      - boost::test_tools
+      - boost::debug

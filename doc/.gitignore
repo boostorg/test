@@ -1,0 +1,7 @@
+html/
+node_modules/
+build/
+reference-output/
+antora.log
+.superproject-playbook.yml
+mrdocs.yml.bak

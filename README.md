@@ -1,4 +1,4 @@
-![boosttest logo](doc/html/images/boost.test.logo.png)
+![boosttest logo](doc/modules/ROOT/images/boost.test.logo.png)
 
 # What is Boost.Test?
 Boost.Test is a C++11/14/17 unit testing library, available on a wide range of platforms and compilers.
