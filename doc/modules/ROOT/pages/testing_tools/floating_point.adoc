@@ -188,11 +188,8 @@ https://en.cppreference.com/w/cpp/named_req/LessThanComparable[`LessThanComparab
 
 ==== Notation
 
-[%header%autowidth,cols="2*"]
+[%autowidth,cols="2*"]
 |===
-|
-|
-
 |`T`
 |A type that is a model of `ToleranceCompatible`
 

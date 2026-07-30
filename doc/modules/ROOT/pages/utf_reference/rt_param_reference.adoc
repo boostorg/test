@@ -281,7 +281,7 @@ BOOST_TEST_LIST_CONTENT
 
 The following _deliberately_ complicated example illustrates the purpose of the `--list_content`
 directive. The SVG generated from the produced Graphviz/dot file can be downloaded
-images/boost_runtime_list_content.svg[here].
+xref:attachment$boost_runtime_list_content.svg[here].
 
 // tag reference: doc/modules/ROOT/examples/boost_runtime_list_content.run.cpp
 :bt-name: boost_runtime_list_content
