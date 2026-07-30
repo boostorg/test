@@ -779,32 +779,38 @@ class Renderer(object):
                 "include::partial$bt_example.adoc[]\n\n"
                 % (name, rule, name, rule, self.inline(descr, page).strip()))
 
-    def register_import(self, target):
-        """Record an [import] and the //[callout] ids the file defines.
+    # doc/snippet and doc/examples are now both under modules/ROOT/examples, so
+    # the paths in the QuickBook [import]s have to be remapped.
+    EXAMPLES_ROOT = os.path.join(DOC, "modules", "ROOT", "examples")
+    IMPORT_REMAP = (("snippet/", "snippets/"), ("examples/", ""))
 
-        doc/snippet moves to modules/ROOT/examples/snippets; doc/examples is
-        already the examples root, and those files are pulled in by bt_example
-        rather than by a bare callout.
-        """
+    def register_import(self, target):
+        """Record an [import] and the tag ids the imported file defines."""
         self.imports.add(target)
-        path = os.path.normpath(os.path.join(DOC, target.replace("../", "", 1)))
+        rel = target.lstrip("./")
+        for old, new in self.IMPORT_REMAP:
+            if rel.startswith(old):
+                rel = new + rel[len(old):]
+                break
+        path = os.path.normpath(os.path.join(self.EXAMPLES_ROOT, rel))
         if not os.path.isfile(path):
             self.fixmes["import-missing"] += 1
+            sys.stderr.write("  missing import: %s\n" % target)
             return
-        rel = os.path.relpath(path, DOC)
-        if rel.startswith("snippet" + os.sep):
-            resource = "snippets/" + rel.split(os.sep, 1)[1].replace(os.sep, "/")
-        else:
-            resource = rel.replace(os.sep, "/")
-        for m in re.finditer(r"^\s*//\[([A-Za-z_]\w*)",
+        for m in re.finditer(r"^\s*(?://|/\*)\s*tag::([\w-]+)\[\]",
                              open(path, encoding="utf-8", errors="replace").read(),
                              re.M):
-            self.snippets[m.group(1)] = resource
+            self.snippets[m.group(1)] = rel.replace(os.sep, "/")
 
     def snippet_include(self, name):
         resource = self.snippets[name]
-        return ("[source,cpp]\n----\ninclude::example$%s[tag=%s]\n----\n\n"
-                % (resource, name))
+        out = ("[source,cpp]\n----\ninclude::example$%s[tag=%s]\n----\n"
+               % (resource, name))
+        # Snippets carrying AsciiDoc callouts keep the colist beside the code,
+        # in a `<name>-callouts` region of the same file.
+        if name + "-callouts" in self.snippets:
+            out += "include::example$%s[tag=%s-callouts]\n" % (resource, name)
+        return out + "\n"
 
     def table(self, inner, page):
         m = re.match(r"table(?::(\S+))?\s*", inner)

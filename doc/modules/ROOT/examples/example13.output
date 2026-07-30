@@ -1,0 +1,4 @@
+// tag::example_output[]
+> example 1
+Test setup error: test tree is empty
+// end::example_output[]

@@ -43,7 +43,7 @@ jobs:
     with:
        enable_pr_coverage: false  # Disabled: Too many issues with lcov
        enable_cygwin: false
-       depinst_args: --include doc/examples
+       depinst_args: --include doc/modules
        enable_mingw: false
        enable_multiarch: false
        timeout: 360
