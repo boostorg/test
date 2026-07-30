@@ -43,7 +43,8 @@ add_library(mrdocs OBJECT mrdocs.cpp)
 # This worktree's headers must win over whatever the Boost checkout carries,
 # which matters when BOOST_SRC_DIR is a clone rather than the superproject this
 # library sits in.
-target_include_directories(mrdocs BEFORE PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../include)
+get_filename_component(BOOST_TEST_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../include" ABSOLUTE)
+target_include_directories(mrdocs BEFORE PRIVATE ${BOOST_TEST_INCLUDE_DIR})
 target_link_libraries(mrdocs PRIVATE Boost::unit_test_framework)
 set_target_properties(mrdocs PROPERTIES
   CXX_STANDARD 17

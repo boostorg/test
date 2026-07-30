@@ -1,0 +1,249 @@
+= Headers
+:page-aliases: boost_test/utf_reference/headers.adoc
+
+The public headers of the _Unit Test Framework_, and what each one brings in.
+Every page in xref:reference:index.adoc[the generated reference] also names the
+header its symbol is declared in, so this page is the way round the other one
+does not cover: which header to include for a given facility.
+
+Most test modules include only `boost/test/unit_test.hpp`, or one of the
+xref:usage_variants.adoc[usage variant] headers. The rest matter when
+customising the framework or when reaching for a specific component.
+
+== Core
+
+`boost/test/unit_test.hpp`::
+The header a test module includes. Pulls in the test tree, the assertion
+macros, the logger and the runner.
+link:{base-url}/include/boost/test/unit_test.hpp[source]
+
+`boost/test/framework.hpp`::
+The framework's own interface: initialisation, running the test tree, and
+access to the unit under execution --
+cpp:boost::unit_test::framework::run[`run`],
+cpp:boost::unit_test::framework::current_test_case[`current_test_case`],
+cpp:boost::unit_test::framework::setup_error[`setup_error`].
+link:{base-url}/include/boost/test/framework.hpp[source]
+
+`boost/test/execution_monitor.hpp`::
+cpp:boost::execution_monitor[`execution_monitor`], which runs a function in a
+controlled environment, and cpp:boost::execution_exception[`execution_exception`].
+Also declares xref:utf_reference/link_references.adoc#config_disable_alt_stack[`BOOST_TEST_DISABLE_ALT_STACK`].
+link:{base-url}/include/boost/test/execution_monitor.hpp[source]
+
+`boost/test/unit_test_parameters.hpp`::
+The xref:utf_reference/rt_param_reference.adoc[runtime parameters] as the
+framework sees them, once the command line and the environment have been read.
+link:{base-url}/include/boost/test/unit_test_parameters.hpp[source]
+
+`boost/test/debug.hpp`::
+Debugger detection and attachment: cpp:boost::debug::under_debugger[`under_debugger`],
+cpp:boost::debug::attach_debugger[`attach_debugger`], cpp:boost::debug::set_debugger[`set_debugger`].
+`boost/test/debug_config.hpp` is the empty customisation header it includes,
+for you to define the debugger configuration macros in.
+link:{base-url}/include/boost/test/debug.hpp[source]
+
+`boost/test/progress_monitor.hpp`::
+cpp:boost::unit_test::progress_monitor_t[`progress_monitor_t`], the observer
+behind xref:test_output/test_output_progress.adoc[progress display].
+link:{base-url}/include/boost/test/progress_monitor.hpp[source]
+
+== Test tree
+
+`boost/test/tree/test_unit.hpp`::
+cpp:boost::unit_test::test_case[`test_case`],
+cpp:boost::unit_test::test_suite[`test_suite`] and the
+cpp:boost::unit_test::test_unit[`test_unit`] they share, plus
+cpp:boost::unit_test::master_test_suite_t[`master_test_suite_t`].
+link:{base-url}/include/boost/test/tree/test_unit.hpp[source]
+
+`boost/test/tree/observer.hpp`::
+cpp:boost::unit_test::test_observer[`test_observer`], the interface the logger,
+the results collector and the progress monitor all implement.
+link:{base-url}/include/boost/test/tree/observer.hpp[source]
+
+`boost/test/parameterized_test.hpp`::
+`BOOST_PARAM_TEST_CASE`, which builds a test case per element of a sequence.
+Superseded by xref:tests_organization/test_case_generation.adoc[data-driven test cases].
+link:{base-url}/include/boost/test/parameterized_test.hpp[source]
+
+== Assertions
+
+`boost/test/tools/assertion_result.hpp`::
+cpp:boost::test_tools::assertion_result[`assertion_result`], what a
+xref:testing_tools/custom_predicates.adoc[custom predicate] returns when it
+wants to explain itself.
+link:{base-url}/include/boost/test/tools/assertion_result.hpp[source]
+
+`boost/test/tools/floating_point_comparison.hpp`::
+The xref:testing_tools/floating_point.adoc[floating point comparison]
+machinery: cpp:boost::math::fpc::close_at_tolerance[`close_at_tolerance`],
+cpp:boost::math::fpc::small_with_tolerance[`small_with_tolerance`], and the
+cpp:boost::math::fpc::tolerance_based[`tolerance_based`] trait to specialise
+for a user-defined type.
+link:{base-url}/include/boost/test/tools/floating_point_comparison.hpp[source]
+
+`boost/test/tools/output_test_stream.hpp`::
+cpp:boost::test_tools::output_test_stream[`output_test_stream`], for
+xref:testing_tools/output_stream_testing.adoc[comparing output against a pattern].
+link:{base-url}/include/boost/test/tools/output_test_stream.hpp[source]
+
+`boost/test/tools/detail/tolerance_manip.hpp`::
+The cpp:boost::test_tools::tolerance[`tolerance`] manipulator.
+link:{base-url}/include/boost/test/tools/detail/tolerance_manip.hpp[source]
+
+`boost/test/tools/detail/bitwise_manip.hpp`::
+The cpp:boost::test_tools::bitwise[`bitwise`] manipulator, for
+xref:testing_tools/bitwise.adoc[bitwise comparison].
+link:{base-url}/include/boost/test/tools/detail/bitwise_manip.hpp[source]
+
+`boost/test/tools/detail/per_element_manip.hpp`::
+The cpp:boost::test_tools::per_element[`per_element`] manipulator, for
+xref:testing_tools/collections.adoc[element-wise collection comparison].
+link:{base-url}/include/boost/test/tools/detail/per_element_manip.hpp[source]
+
+`boost/test/tools/detail/lexicographic_manip.hpp`::
+The cpp:boost::test_tools::lexicographic[`lexicographic`] manipulator.
+link:{base-url}/include/boost/test/tools/detail/lexicographic_manip.hpp[source]
+
+== Logs and reports
+
+`boost/test/unit_test_log.hpp`::
+cpp:boost::unit_test::unit_test_log_t[`unit_test_log_t`], the
+xref:test_output/logging_api.adoc[logging API]: where the log goes, how
+verbose it is and in which format.
+link:{base-url}/include/boost/test/unit_test_log.hpp[source]
+
+`boost/test/unit_test_log_formatter.hpp`::
+cpp:boost::unit_test::unit_test_log_formatter[`unit_test_log_formatter`], the
+interface to implement for a
+xref:test_output/logging_api.adoc#custom_log_formatter[custom log format].
+link:{base-url}/include/boost/test/unit_test_log_formatter.hpp[source]
+
+`boost/test/results_collector.hpp`::
+cpp:boost::unit_test::results_collector_t[`results_collector_t`] and the
+cpp:boost::unit_test::test_results[`test_results`] it accumulates per test unit.
+link:{base-url}/include/boost/test/results_collector.hpp[source]
+
+`boost/test/results_reporter.hpp`::
+The xref:test_output/report_formats.adoc[report] side: format selection,
+output stream and detail level.
+link:{base-url}/include/boost/test/results_reporter.hpp[source]
+
+`boost/test/output/compiler_log_formatter.hpp`::
+The human readable log format, which imitates compiler diagnostics so an IDE
+can jump to the failure.
+link:{base-url}/include/boost/test/output/compiler_log_formatter.hpp[source]
+
+`boost/test/output/xml_log_formatter.hpp`::
+The XML log format.
+link:{base-url}/include/boost/test/output/xml_log_formatter.hpp[source]
+
+`boost/test/output/plain_report_formatter.hpp`::
+The human readable report format.
+link:{base-url}/include/boost/test/output/plain_report_formatter.hpp[source]
+
+`boost/test/output/xml_report_formatter.hpp`::
+The XML report format.
+link:{base-url}/include/boost/test/output/xml_report_formatter.hpp[source]
+
+== Datasets
+
+`boost/test/data/test_case.hpp`::
+`BOOST_DATA_TEST_CASE` and `BOOST_DATA_TEST_CASE_F`. Including it is what makes
+a xref:tests_organization/test_case_generation.adoc[data-driven test case]
+available.
+link:{base-url}/include/boost/test/data/test_case.hpp[source]
+
+`boost/test/data/monomorphic/fwd.hpp`::
+cpp:boost::unit_test::data::make[`make`], which turns a value, a collection or
+an initializer list into a dataset, and the
+cpp:boost::unit_test::data::monomorphic::is_dataset[`is_dataset`] trait.
+link:{base-url}/include/boost/test/data/monomorphic/fwd.hpp[source]
+
+`boost/test/data/config.hpp`::
+Defines `BOOST_TEST_NO_RANDOM_DATASET_AVAILABLE`,
+xref:utf_reference/link_references.adoc#config_no_zip_composition[`BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE`]
+and
+xref:utf_reference/link_references.adoc#config_no_grid_composition[`BOOST_TEST_NO_GRID_COMPOSITION_AVAILABLE`]
+when the standard library in use cannot support those features.
+link:{base-url}/include/boost/test/data/config.hpp[source]
+
+`boost/test/data/size.hpp`::
+cpp:boost::unit_test::data::size_t[`size_t`], a dataset size that can be
+infinite.
+link:{base-url}/include/boost/test/data/size.hpp[source]
+
+`boost/test/data/for_each_sample.hpp`::
+cpp:boost::unit_test::data::for_each_sample[`for_each_sample`], how a dataset
+hands its samples to the test body.
+link:{base-url}/include/boost/test/data/for_each_sample.hpp[source]
+
+The dataset kinds each have their own header, all under
+`boost/test/data/monomorphic/`:
+
+[%autowidth,cols="2*"]
+|===
+|`singleton.hpp`
+|A dataset of exactly one sample
+
+|`array.hpp`
+|A dataset over a C array
+
+|`collection.hpp`
+|A dataset over an STL collection
+
+|`initializer_list.hpp`
+|A dataset over a braced list
+
+|`generate.hpp`
+|A dataset produced by a generator
+
+|`delayed.hpp`
+|A dataset constructed only when the test runs, via
+ cpp:boost::unit_test::data::make_delayed[`make_delayed`]
+
+|`join.hpp`
+|xref:tests_organization/test_case_generation.adoc#operations[Concatenation] of two datasets
+
+|`zip.hpp`
+|xref:tests_organization/test_case_generation.adoc#operations[Zip] of two datasets
+
+|`grid.hpp`
+|xref:tests_organization/test_case_generation.adoc#operations[Cartesian product] of two datasets
+|===
+
+`boost/test/data/monomorphic/generators.hpp`::
+Includes the generators below.
+link:{base-url}/include/boost/test/data/monomorphic/generators.hpp[source]
+
+`boost/test/data/monomorphic/generators/xrange.hpp`::
+cpp:boost::unit_test::data::xrange[`xrange`], a dataset of evenly spaced values.
+link:{base-url}/include/boost/test/data/monomorphic/generators/xrange.hpp[source]
+
+`boost/test/data/monomorphic/generators/random.hpp`::
+cpp:boost::unit_test::data::random[`random`], an infinite dataset of random
+values, with `seed`, `distribution` and `engine` named parameters.
+link:{base-url}/include/boost/test/data/monomorphic/generators/random.hpp[source]
+
+`boost/test/data/monomorphic/generators/keywords.hpp`::
+The `begin`, `end` and `step` named parameters `xrange` takes.
+link:{base-url}/include/boost/test/data/monomorphic/generators/keywords.hpp[source]
+
+== Utilities
+
+`boost/test/utils/is_forward_iterable.hpp`::
+cpp:boost::unit_test::is_forward_iterable[`is_forward_iterable`] and
+cpp:boost::unit_test::is_container_forward_iterable[`is_container_forward_iterable`],
+the traits that decide whether `BOOST_TEST` treats a type as
+xref:testing_tools/collections.adoc[a collection].
+link:{base-url}/include/boost/test/utils/is_forward_iterable.hpp[source]
+
+`boost/test/utils/named_params.hpp`::
+The named parameter mechanism the decorators and the dataset generators use.
+link:{base-url}/include/boost/test/utils/named_params.hpp[source]
+
+`boost/test/utils/algorithm.hpp`::
+The small algorithms the framework needs and the standard library does not
+provide, such as `find_first_not_of` over two ranges.
+link:{base-url}/include/boost/test/utils/algorithm.hpp[source]

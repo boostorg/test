@@ -63,9 +63,12 @@ option was set to `no`. Thanks to https://github.com/thughes[Tom Hughes] for thi
 
 * It is now possible to combine tolerance indication, user message and collection comparison modifier in a single `BOOST_TEST` expression
 +
-`+std::vector<double> v1 = f();
+[source,cpp]
+----
+std::vector<double> v1 = f();
 std::vector<double> v2{1.1, 1.19};
-BOOST_TEST(v1 == v2, boost::test_tools::tolerance( 1e-3 ) << "comparison to ground truth failed" << boost::test_tools::per_element());+`
+BOOST_TEST(v1 == v2, boost::test_tools::tolerance( 1e-3 ) << "comparison to ground truth failed" << boost::test_tools::per_element());
+----
 
 === Bugfixes and feature requests
 
@@ -168,19 +171,25 @@ deprecated for a long time already, and will be removed in the near future. Plea
 switch to eg. the header only variable of Boost.Test. Tests using `minimal.hpp` can
 readily be converted to the header variant. For instance, the following code:
 +
-`+#include <boost/test/minimal.hpp>
+[source,cpp]
+----
+#include <boost/test/minimal.hpp>
 int test_main( int, char *[] )
 {
-...
-}+`
+  ...
+}
+----
 +
 may be rewritten as:
 +
-`+#include <boost/test/included/unit_test.hpp>
+[source,cpp]
+----
+#include <boost/test/included/unit_test.hpp>
 BOOST_AUTO_TEST_CASE(test_main)
 {
-...
-}+`
+  ...
+}
+----
 * The floating point comparison behavior change may use this type of comparison while previously
 using straight relational operator comparison. In particular this may causes _new warnings_.
 * the member function cpp:boost::unit_test::unit_test_log_formatter::log_build_info[boost::unit_test::unit_test_log_formatter::log_build_info] has slightly changed

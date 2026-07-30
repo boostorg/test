@@ -75,4 +75,5 @@
 ** xref:utf_reference/testout_reference.adoc[]
 ** xref:utf_reference/rt_param_reference.adoc[]
 ** xref:utf_reference/link_references.adoc[]
+** xref:utf_reference/ref_headers.adoc[]
 ** xref:reference:index.adoc[C++ API reference]

@@ -17,9 +17,11 @@ exclude:
   # Definitions, not declarations: pulled in only by the header-only variant.
   - '../include/boost/test/impl'
   - '../include/boost/test/included'
-  # Assembly headers and internal plumbing with no public API of their own.
-  - '../include/boost/test/detail'
   - '../include/boost/test/utils/runtime'
+# Note: boost/test/detail is deliberately *not* excluded. global_typedef.hpp
+# lives there and declares public enums the narrative links to, such as
+# output_format; the Doxygen target this replaced listed it explicitly. The
+# rest of that directory is plumbing that the symbol filters below drop anyway.
 compilation-database: ./CMakeLists.txt
 
 # Filters
@@ -27,11 +29,17 @@ include-symbols:
   - 'boost::unit_test::**'
   - 'boost::test_tools::**'
   - 'boost::debug::**'
+  # Boost.Test declares its floating point comparison predicates, and the
+  # tolerance_based customisation point users specialise, in this namespace --
+  # it is ours, not Boost.Math's, and the chapter on floating point comparison
+  # links straight into it.
+  - 'boost::math::fpc::**'
   - 'boost::execution_exception'
   - 'boost::execution_monitor'
   - 'boost::execution_aborted'
   - 'boost::system_error'
 implementation-defined:
+  - 'boost::math::fpc::fpc_detail'
   - 'boost::unit_test::ut_detail'
   - 'boost::unit_test::**::ut_detail'
   - 'boost::unit_test::**::ds_detail'

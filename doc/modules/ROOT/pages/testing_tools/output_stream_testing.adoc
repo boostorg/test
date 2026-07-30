@@ -21,7 +21,7 @@ string comparison and error message generation is automated by the tool implemen
 All `output_test_stream` validation member functions by default flush the stream once the check is performed.
 If you want to perform several checks with the same output, specify parameter `flush_stream`
 with value `false` footnote:[This parameter is supported on all comparison methods, see the class
-cpp:boost::test_tools::output_test_stream[documentation.\]].
+cpp:boost::test_tools::output_test_stream[documentation].].
 
 In some cases manual generation of expected output is either too time consuming or is impossible at all because
 of sheer volume. A possible way to address that issue is to split the test in two steps:

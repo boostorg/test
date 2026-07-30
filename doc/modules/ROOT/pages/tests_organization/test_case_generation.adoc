@@ -53,23 +53,27 @@ to the test.
 types `T1` and `T2` respectively. Now we would like to test a new functions `func3` that takes as argument a type
 `T3` containing `T1` and `T2`, and calling `func1` and `func2` through a known algorithm. An example of such a
 setting would be
-`// Returns the log of x
++
+[source,cpp]
+----
+// Returns the log of x
 // Precondition: x strictly positive.
 double fast_log(double x);
-+
+
 // Returns 1/(x-1)
 // Precondition: x != 1
 double fast_inv(double x);
-+
-struct dummy \{
-unsigned int field1;
-unsigned int field2;
+
+struct dummy {
+  unsigned int field1;
+  unsigned int field2;
 };
-+
+
 double func3(dummy value)
-\{
-return 0.5 * (exp(fast_log(value.field1))/value.field1 + value.field2/fast_inv(value.field2));
-}`
+{
+  return 0.5 * (exp(fast_log(value.field1))/value.field1 + value.field2/fast_inv(value.field2));
+}
+----
 +
 In this example,
 ** `func3` inherits from the preconditions of `fast_log` and `fast_inv`: it is defined in `(0, +infinity)` and in `[-C, +C] - \{1}` for `field1` and `field2` respectively (`C`
@@ -128,7 +132,7 @@ The descriptive power of the datasets in _Unit Test Framework_ comes from
 ====
 Only "monomorphic" datasets are supported, which means that all samples within a single dataset have the same type and same arity
  footnote:[polymorphic datasets will be considered in the future. Their need is mainly driven by the replacement of the
- xref:tests_organization/test_organization_templates.adoc[typed parametrized test cases\] by the dataset-like API.]
+ xref:tests_organization/test_organization_templates.adoc[typed parametrized test cases] by the dataset-like API.]
  . However, dataset of different sample types may be combined together with zip and cartesian product.
 ====
 
@@ -173,7 +177,7 @@ that has been instantiated after the `main` of the test module entry.
 To overcome this, a *delayed* dataset instantiation interface has been introduced. This effectively wraps the dataset inside another one,
 which *lazyly* instantiates the dataset.
 
-To instantiate a delayed dataset, the cpp:boost::unit_test::data::monomorphic::make_delayed[boost::unit_test::data::monomorphic::make_delayed] function should be used in the
+To instantiate a delayed dataset, the cpp:boost::unit_test::data::make_delayed[boost::unit_test::data::make_delayed] function should be used in the
 xref:{boost_data_test_case}[`BOOST_DATA_TEST_CASE`] call. The following snippet:
 
 [source,cpp]
@@ -327,9 +331,12 @@ The following properties hold:
 * the resulting dataset is of same arity as the operand datasets,
 * the size of the returned dataset is the sum of the size of the joined datasets,
 * the operation is associative, and it is possible to combine more than two datasets in one expression. The following joins are equivalent for any datasets `dsa`, `dsb` and `dsc`:
-`( dsa + dsb ) + dsc
+[source,cpp]
+----
+( dsa + dsb ) + dsc
 == dsa + ( dsb + dsc )
-== dsa + dsb + dsc`
+== dsa + dsb + dsc
+----
 
 [WARNING]
 ====
@@ -362,9 +369,12 @@ The following properties hold:
 * the size of the resulting dataset is equal to the size of the datasets (since they are supposed to be of the same size),
 exception made for the case the operand datasets size mismatch (see below),
 * the operation is associative, and it is possible to combine more than two datasets in one expression,
-`+( dsa ^ dsb ) ^ dsc
+[source,cpp]
+----
+( dsa ^ dsb ) ^ dsc
 == dsa ^ ( dsb ^ dsc )
-== dsa ^ dsb ^ dsc+`
+== dsa ^ dsb ^ dsc
+----
 
 A particular handling is performed if `dsa` and `dsb` are of different size. The rule is as follow:
 

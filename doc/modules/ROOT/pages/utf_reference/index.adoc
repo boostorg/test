@@ -17,6 +17,7 @@ them.
   parameter, with its command-line syntax and environment variable
 * xref:utf_reference/link_references.adoc[] -- the macros that select a build
   variant and the behaviours they switch on
+* xref:utf_reference/ref_headers.adoc[] -- which header to include for what
 
 The C++ API -- classes, functions and types -- is generated from the headers by
 https://www.mrdocs.com[MrDocs] and lives in
