@@ -127,8 +127,45 @@ Define this macro before the inclusion of any __UTF__ header to disable the supp
 of the [@http://www.gnu.org/software/libc/manual/html_node/Signal-Stack.html alternative stack],
 in case your compiler does not support it and the __UTF__ cannot automatically guess the lack of support.
 
-See [link boost_test.utf_reference.rt_param_reference.use_alt_stack `use_alt_stack`]
-and [macroref BOOST_TEST_DISABLE_ALT_STACK `BOOST_TEST_DISABLE_ALT_STACK`] for more details.
+See [link boost_test.utf_reference.rt_param_reference.use_alt_stack `use_alt_stack`] for more details.
+[endsect]
+
+[/-----------------------------------------------------------------]
+[section:config_no_random_dataset `BOOST_TEST_NO_RANDOM_DATASET_AVAILABLE`]
+Indicates that the [link boost_test.tests_organization.test_cases.test_case_generation.generators.random random dataset]
+is not available.
+
+Unlike the other macros in this section, this one is not defined by you: the __UTF__ defines it
+for you when the standard library in use provides no `<random>` header, which the random dataset
+generator needs. Test it to guard code that would otherwise fail to compile:
+
+``
+#include <boost/test/data/config.hpp>
+
+#ifndef BOOST_TEST_NO_RANDOM_DATASET_AVAILABLE
+// use data::random(...) here
+#endif
+``
+[endsect]
+
+[/-----------------------------------------------------------------]
+[section:config_no_zip_composition `BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE`]
+Indicates that the [link boost_test.tests_organization.test_cases.test_case_generation.operations zip operation]
+on datasets is not available.
+
+As for `BOOST_TEST_NO_RANDOM_DATASET_AVAILABLE`, the __UTF__ defines this macro for you: zipping
+datasets needs the `<tuple>` header, and the macro appears when the standard library in use does
+not provide one.
+[endsect]
+
+[/-----------------------------------------------------------------]
+[section:config_no_grid_composition `BOOST_TEST_NO_GRID_COMPOSITION_AVAILABLE`]
+Indicates that the [link boost_test.tests_organization.test_cases.test_case_generation.operations grid operation]
+on datasets is not available.
+
+Defined by the __UTF__ under the same condition as
+[link boost_test.utf_reference.link_references.config_no_zip_composition `BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE`]:
+the grid, or Cartesian product, of two datasets needs the `<tuple>` header.
 [endsect]
 
 [endsect]

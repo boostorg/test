@@ -62,7 +62,7 @@ insensitive strings: "N", "NO", "FALSE", "0".
 [#enum_param_value]
 Values of an enumeration type are expected as case sensitive strings representing
 enumeration value names. Each parameter with an enumeration value lists all valid names in a
-parameter\`s description.
+parameter's description.
 
 [#auto_dbg]
 == `auto_start_dbg`
@@ -673,7 +673,7 @@ BOOST_TEST_REPORT_SINK
 [#result_code]
 == `result_code`
 
-The "no" argument value for the option \`result_code instructs the _Unit Test Framework_ to always return zero
+The "no" argument value for the option `result_code` instructs the _Unit Test Framework_ to always return zero
 result code. This could be used for test programs executed within IDE. By default this parameter has
 value "yes". See the xref:usage_recommendations/index.adoc#ref_usage_recommendations[usage recommendations] section for more details.
 

@@ -43,7 +43,7 @@ __PEM__ instead of regular function `main` your program is required to supply a 
 
 Here is the traditional ['Hello World] program implemented using the __PEM__:
 
-[bt_example example24..Hello World with the Program Execution Monitor..run-fail]
+[bt_example example24..Hello World with the Program Execution Monitor..run]
 
 It really is that simple - just change the name of your initial function from `main()` to `cpp_main()`. Do make sure
 the `argc` and `argv` parameters are specified (although you don't have to name them if you don't use them).

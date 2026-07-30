@@ -60,6 +60,7 @@
 ** xref:adv_scenarios/shared_lib_customizations.adoc[]
 ** xref:adv_scenarios/external_test_runner.adoc[]
 ** xref:adv_scenarios/obsolete_init_func.adoc[]
+* xref:program_execution_monitor.adoc[]
 * xref:usage_recommendations/index.adoc[]
 ** xref:usage_recommendations/bt_and_tdd.adoc[]
 ** xref:usage_recommendations/hello.adoc[]

@@ -49,7 +49,7 @@ insensitive strings: "N", "NO", "FALSE", "0".
 
 Values of an enumeration type are expected as case sensitive strings representing
 enumeration value names. Each parameter with an enumeration value lists all valid names in a
-parameter`s description.
+parameter's description.
 
 [/ ###############################################################################################]
 
@@ -695,7 +695,7 @@ Case sensitive [link regular_param_value string]:
 [/ ###############################################################################################]
 [section:result_code `result_code`]
 
-The "no" argument value for the option [`result_code] instructs the __UTF__ to always return zero
+The "no" argument value for the option `result_code` instructs the __UTF__ to always return zero
 result code. This could be used for test programs executed within IDE. By default this parameter has
 value "yes". See the [link ref_usage_recommendations usage recommendations] section for more details.
 

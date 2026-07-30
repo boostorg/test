@@ -125,5 +125,43 @@ Define this macro before the inclusion of any _Unit Test Framework_ header to di
 of the http://www.gnu.org/software/libc/manual/html_node/Signal-Stack.html[alternative stack],
 in case your compiler does not support it and the _Unit Test Framework_ cannot automatically guess the lack of support.
 
-See xref:utf_reference/rt_param_reference.adoc#use_alt_stack[`use_alt_stack`]
-and xref:utf_reference/link_references.adoc#config_disable_alt_stack[`BOOST_TEST_DISABLE_ALT_STACK`] for more details.
+See xref:utf_reference/rt_param_reference.adoc#use_alt_stack[`use_alt_stack`] for more details.
+
+[#config_no_random_dataset]
+== `BOOST_TEST_NO_RANDOM_DATASET_AVAILABLE`
+
+Indicates that the xref:tests_organization/test_case_generation.adoc#random[random dataset]
+is not available.
+
+Unlike the other macros in this section, this one is not defined by you: the _Unit Test Framework_ defines it
+for you when the standard library in use provides no `<random>` header, which the random dataset
+generator needs. Test it to guard code that would otherwise fail to compile:
+
+[source,cpp]
+----
+#include <boost/test/data/config.hpp>
+
+#ifndef BOOST_TEST_NO_RANDOM_DATASET_AVAILABLE
+// use data::random(...) here
+#endif
+----
+
+[#config_no_zip_composition]
+== `BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE`
+
+Indicates that the xref:tests_organization/test_case_generation.adoc#operations[zip operation]
+on datasets is not available.
+
+As for `BOOST_TEST_NO_RANDOM_DATASET_AVAILABLE`, the _Unit Test Framework_ defines this macro for you: zipping
+datasets needs the `<tuple>` header, and the macro appears when the standard library in use does
+not provide one.
+
+[#config_no_grid_composition]
+== `BOOST_TEST_NO_GRID_COMPOSITION_AVAILABLE`
+
+Indicates that the xref:tests_organization/test_case_generation.adoc#operations[grid operation]
+on datasets is not available.
+
+Defined by the _Unit Test Framework_ under the same condition as
+xref:utf_reference/link_references.adoc#config_no_zip_composition[`BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE`]:
+the grid, or Cartesian product, of two datasets needs the `<tuple>` header.

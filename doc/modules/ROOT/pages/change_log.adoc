@@ -158,7 +158,7 @@ point comparisons for expressions such as
 +
 `BOOST_TEST(3.0001 == 3);`
 +
-See this section // FIXME(qbk2adoc): unresolved link boost_test.testing_tools.extended_comparison.floating_point.type_promotion_of_the_operands
+See xref:testing_tools/floating_point.adoc#type_promotion_of_the_operands[this section]
 for more information.
 
 === Breaking changes
@@ -413,7 +413,7 @@ xref:testing_tools/strings.adoc[string comparison] for more details.
 
 * Boost.Test now treats each sample of a dataset test case as being a uniquely named test case under the same test suite,
 which enables the (re)run of one particular sample from the command line interface. See
-here // FIXME(qbk2adoc): unresolved link boost_test.tests_organization.test_cases.test_case_generation.datasets_auto_registration.samples_and_test_tree
+xref:tests_organization/test_case_generation.adoc#samples_and_test_tree[here]
 for more details,
 * Boost.Test learned to interpret ':' as a separator for the test filters: the string passed to
 xref:utf_reference/rt_param_reference.adoc#run_test[`--run_test`]
@@ -595,7 +595,7 @@ should be rewritten to
 . {trac-url}/9539[#9539] Floating-point comparison algorithms aren't formatted correctly
 . {trac-url}/9581[#9581] Squassabia reference link gives 404 not found
 . {trac-url}/9960[#9960] Warnings on Clang
-. {trac-url}/10256[#10256] \[boost test] - issue: `sigaltstack`
+. {trac-url}/10256[#10256] Boost.Test issue: `sigaltstack`
 . {trac-url}/10318[#10318] Minor documentation fix
 . {trac-url}/10394[#10394] Broken links in Boost Test documentation
 . {trac-url}/10888[#10888] Assertion failures don't show up in the errors pane in VS 2010, VS 2012 or VS 2013 (duplicates)

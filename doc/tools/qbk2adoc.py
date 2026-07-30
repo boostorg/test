@@ -55,7 +55,7 @@ CHAPTER_DIRS = {
     "test_output": "test_output",
     "runtime_config": "runtime_config",
     "adv_scenarios": "adv_scenarios",
-    "pem": "prod_use",
+    "pem": None,
     "usage_recommendations": "usage_recommendations",
     "section_faq": None,
     "section_glossary": None,
@@ -65,7 +65,10 @@ CHAPTER_DIRS = {
 }
 
 # The introduction is the component's landing page.
-PAGE_OVERRIDES = {"intro": "index.adoc"}
+PAGE_OVERRIDES = {
+    "intro": "index.adoc",
+    "pem": "program_execution_monitor.adoc",
+}
 
 # QuickBook tags naming a C++ entity documented by MrDocs; they all become the
 # `cpp:` macro contributed by antora-cpp-tagfiles-extension.
@@ -88,6 +91,14 @@ MACROREF_TARGETS = {
     "BOOST_TEST_NO_RANDOM_DATASET_AVAILABLE": "config_no_random_dataset",
 }
 MACROREF_PAGE = "utf_reference/link_references.adoc"
+
+# Link targets naming a chapter that no longer exists and has no successor in
+# the narrative. The Execution Monitor lost its chapter long ago; MrDocs now
+# documents the class, so that is where the link goes.
+STALE_LINK_TARGETS = {
+    "boost_test.components.execution_monitor":
+        "xref:reference:boost/execution_monitor.adoc",
+}
 
 # parametric_test_case_generation.qbk gives two different tables the same id.
 # The second one lists the random generator's parameters.
@@ -260,6 +271,7 @@ class Index(object):
         self._assign_qids(self.root, [LIBRARY_ID])
         self._assign_pages()
         self._collect_anchors()
+        self.link_targets = self.collect_link_targets()
 
     # -- loading ------------------------------------------------------------
 
@@ -418,11 +430,24 @@ class Index(object):
                 found = [m.group(1) for m in re.finditer(r"\[#([^\]\s]+)\]", chunk)]
                 found += [m.group(1)
                           for m in re.finditer(r"\[h[1-6]:([^\]\s]+)[\s\]]", chunk)]
+                # QuickBook derives an id from the title of a plain [hN]
+                # heading, and links do target those.
+                found += [make_id(m.group(1))
+                          for m in re.finditer(r"\[h[1-6]\s+([^\]]*)\]", chunk)]
                 for anchor in found:
                     self.anchors[anchor] = (owner, anchor)
                     # links also address these as <section-qid>.<anchor>
                     self.anchors.setdefault("%s.%s" % (sec.qid, anchor),
                                             (owner, anchor))
+
+    def collect_link_targets(self):
+        targets = set()
+        for sec in self.by_qid.values():
+            for kind, chunk in sec.chunks:
+                if kind == "text":
+                    for m in re.finditer(r"\[links?\s+(\S+)", chunk):
+                        targets.add(m.group(1))
+        return targets
 
     def resolve(self, target):
         """Map a QuickBook link target to (page-section, anchor) or None."""
@@ -430,6 +455,15 @@ class Index(object):
             return self.anchors[target]
         sec = self.by_qid.get(target)
         if sec is not None:
+            owner = self.owning_page(sec)
+            return (owner, None if owner is sec else sec.id)
+        # The chapter tree was reorganised at some point without the links
+        # being updated: `boost_test.components.section_pem...` still names a
+        # real section by its last component. Accept that when unambiguous.
+        tail = target.rsplit(".", 1)[-1]
+        matches = {s.qid for s in self.by_qid.values() if s.id == tail}
+        if len(matches) == 1:
+            sec = self.by_qid[matches.pop()]
             owner = self.owning_page(sec)
             return (owner, None if owner is sec else sec.id)
         return None
@@ -502,7 +536,7 @@ class Renderer(object):
         return self.DEF_RE.sub(repl, text) if code else text
 
     def build_def_table(self, page):
-        """Decide, once, what each [def] becomes in prose and in antora.yml.
+        r"""Decide, once, what each [def] becomes in prose and in antora.yml.
 
         Asciidoctor substitutes quotes *before* attributes, and a value coming
         from an API attribute -- which is what antora.yml sets -- is inserted
@@ -581,6 +615,9 @@ class Renderer(object):
         return "".join(out)
 
     def link_macro(self, target, label, page):
+        if target in STALE_LINK_TARGETS:
+            return "%s[%s]" % (STALE_LINK_TARGETS[target],
+                               label.replace("]", "\\]"))
         # `boost.debug.under_debugger` and friends address the Doxygen-generated
         # reference, which MrDocs now owns; route them through the cpp: macro.
         if target.startswith("boost.") and not target.startswith(LIBRARY_ID + "."):
@@ -662,7 +699,7 @@ class Renderer(object):
 
     # -- blocks -------------------------------------------------------------
 
-    def render_body(self, text, page, level, headings):
+    def render_body(self, text, page, level, headings, sec=None):
         """Render a section body (no nested [section]s) at AsciiDoc `level`."""
         out = []
         pending = []          # anchors waiting to attach to the next block
@@ -684,7 +721,7 @@ class Renderer(object):
                     pending.append("[#%s]" % inner[1:].strip())
                     pos = end
                     continue
-                block = self.render_block_tag(tag, inner, page, level, headings)
+                block = self.render_block_tag(tag, inner, page, level, headings, sec)
                 if block is not None:
                     out.append(self.flush_anchors(pending) + block)
                     pos = end
@@ -716,10 +753,10 @@ class Renderer(object):
         del pending[:]
         return text
 
-    def render_block_tag(self, tag, inner, page, level, headings):
+    def render_block_tag(self, tag, inner, page, level, headings, sec=None):
         rest = inner[len(tag):].strip() if tag else inner
         if re.match(r"^h[1-6]([\s:])", inner) or tag == "heading":
-            return self.heading(inner, page, level, headings)
+            return self.heading(inner, page, level, headings, sec)
         if tag in ADMONITIONS:
             return self.admonition(ADMONITIONS[tag], rest, page, level)
         if tag == "table":
@@ -747,7 +784,7 @@ class Renderer(object):
             return self.image_macro(inner[1:].strip(), block=True) + "\n\n"
         return None
 
-    def heading(self, inner, page, level, headings):
+    def heading(self, inner, page, level, headings, sec=None):
         m = re.match(r"h([1-6])(?::(\S+))?\s*(.*)", inner, re.S)
         if m:
             depth, anchor, title = int(m.group(1)), m.group(2), m.group(3)
@@ -755,6 +792,16 @@ class Renderer(object):
             depth, anchor = 3, None
             title = inner[len("heading"):].strip()
         rank = headings.index(depth) if depth in headings else 0
+        if anchor is None:
+            # QuickBook derives an id from a plain [hN] title, but scoped to the
+            # enclosing section. Flattened onto one page those ids collide -- 25
+            # runtime parameters each have an "Acceptable values" heading -- so
+            # only emit the ones something actually links to.
+            auto = make_id(title)
+            qualified = "%s.%s" % (sec.qid, auto) if sec is not None else auto
+            if auto in self.index.link_targets or (
+                    qualified in self.index.link_targets):
+                anchor = auto
         out = "[#%s]\n" % anchor if anchor else ""
         out += "%s %s\n\n" % ("=" * min(level + 1 + rank, 6),
                               self.inline(title.strip(), page).strip())
@@ -1009,7 +1056,7 @@ class Renderer(object):
         headings = self.heading_ranks(sec)
         for kind, chunk in sec.chunks:
             if kind == "text":
-                out.append(self.render_body(chunk, page, level, headings))
+                out.append(self.render_body(chunk, page, level, headings, sec))
             elif chunk.page is None:
                 out.append("[#%s]\n%s %s\n\n" % (
                     chunk.id, "=" * (level + 1),

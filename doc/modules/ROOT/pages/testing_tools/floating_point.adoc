@@ -109,6 +109,7 @@ types `T` and `U` appear as sub-expressions of the full expression inside assert
 :bt-descr: tolerance applied to different types
 include::partial$bt_example.adoc[]
 
+[#type_promotion_of_the_operands]
 == Type promotion of the operands
 
 Given two types `T` and `U` being compared inside an assertion xref:{boost_test}[`BOOST_TEST`], tolerance based comparison is invoked
@@ -141,7 +142,7 @@ include::partial$bt_example.adoc[]
 Finally, note that comparisons for tolerance are also applied to `operator<` with semantics _less by more than some tolerance_,
 and other relational operators. Also, the tolerance-based comparisons are involved when a more complicated expression tree is
 processed within the assertion body. The section on
-relational operators // FIXME(qbk2adoc): unresolved link boost_test.testing_tools.extended_comparison.floating_point.floating_points_comparison_impl.tolerance_in_operator
+xref:testing_tools/floating_point.adoc#tolerance_in_operator[relational operators]
 defines how `operator<` relates to tolerance.
 
 // tag reference: doc/modules/ROOT/examples/tolerance_03.run-fail.cpp
@@ -313,6 +314,7 @@ The compatibility assertion xref:{boost_level_small}[`BOOST_<level>_SMALL`] perf
 The _Unit Test Framework_ also provides unary predicate cpp:boost::math::fpc::small_with_tolerance[`small_with_tolerance`] and binary predicate predicate
 cpp:boost::math::fpc::close_at_tolerance[`close_at_tolerance`] that implement formula (abs) and (rel) respectively.
 
+[#tolerance_in_operator]
 === Tolerance in `operator<`
 
 Tolerance-based computations also apply to `operator<` and other relational operators. The semantics are defined as follows:

@@ -47,6 +47,7 @@ of the full statement. However, we can observe that they are not treated symmetr
 
 More details on how the _Unit Test Framework_ parses the statement are given in xref:testing_tools/internal_details.adoc[this] section.
 
+[#custom_messages]
 == Custom messages
 
 While perfectly exact and precise, the file name, test case name, line number of a failed statement carry an information that

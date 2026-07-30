@@ -23,6 +23,7 @@ xref:adv_scenarios/external_test_runner.adoc[external test runner].
 WARNING: The test module should have at least one test-case defined, otherwise it is considered as an error.
 
 [#test_body]
+[#test_body]
 == Test body
 
 This is the part of a test module that actually performs the test.
@@ -42,6 +43,7 @@ This is a collective name when referred to either a xref:section_glossary.adoc#t
 xref:section_glossary.adoc#test_case[test cases]. See xref:tests_organization/index.adoc[this section] for more details.
 
 [#test_assertion]
+[#test_assertion]
 == Test assertion
 
 This is a single binary condition (binary in a sense that is has two outcomes: pass and fail) checked
@@ -53,6 +55,7 @@ assertions within single test case - advocated by those only interested in the f
 test module. The _Unit Test Framework_ supports both approaches.
 
 [#test_case]
+[#test_case]
 == Test case
 
 This is an independently monitored function within a test module that
@@ -62,6 +65,7 @@ test case execution termination doesn't cause the testing to cease. Instead the 
 case execution monitor, reported by the _Unit Test Framework_ and testing proceeds to the next test case. Later on you are going
 to see that this is on of the primary reasons to prefer multiple small test cases to a single big test function.
 
+[#test_suite]
 [#test_suite]
 == Test suite
 
@@ -79,6 +83,7 @@ The _Unit Test Framework_ requires the test tree to contain at least one test su
 test suite - root node of the test tree - is called the master test suite.
 
 [#test_setup]
+[#test_setup]
 == Test setup
 
 This is the part of a test module that is responsible for the test
@@ -91,6 +96,7 @@ preparation. It includes the following operations that take place prior to a sta
 test initialization, even though it's executed as a part of the test case.
 
 [#test_cleanup]
+[#test_cleanup]
 == Test cleanup
 
 This is the part of test module that is responsible for cleanup operations.
@@ -100,6 +106,7 @@ This is the part of test module that is responsible for cleanup operations.
 
 Matching setup and cleanup operations are frequently united into a single entity called test fixture.
 
+[#test_runner]
 [#test_runner]
 == Test runner
 

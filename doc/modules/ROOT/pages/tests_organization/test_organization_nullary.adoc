@@ -52,7 +52,7 @@ Both test case creation and registration are performed in the
 xref:adv_scenarios/test_module_init_overview.adoc[test module initialization function].
 
 Here is the simplest example of manually registered test case. A single test case is created and registered inside
-the test module initialization routine. Note that the free function name is passed by address to the macro xref:{boost_test_case}[`BOOST_TEST_CASE`]\`.
+the test module initialization routine. Note that the free function name is passed by address to the macro xref:{boost_test_case}[`BOOST_TEST_CASE`].
 
 [#ref_bt_example01]
 // tag reference: doc/modules/ROOT/examples/example01.run.cpp

@@ -257,6 +257,7 @@ A compilation-time check is performed on the coherence of the arity of the datas
 
 CAUTION: The macros xref:{boost_data_test_case}[`BOOST_DATA_TEST_CASE`] and xref:{boost_data_test_case_f}[`BOOST_DATA_TEST_CASE_F`] are available only for compilers with support for *variadic macros*.
 
+[#samples_and_test_tree]
 === Samples and test tree
 
 It should be emphasized that those macros do not declare a single test case (as xref:{boost_auto_test_case}[`BOOST_AUTO_TEST_CASE`] would do) but declare and

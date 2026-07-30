@@ -50,7 +50,7 @@ Both test case creation and registration are performed in the
 [link boost_test.adv_scenarios.test_module_init_overview test module initialization function].
 
 Here is the simplest example of manually registered test case. A single test case is created and registered inside
-the test module initialization routine. Note that the free function name is passed by address to the macro __BOOST_TEST_CASE__`.
+the test module initialization routine. Note that the free function name is passed by address to the macro __BOOST_TEST_CASE__.
 
 [#ref_bt_example01]
 [bt_example example01..Nullary free function manually registered..run]

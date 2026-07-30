@@ -37,6 +37,7 @@ asciidoc:
     master_test_suite: 'tests_organization/master_test_suite.adoc'
     runtime_configuration: 'runtime_config/index.adoc'
     output_test_stream_tool: 'testing_tools/output_stream_testing.adoc'
+    auto_linking: 'program_execution_monitor.adoc#ref_pem_auto_link'
     boost_test_alternative_init_api: 'utf_reference/link_references.adoc#link_boost_test_alternative_init_macro'
     boost_test_main: 'utf_reference/link_references.adoc#link_boost_test_main_macro'
     boost_test_dyn_link: 'utf_reference/link_references.adoc#link_boost_test_dyn_link'

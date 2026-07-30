@@ -18,7 +18,7 @@ void test_operations(Processor& processor, int limit)
 ----
 
 In case of failure, in order to see in the logs at which point of the loops the failure occurred, we need some extra
-information in the assertion, which can be achieved for instance the following way // FIXME(qbk2adoc): unresolved link boost_test.testing_tools.reports.custom_messages:
+information in the assertion, which can be achieved for instance xref:testing_tools/reports.adoc#custom_messages[the following way]:
 
 [source,cpp]
 ----
