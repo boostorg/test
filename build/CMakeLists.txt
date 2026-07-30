@@ -121,11 +121,12 @@ set_target_properties(boost_test_framework_shared PROPERTIES FOLDER "UTF")
 # Documentation files (files only, no target)
 file(GLOB_RECURSE
      BOOST_UTF_DOC_FILES
-     ${BOOST_TEST_ROOT_DIR}/doc/*.qbk)
+     ${BOOST_TEST_ROOT_DIR}/doc/modules/ROOT/pages/*.adoc
+     ${BOOST_TEST_ROOT_DIR}/doc/modules/ROOT/nav.adoc)
 add_custom_target(
-  quickbook
+  documentation
   SOURCES ${BOOST_UTF_DOC_FILES})
-set_property(TARGET quickbook PROPERTY FOLDER "Documentation/")
+set_property(TARGET documentation PROPERTY FOLDER "Documentation/")
 
 # Unit tests
 add_subdirectory(${BOOST_TEST_ROOT_DIR}/test tmp_folders_tests)

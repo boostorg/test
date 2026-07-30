@@ -24,14 +24,13 @@ asciidoc:
     trac-url: https://svn.boost.org/trac/boost/ticket
     pr-url: https://github.com/boostorg/test/pull
     issue-url: https://github.com/boostorg/test/issues
-    # >>> BEGIN GENERATED ATTRIBUTES (doc/tools/qbk2adoc.py) <<<
-    # Most of the QuickBook [def] macros were link aliases into the reference
-    # chapter. Only the link *target* lives here, so a reference page can be
-    # renamed in one place instead of at ~2000 call sites; the label stays at
-    # the call site. It has to: Asciidoctor substitutes quotes before
-    # attributes, and a value coming from an API attribute -- which is what
-    # this file sets -- is inserted without further substitution, so `code`
-    # formatting inside an attribute value would render its backticks.
+    # Targets for the cross-references into the reference chapter, so that a
+    # reference page can be renamed in one place instead of at ~2000 call
+    # sites. Only the target lives here; the label stays at the call site, as
+    # in xref:{boost_test}[`BOOST_TEST`]. It has to: Asciidoctor substitutes
+    # quotes before attributes, and a value coming from an API attribute --
+    # which is what this file sets -- is inserted without further
+    # substitution, so formatting inside a value would never be processed.
     part_faq: 'section_faq.adoc'
     floating_points_testing_tools: 'testing_tools/floating_point.adoc#floating_points_comparison_theory'
     master_test_suite: 'tests_organization/master_test_suite.adoc'
@@ -112,7 +111,6 @@ asciidoc:
     decorator_expected_failures: 'utf_reference/testing_tool_ref.adoc#decorator_expected_failures'
     decorator_timeout: 'utf_reference/testing_tool_ref.adoc#decorator_timeout'
     decorator_tolerance: 'utf_reference/testing_tool_ref.adoc#decorator_tolerance'
-    # >>> END GENERATED ATTRIBUTES <<<
 
 nav:
   - modules/ROOT/nav.adoc
