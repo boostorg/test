@@ -17,9 +17,9 @@ test suites.
 to compile a test that takes a second to run.
 * For long and complex tests users want to be able to see the testing progress.
 * Simplest tests shouldn't require an external library.
-* For long term usage users of the {utf} should be able to build it as a standalone library.
+* For long term usage users of the _Unit Test Framework_ should be able to build it as a standalone library.
 
-The {utf} satisfies the requirements above, and provides versatile facilities to:
+The _Unit Test Framework_ satisfies the requirements above, and provides versatile facilities to:
 
 * Easily specify all the expectations in the code being tested.
 * Organize these expectations into xref:section_glossary.adoc#test_case[test cases] and xref:section_glossary.adoc#test_suite[test suites].

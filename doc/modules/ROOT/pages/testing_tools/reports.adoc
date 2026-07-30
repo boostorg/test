@@ -31,7 +31,7 @@ TIP: Richness of the information contained in the logs is a key for the rapid un
 
 == Default reporting
 
-When an assertion fails, {boost_test} reports details and values on the operands of `statement` that lead to the failure.
+When an assertion fails, xref:{boost_test}[`BOOST_TEST`] reports details and values on the operands of `statement` that lead to the failure.
 
 // tag reference: doc/modules/ROOT/examples/boost_test_macro3.run-fail.cpp
 :bt-name: boost_test_macro3
@@ -45,7 +45,7 @@ of the full statement. However, we can observe that they are not treated symmetr
 * "`a - 1 < b`" reports `"13 - 1 >= 12" failed`
 * "`b > a - 1`" reports `"12 <= 12" failed`
 
-More details on how the {utf} parses the statement are given in xref:testing_tools/internal_details.adoc[this] section.
+More details on how the _Unit Test Framework_ parses the statement are given in xref:testing_tools/internal_details.adoc[this] section.
 
 == Custom messages
 

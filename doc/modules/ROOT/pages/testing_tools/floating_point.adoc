@@ -1,7 +1,7 @@
 = Floating point comparison
 :page-aliases: boost_test/testing_tools/extended_comparison/floating_point.adoc
 
-Unless specified otherwise, when a value of floating-point type is compared inside a {boost_test} assertion,
+Unless specified otherwise, when a value of floating-point type is compared inside a xref:{boost_test}[`BOOST_TEST`] assertion,
 operators `==`, `!=` , `<` etc. defined for this type are used. However for floating point type, in most cases what is needed is not an _exact_
 equality (or inequality), but a verification that two numbers are _sufficiently close_ or _sufficiently different_. For that purpose, a *tolerance* parameter
 that will instruct the framework what is considered _sufficiently close_ needs to provided.
@@ -11,7 +11,7 @@ NOTE: How the tolerance parameter is processed in detail is described xref:testi
 == Test-unit tolerance
 
 It is possible to define a per-xref:section_glossary.adoc#ref_test_unit[test unit] tolerance for a given floating point type by using
-xref:tests_organization/decorators.adoc[decorator] {decorator_tolerance}:
+xref:tests_organization/decorators.adoc[decorator] xref:{decorator_tolerance}[`tolerance`]:
 
 // tag reference: doc/modules/ROOT/examples/tolerance_01.run-fail.cpp
 :bt-name: tolerance_01
@@ -22,7 +22,7 @@ include::partial$bt_example.adoc[]
 == Assertion tolerance
 
 It is possible to specify floating point comparison tolerance per single assertion, by providing the _manipulator_ cpp:boost::test_tools::tolerance[boost::test_tools::tolerance]
-as the second argument to {boost_test}:
+as the second argument to xref:{boost_test}[`BOOST_TEST`]:
 
 // tag reference: doc/modules/ROOT/examples/tolerance_02.run-fail.cpp
 :bt-name: tolerance_02
@@ -34,7 +34,7 @@ include::partial$bt_example.adoc[]
 ====
 Manipulators requires a compiler that supports variadic macros, `auto` for type deduction
  and `decltype`. These are C++11 features, but are also available on some pre-C++11 compilers. On compilers that are
- lacking these features, resort to defining tolerance per test unit or to compatibility test assertions: {boost_check_close} and {boost_check_small}.
+ lacking these features, resort to defining tolerance per test unit or to compatibility test assertions: xref:{boost_check_close}[`BOOST_CHECK_CLOSE`] and xref:{boost_check_small}[`BOOST_CHECK_SMALL`].
 ====
 
 == Tolerance expressed in percentage
@@ -95,12 +95,12 @@ the numeric value passed along the manipulator:
 This is also the case for decorator `tolerance`. In the case of the decorator however, it is possible to apply multiple
 decorators `tolerance` defining the tolerance for different types.
 
-When values of two different floating point types `T` and `U` are compared, {boost_test} uses the tolerance
+When values of two different floating point types `T` and `U` are compared, xref:{boost_test}[`BOOST_TEST`] uses the tolerance
 specified for type `boost::common_type<T, U>::type`. For instance, when setting a tolerance for mixed `float`-to-`double` comparison,
 the tolerance for type `double` needs to be set.
 
 Given two floating point types `T` and `U` and their common type `C`, the tolerance specified for type `C` is applied only when
-types `T` and `U` appear as sub-expressions of the full expression inside assertion {boost_test}. It is not applied when
+types `T` and `U` appear as sub-expressions of the full expression inside assertion xref:{boost_test}[`BOOST_TEST`]. It is not applied when
 `T` and `U` are compared inside a function invoked during the evaluation of the expression:
 
 // tag reference: doc/modules/ROOT/examples/tolerance_05.run-fail.cpp
@@ -111,7 +111,7 @@ include::partial$bt_example.adoc[]
 
 == Type promotion of the operands
 
-Given two types `T` and `U` being compared inside an assertion {boost_test}, tolerance based comparison is invoked
+Given two types `T` and `U` being compared inside an assertion xref:{boost_test}[`BOOST_TEST`], tolerance based comparison is invoked
 
 . whenever the types `T` and `U` are both xref:testing_tools/floating_point.adoc#customizing_for_tolerance[tolerance based] types
 . whenever `T` is _tolerance_ based and `U` is _arithmetic_, in the sense that `std::numeric_limits<U>::value` evaluates to `true` (or the other way round)
@@ -120,7 +120,7 @@ In all cases, the type of the tolerance is deduced as `boost::common_type<T, U>:
 
 [NOTE]
 ====
-This behavior has been introduced in Boost 1.70 / {utf} xref:change_log.adoc#ref_CHANGE_LOG_3_10[3.10]. Previously tolerance based comparison was used only when the type of the two
+This behavior has been introduced in Boost 1.70 / _Unit Test Framework_ xref:change_log.adoc#ref_CHANGE_LOG_3_10[3.10]. Previously tolerance based comparison was used only when the type of the two
  operands were tolerance based types, which was silently ignoring the tolerance for expressions such as
 
 [source,cpp]
@@ -153,7 +153,7 @@ include::partial$bt_example.adoc[]
 [#customizing_for_tolerance]
 == Enabling tolerance for user-defined types
 
-The {utf} recognizes that a given type `T` is suitable for tolerance-based comparisons using the expression
+The _Unit Test Framework_ recognizes that a given type `T` is suitable for tolerance-based comparisons using the expression
 cpp:boost::math::fpc::tolerance_based[boost::math::fpc::tolerance_based]`<T>::value`. This meta-function already returns `true` for built-in
 floating-point types as well as any other types that match the following compile-time expression:
 
@@ -273,7 +273,7 @@ a|
 [#floating_points_comparison_impl]
 == Tolerance-based comparisons
 
-Assertions in the {utf} use two kinds of comparison. For `u` being close to zero with absolute tolerance `eps`:
+Assertions in the _Unit Test Framework_ use two kinds of comparison. For `u` being close to zero with absolute tolerance `eps`:
 
 [source,cpp]
 ----
@@ -288,9 +288,9 @@ For `u` and `v` being close with relative tolerance `eps`:
 && abs(u - v)/abs(v) <= eps; // (rel)
 ----
 
-For rationale for choosing these formulae, see section {floating_points_testing_tools}.
+For rationale for choosing these formulae, see section xref:{floating_points_testing_tools}[Floating point comparison algorithms].
 
-Assertion {boost_test} (when comparing floating-point numbers) uses the following algorithm:
+Assertion xref:{boost_test}[`BOOST_TEST`] (when comparing floating-point numbers) uses the following algorithm:
 
 * When either value `u` or `v` is zero, evaluates formula (abs) on the other value.
 * When the specified tolerance is zero, performs direct (native) comparison between `u` and `v`.
@@ -306,11 +306,11 @@ BOOST_TEST(v == T(0), tt::tolerance(eps));
 ----
 ====
 
-The compatibility assertions {boost_level_close} and {boost_level_close_fraction} perform formula (rel).
+The compatibility assertions xref:{boost_level_close}[`BOOST_<level>_CLOSE`] and xref:{boost_level_close_fraction}[`BOOST_<level>_CLOSE_FRACTION`] perform formula (rel).
 
-The compatibility assertion {boost_level_small} performs formula (abs).
+The compatibility assertion xref:{boost_level_small}[`BOOST_<level>_SMALL`] performs formula (abs).
 
-The {utf} also provides unary predicate cpp:boost::math::fpc::small_with_tolerance[`small_with_tolerance`] and binary predicate predicate
+The _Unit Test Framework_ also provides unary predicate cpp:boost::math::fpc::small_with_tolerance[`small_with_tolerance`] and binary predicate predicate
 cpp:boost::math::fpc::close_at_tolerance[`close_at_tolerance`] that implement formula (abs) and (rel) respectively.
 
 === Tolerance in `operator<`
@@ -322,7 +322,7 @@ Tolerance-based computations also apply to `operator<` and other relational oper
 * _less-or-equal-at-tolerance_ <==> _strictly-less_ or _close-at-tolerance_
 * _greater-or-equal-at-tolerance_ <==> _strictly-greater_ or _close-at-tolerance_
 
-NOTE: This implies that the exactly one of these: `u < v`, `u == v`, `u > v`, passes with {boost_test} at any given tolerance.
+NOTE: This implies that the exactly one of these: `u < v`, `u == v`, `u > v`, passes with xref:{boost_test}[`BOOST_TEST`] at any given tolerance.
 
 [CAUTION]
 ====
@@ -346,7 +346,7 @@ However, in many circumstances, this is not what we want. The same absolute tole
 two values of magnitude `10e12` and at the same time too little to meaningfully compare values of magnitude `10e-12`. For examples, see xref:testing_tools/floating_point.adoc#Squassabia[Squassabia].
 
 We do not want to apply the same absolute tolerance for huge and tiny numbers. Instead, we would like to scale the `epsilon` with `u` and `v`.
-The {utf} implements floating-point comparison algorithm that is based on the solution presented in xref:testing_tools/floating_point.adoc#KnuthII[Knuth]:
+The _Unit Test Framework_ implements floating-point comparison algorithm that is based on the solution presented in xref:testing_tools/floating_point.adoc#KnuthII[Knuth]:
 
 [#equ2]
 [source,cpp]
@@ -420,10 +420,10 @@ produce others "non-rounding" errors, such as underflow/overflow, division-by-ze
 All theorems about the upper limit of a rounding error, including that of `half_epsilon`, refer only to
 the 'rounding' operation, nothing more. This means that the 'operation error', that is, the error incurred by the
 operation itself, besides rounding, isn't considered. In order for numerical software to be able to actually
-predict error bounds, the {ieee754} standard requires arithmetic operations to be 'correctly or exactly rounded'.
+predict error bounds, the *IEEE754* standard requires arithmetic operations to be 'correctly or exactly rounded'.
 That is, it is required that the internal computation of a given operation be such that the floating point result
 is the exact result rounded to the number of working bits. In other words, it is required that the computation used
-by the operation itself doesn't introduce any additional errors. The {ieee754} standard does not require same behavior
+by the operation itself doesn't introduce any additional errors. The *IEEE754* standard does not require same behavior
 from most non-arithmetic operation. The underflow/overflow and division-by-zero errors may cause rounding errors
 with unpredictable upper limits.
 

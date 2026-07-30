@@ -1,0 +1,104 @@
+#
+# Copyright (c) 2003 Boost.Test contributors
+#
+# Distributed under the Boost Software License, Version 1.0. (See accompanying
+# file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+#
+
+# Input. CMakeLists.txt in this directory configures a single umbrella
+# translation unit, mrdocs.cpp, that includes the public headers; see the
+# comment at the top of that file for what is in it and why.
+source-root: ..
+input:
+  - ../include
+file-patterns:
+  - '*.hpp'
+exclude:
+  # Definitions, not declarations: pulled in only by the header-only variant.
+  - '../include/boost/test/impl'
+  - '../include/boost/test/included'
+  # Assembly headers and internal plumbing with no public API of their own.
+  - '../include/boost/test/detail'
+  - '../include/boost/test/utils/runtime'
+compilation-database: ./CMakeLists.txt
+
+# Filters
+include-symbols:
+  - 'boost::unit_test::**'
+  - 'boost::test_tools::**'
+  - 'boost::debug::**'
+  - 'boost::execution_exception'
+  - 'boost::execution_monitor'
+  - 'boost::execution_aborted'
+  - 'boost::system_error'
+implementation-defined:
+  - 'boost::unit_test::ut_detail'
+  - 'boost::unit_test::**::ut_detail'
+  - 'boost::unit_test::**::ds_detail'
+  - 'boost::unit_test::utils::nfp_detail'
+  - 'boost::unit_test::**::detail'
+  - 'boost::test_tools::tt_detail'
+  - 'boost::test_tools::**::detail'
+exclude-symbols:
+  # Internal helpers that happen to sit in a public namespace rather than in
+  # one of the detail namespaces above.
+  - 'boost::unit_test::data::invoke_action_impl'
+  - 'boost::unit_test::data::index_sequence'
+  - 'boost::unit_test::data::make_index_sequence'
+  - 'boost::unit_test::data::index_sequence_for'
+see-below:
+  # Heavily SFINAE-constrained; the signatures are noise for a reader.
+  - 'boost::unit_test::data::monomorphic::**::iterator'
+inaccessible-members: never
+inaccessible-bases: never
+inherit-base-members: never
+private-bases: false
+extract-friends: false
+auto-function-metadata: false
+sort-members: false
+
+# Macros. Boost.Test's public macros carry no doc comments in the sources -- the
+# Doxygen target that preceded this one only surfaced them because it ran with
+# EXTRACT_ALL=YES -- so with extract-all-macros off (the default) almost none
+# will be extracted. The authoritative macro reference is the hand-written
+# utf_reference/ pages. These patterns are here so that a macro which does
+# acquire a doc comment lands in the reference, and internals never do.
+include-macros:
+  - 'BOOST_TEST_*'
+  - 'BOOST_AUTO_TEST_*'
+  - 'BOOST_FIXTURE_TEST_*'
+  - 'BOOST_DATA_TEST_*'
+  - 'BOOST_PARAM_TEST_CASE'
+  - 'BOOST_GLOBAL_FIXTURE'
+  - 'BOOST_CHECK*'
+  - 'BOOST_REQUIRE*'
+  - 'BOOST_WARN*'
+  - 'BOOST_ERROR'
+  - 'BOOST_FAIL'
+  - 'BOOST_IS_DEFINED'
+exclude-macros:
+  - 'BOOST_TEST_DETAIL_*'
+  - 'BOOST_TEST_TOOL_*'
+  - 'BOOST_TEST_PP_*'
+  - '*_IMPL'
+  - '*_IMPL_'
+  # Documented in the sources but not public API.
+  - 'BOOST_TEST_SYS_ASSERT'
+  - 'BOOST_TEST_INVOKE_IF_N_ARGS'
+
+# Template overrides layered on top of the built-in addons. See the header
+# comment in the overridden file for what it changes and why.
+addons-supplemental:
+  - mrdocs-addons
+
+# Generator
+generate: adoc
+multipage: true
+base-url: https://www.github.com/boostorg/test/blob/master/
+
+# Diagnostics. Most symbols are undocumented today; warning on each of them
+# would bury anything actionable.
+verbose: true
+warn-if-undocumented: false
+warn-no-paramdoc: false
+warn-as-error: false

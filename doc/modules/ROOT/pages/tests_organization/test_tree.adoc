@@ -20,7 +20,7 @@ section) *without* any fixture:
 image::class-hier.jpg[]
 
 xref:tests_organization/decorators.adoc[Decoration] can be added to test suites and cases except for the master test suite. Those
-decoration may modify the way the {utf}
+decoration may modify the way the _Unit Test Framework_
 handles the tree. For instance, there is no defined order in the execution of test cases enforced by the tree itself, except for the fixtures
 and the elements they relate to (suite, case); decoration may be used to instruct a specific order among the elements of the tree.
 

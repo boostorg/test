@@ -1,4 +1,40 @@
-= {utf} API reference
+= _Unit Test Framework_ API reference
 :page-aliases: boost_test/utf_reference.adoc
 
-// The Doxygen-generated reference is replaced by the MrDocs `reference` module.
+The reference has two halves.
+
+The pages below document the macros and the command-line parameters, which is
+what most test code is written against. They are maintained by hand: the macros
+carry no documentation comments in the sources, so no generator can produce
+them.
+
+* xref:utf_reference/test_org_reference.adoc[] -- declaring test cases, test
+  suites and fixtures, and the decorators that annotate them
+* xref:utf_reference/testing_tool_ref.adoc[] -- the assertion macros
+* xref:utf_reference/testout_reference.adoc[] -- controlling what a test
+  reports
+* xref:utf_reference/rt_param_reference.adoc[] -- one section per runtime
+  parameter, with its command-line syntax and environment variable
+* xref:utf_reference/link_references.adoc[] -- the macros that select a build
+  variant and the behaviours they switch on
+
+The C++ API -- classes, functions and types -- is generated from the headers by
+https://www.mrdocs.com[MrDocs] and lives in
+xref:reference:index.adoc[the reference module]:
+
+* xref:reference:boost/unit_test.adoc[`boost::unit_test`] -- the framework
+  itself: the test tree, the runner, logging and reporting
+* xref:reference:boost/unit_test/data.adoc[`boost::unit_test::data`] -- datasets
+  for data-driven test cases
+* xref:reference:boost/test_tools.adoc[`boost::test_tools`] -- the types the
+  assertion macros are built on, such as
+  xref:reference:boost/test_tools/assertion_result.adoc[`assertion_result`] and
+  xref:reference:boost/test_tools/output_test_stream.adoc[`output_test_stream`]
+* xref:reference:boost/debug.adoc[`boost::debug`] -- debugger detection and
+  attachment
+* xref:reference:boost/execution_monitor.adoc[`boost::execution_monitor`] --
+  the lower-level component that runs a function in a controlled environment
+
+Which headers to include for what is covered by
+xref:usage_variants.adoc[the usage variants] and by
+xref:adv_scenarios/index.adoc[the advanced usage scenarios].

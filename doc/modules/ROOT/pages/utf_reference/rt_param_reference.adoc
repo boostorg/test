@@ -1,7 +1,7 @@
 = Runtime parameters reference
 :page-aliases: boost_test/utf_reference/rt_param_reference.adoc
 
-Following sections provide detailed specification for all {utf} runtime parameters. Each parameter specification includes:
+Following sections provide detailed specification for all _Unit Test Framework_ runtime parameters. Each parameter specification includes:
 
 * The full parameter name.
 * Description of parameter semantic and default value.
@@ -42,7 +42,7 @@ prefix. For example, try
 
 == Parameter value formats
 
-The {utf} runtime parameters take value of the following types: string, boolean, enumeration,
+The _Unit Test Framework_ runtime parameters take value of the following types: string, boolean, enumeration,
 unsigned, long. Formats required for values of these types are following:
 
 === String, unsigned, long
@@ -89,7 +89,7 @@ BOOST_TEST_AUTO_START_DBG
 [#build_info]
 == `build_info`
 
-Option _build_info_ instructs the {utf} to display the build information before testing begins.
+Option _build_info_ instructs the _Unit Test Framework_ to display the build information before testing begins.
 This information includes:
 
 * platform
@@ -113,14 +113,14 @@ BOOST_TEST_BUILD_INFO
 [#catch_system]
 == `catch_system_errors`
 
-If option _catch_system_errors_ has value "no" the {utf} does not attempt to catch asynchronous system failures
+If option _catch_system_errors_ has value "no" the _Unit Test Framework_ does not attempt to catch asynchronous system failures
 (signals on *NIX platforms or structured exceptions on Windows). This can be used for test programs executed
 within an IDE or to get a coredump for a stack analysis. See
 xref:usage_recommendations/index.adoc#ref_usage_recommendations[usage recommendations] pages for more details.
 
 [NOTE]
 ====
-If the {utf} detects that the current process is being run under a debugger, the `catch_system_errors` is
+If the _Unit Test Framework_ detects that the current process is being run under a debugger, the `catch_system_errors` is
  automatically disabled.
 ====
 
@@ -128,7 +128,7 @@ If the {utf} detects that the current process is being run under a debugger, the
 
 xref:utf_reference/rt_param_reference.adoc#boolean_param_value[Boolean] with default value *no*.
 
-NOTE: The {utf} can be built with flag `BOOST_TEST_DEFAULTS_TO_CORE_DUMP` in which case default changes to *yes*
+NOTE: The _Unit Test Framework_ can be built with flag `BOOST_TEST_DEFAULTS_TO_CORE_DUMP` in which case default changes to *yes*
 
 === Command line syntax
 
@@ -142,7 +142,7 @@ BOOST_TEST_CATCH_SYSTEM_ERRORS
 [#color_output]
 == `color_output`
 
-The {utf} is able to produce color output on systems which support it. To disable this behavior, set this option to
+The _Unit Test Framework_ is able to produce color output on systems which support it. To disable this behavior, set this option to
 `no`. By default the framework produces color output.
 
 === Acceptable values
@@ -244,7 +244,7 @@ testsuite1*
 represents test module consisting of two test suites: `testsuite1` and `testsuite2`, and three test cases: `testcase1`,
 `testcase2`, and `testcase3`. The formatting reflects the test-tree: the first two test cases belong to the first test suite
 and last one belongs to the second. Out of three test cases only two are enabled by default:
-`testcase1` and `testcase3`. `testcase2` is not enabled by default, but can be enabled by using the parameter {param_run_test}.
+`testcase1` and `testcase3`. `testcase2` is not enabled by default, but can be enabled by using the parameter xref:{param_run_test}[`run_test`].
 
 === DOT
 
@@ -330,7 +330,7 @@ Available labels:
 [#log_format]
 == `log_format`
 
-Parameter _log_format_ allows to set the {utf} log format to one of the formats supplied by the framework.
+Parameter _log_format_ allows to set the _Unit Test Framework_ log format to one of the formats supplied by the framework.
 To specify custom log format use the xref:test_output/logging_api.adoc#ref_log_formatter_api[custom log formatting API].
 
 The only acceptable values for this parameter are the names of the output formats supplied by the
@@ -358,7 +358,7 @@ BOOST_TEST_LOG_FORMAT
 [#log_level]
 == `log_level`
 
-Parameter _log_level_ allows to set the {utf} xref:test_output/logging_api.adoc#ref_log_level_explanations[log level]. Log level defines
+Parameter _log_level_ allows to set the _Unit Test Framework_ xref:test_output/logging_api.adoc#ref_log_level_explanations[log level]. Log level defines
 the verbosity of the testing log produced by a testing module. The verbosity ranges from a complete log, when all
 assertions (both successful and failing) are reported and all notifications about test units start and finish
 are included, to an empty log, when nothing is reported to a testing log stream.
@@ -387,7 +387,7 @@ Thus each level includes messages on that level as well as all the messages on l
 |Test units start/finish notifications
 
 |message
-|User generated messages (using {boost_test_message} tool)
+|User generated messages (using xref:{boost_test_message}[`BOOST_TEST_MESSAGE`] tool)
 
 |warning
 a|
@@ -397,7 +397,7 @@ Messages describing failed assertion on `WARN` level (
      tools)
 
 |*error* (default for HRF and XML)
-|Messages describing failed assertion on `CHECK` level ({boost_test} / `BOOST_CHECK_...` tools)
+|Messages describing failed assertion on `CHECK` level (xref:{boost_test}[`BOOST_TEST`] / `BOOST_CHECK_...` tools)
 
 |cpp_exception
 |Messages reporting uncaught C++ exception
@@ -408,7 +408,7 @@ Messages describing failed assertion on `WARN` level (
 |fatal_error
 a|
 Messages reporting user or system originated fatal errors. For example, memory access violation. Also
-     all the messages describing failed assertion on `REQUIRE` level ({boost_test_require} / `BOOST_REQUIRE_...` tools)
+     all the messages describing failed assertion on `REQUIRE` level (xref:{boost_test_require}[`BOOST_TEST_REQUIRE`] / `BOOST_REQUIRE_...` tools)
 
 |nothing
 |No messages are reported.
@@ -547,7 +547,7 @@ BOOST_TEST_OUTPUT_FORMAT
 [#random]
 == `random`
 
-Parameter _random_ instructs the {utf} to execute the test cases in random order. This parameter
+Parameter _random_ instructs the _Unit Test Framework_ to execute the test cases in random order. This parameter
 accepts an optional `unsigned integer` argument for the seed of the random generator:
 
 * By default (value `0`), the test cases are executed in some specific order
@@ -557,7 +557,7 @@ defined by the order of test units in the test files, and the dependencies betwe
 
 [TIP]
 ====
-in case `--random` is specified, the value of the seed is logged using {boost_test_message}, so that it is possible to replay
+in case `--random` is specified, the value of the seed is logged using xref:{boost_test_message}[`BOOST_TEST_MESSAGE`], so that it is possible to replay
  exactly the same sequence of unit test in case of failure. For the seed to be visible in the logs,
  make sure the proper xref:utf_reference/rt_param_reference.adoc#log_level[`--log_level`] is set.
 ====
@@ -579,7 +579,7 @@ BOOST_TEST_RANDOM
 [#report_format]
 == `report_format`
 
-Parameter _report_format_ allows to set the {utf} report format to one of the formats supplied
+Parameter _report_format_ allows to set the _Unit Test Framework_ report format to one of the formats supplied
 by the framework. To specify a custom report format use unit_test_report API.
 
 The only acceptable values for this parameter are the names of the output formats. By default the
@@ -606,7 +606,7 @@ BOOST_TEST_REPORT_FORMAT
 == `report_level`
 
 Parameter _report_level_ allows to set the verbosity level of the testing result report generated by
-the {utf}. Use value "no" to eliminate the results report completely. See the
+the _Unit Test Framework_. Use value "no" to eliminate the results report completely. See the
 xref:test_output/report_formats.adoc#ref_report_formats[report formats] section for description of report formats on different levels.
 
 === Acceptable values
@@ -673,7 +673,7 @@ BOOST_TEST_REPORT_SINK
 [#result_code]
 == `result_code`
 
-The "no" argument value for the option \`result_code instructs the {utf} to always return zero
+The "no" argument value for the option \`result_code instructs the _Unit Test Framework_ to always return zero
 result code. This could be used for test programs executed within IDE. By default this parameter has
 value "yes". See the xref:usage_recommendations/index.adoc#ref_usage_recommendations[usage recommendations] section for more details.
 
@@ -693,9 +693,9 @@ BOOST_TEST_RESULT_CODE
 [#run_test]
 == `run_test`
 
-Parameter _run_test_ allows to filter which test units to execute during testing. The {utf} supports
+Parameter _run_test_ allows to filter which test units to execute during testing. The _Unit Test Framework_ supports
 both "selection filters", which allow to select which test units to enable from the set of available
-test units, and "disabler filters", which allow to disable some test units. The {utf} also supports
+test units, and "disabler filters", which allow to disable some test units. The _Unit Test Framework_ also supports
 enabling/disabling test units at compile time. These settings identify the default set of test units
 to run. Parameter _run_test_ is used to change this default. This parameter is repeatable, so you can
 specify more than one filter if necessary.
@@ -745,7 +745,7 @@ BOOST_TEST_RUN_FILTERS
 [#save_pattern]
 == `save_pattern`
 
-Option _save_pattern_ facilitates switching mode of operation for testing output streams. See {output_test_stream_tool}
+Option _save_pattern_ facilitates switching mode of operation for testing output streams. See xref:{output_test_stream_tool}[output test stream]
 section for details on these tests.
 
 This parameter serves no particular purpose within the framework itself. It can be used by test modules relying
@@ -779,7 +779,7 @@ BOOST_TEST_SAVE_PATTERN
 [#show_progress]
 == `show_progress`
 
-Option _show_progress_ instructs the {utf} to display test progress information. By default the
+Option _show_progress_ instructs the _Unit Test Framework_ to display test progress information. By default the
 parameter test progress is not shown. More details xref:test_output/test_output_progress.adoc[here].
 
 === Acceptable values
@@ -798,7 +798,7 @@ BOOST_TEST_SHOW_PROGRESS
 [#use_alt_stack]
 == `use_alt_stack`
 
-Option _use_alt_stack_ instructs the {utf} to use alternative stack for signals processing, on
+Option _use_alt_stack_ instructs the _Unit Test Framework_ to use alternative stack for signals processing, on
 platforms where they are supported. More information about this feature is available
 http://www.gnu.org/software/libc/manual/html_node/Signal-Stack.html[here]. The feature is enabled
 by default, but can be disabled using this parameter.
@@ -826,7 +826,7 @@ BOOST_TEST_USE_ALT_STACK
 [#usage]
 == `usage`
 
-If specified option _usage_ instructs the {utf} to displays short usage message about the
+If specified option _usage_ instructs the _Unit Test Framework_ to displays short usage message about the
 framework's parameters.
 
 === Command line syntax
@@ -842,7 +842,7 @@ xref:utf_reference/rt_param_reference.adoc#boolean_param_value[Boolean] with def
 [#wait_for_debugger]
 == `wait_for_debugger`
 
-Option _wait_for_debugger_ instructs the {utf} to pause before starting test units execution,
+Option _wait_for_debugger_ instructs the _Unit Test Framework_ to pause before starting test units execution,
 so that you can attach a debugger to running test module. By default this parameters turned off.
 
 === Acceptable values

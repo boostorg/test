@@ -64,7 +64,7 @@ yields to the following evaluation chain:
 expression2.result = expression1.result op1 b
 expression1.result = a
 +
-The final expression of the statement is cast to a boolean, which is in turn evaluated by the {utf}.
+The final expression of the statement is cast to a boolean, which is in turn evaluated by the _Unit Test Framework_.
 
 The example below illustrates the construction of the left-to-right _chained_ expression.
 

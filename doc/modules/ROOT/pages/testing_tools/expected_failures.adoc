@@ -10,7 +10,7 @@ This feature allows specifying an expected number of failed assertions per test 
 during test tree construction, and can't be updated during test execution.
 
 The feature is not intended to be used to check for expected functionality failures. To check that a particular
-input is causing an exception to be thrown use {boost_level_throw} family of testing
+input is causing an exception to be thrown use xref:{boost_level_throw}[`BOOST_<level>_THROW`] family of testing
 tools.
 
 The usage of this feature should be limited and employed only after careful consideration. In general you should
@@ -32,7 +32,7 @@ If an assertion at fault is fixed and passed while an expected failures specific
 [#l_expected_failure]
 == Expected failure specification
 
-The decorator {decorator_expected_failures} defines the number of assertions that are expected to fail within the corresponding test
+The decorator xref:{decorator_expected_failures}[`expected_failures`] defines the number of assertions that are expected to fail within the corresponding test
 unit. It is reported as failure when the number of failed assertions is greater than the declared expected number of
 failures. If the number of failed assertions is less than the number of expected failures a message is reported. The
 total number of expected failures for a given test suite `S` is the sum of the declared expected failures in `S` and the
@@ -58,7 +58,7 @@ this usage is considered as deprecated. Please consider using the xref:testing_t
 ====
 
 For backwards compatibility, it is possible to indicate the expected failures with
-{boost_auto_test_case_expected_failures} footnote:[deprecated] before the test case definition.
+xref:{boost_auto_test_case_expected_failures}[`BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES`] footnote:[deprecated] before the test case definition.
 
 [source,cpp]
 ----
@@ -67,7 +67,7 @@ BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES(test_case_name, number_of_expected_failur
 
 You can use this macro both on a file scope and inside a test suite. Moreover you can use it even if name of test
 units coincide in different test suites. Expected failures specification applies to the test unit belonging to the same
-test suite where {boost_auto_test_case_expected_failures} resides.
+test suite where xref:{boost_auto_test_case_expected_failures}[`BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES`] resides.
 
 // tag reference: doc/modules/ROOT/examples/example17.run.cpp
 :bt-name: example17

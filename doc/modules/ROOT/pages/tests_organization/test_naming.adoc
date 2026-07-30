@@ -3,10 +3,10 @@
 
 == Acceptable characters for names
 
-The {utf} is flexible on the naming the test units (test cases/suites) and
+The _Unit Test Framework_ is flexible on the naming the test units (test cases/suites) and
 it is possible to use a wide variety of characters. However there are scenarios
 where the name of a test unit may collide with other features
-of the {utf}. For instance:
+of the _Unit Test Framework_. For instance:
 
 * a character may collide with specific command line filters for selecting a
 subset of the test tree. Among those characters: `'@'`, `'+'` or `'/'`
@@ -15,7 +15,7 @@ more details)
 * a name containing a character that is reserved for the shell/terminal, such as
 '!', '\*' ..., may prevent the test name to be passed on the command line *as is*.
 
-To prevent any conflicting declaration, the {utf} *sanitizes* the name given to
+To prevent any conflicting declaration, the _Unit Test Framework_ *sanitizes* the name given to
 a test unit (case or suite), prior to adding the test to the test tree. Any
 conflicting character is replaced by an underscore `'_'`.
 
@@ -29,12 +29,12 @@ NOTE: The sanitization of the test unit names has been introduced in xref:change
 
 == Constraints on test names
 
-The {utf} considers an error if two sibling test cases have the same name. This consistency check is performed
+The _Unit Test Framework_ considers an error if two sibling test cases have the same name. This consistency check is performed
 at runtime and is not sensitive to test filtering.
 
 For test-cases registered automatically, and within the same compilation unit, a compilation error should be raised by
 the compiler in case of name conflict.
-For manual registration of test cases and in case of conflicts, the too {boost_test_case_name} may be used.
+For manual registration of test cases and in case of conflicts, the too xref:{boost_test_case_name}[`BOOST_TEST_CASE_NAME`] may be used.
 
 The data driven tests are automatically created in an isolated test-suite and with a name that is indexed on the
 sample.

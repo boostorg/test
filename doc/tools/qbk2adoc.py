@@ -454,8 +454,11 @@ class Renderer(object):
         self.snippets = {}    # callout id -> example$ resource path
         self.table_ids = {}   # table anchor -> times seen
         self.plain = {}       # def name -> plain text, for use inside code
+        self.def_repl = {}    # def name -> the AsciiDoc it expands to in prose
+        self.attributes = OrderedDict()   # antora.yml attribute -> value
         for name, value in index.defs.items():
             self.plain[name] = self._plain_text(value)
+        self.build_def_table(index.root)
 
     # -- helpers ------------------------------------------------------------
 
@@ -489,25 +492,51 @@ class Renderer(object):
         self.fixmes[kind] += 1
         return "// FIXME(qbk2adoc): %s %s\n" % (kind, detail)
 
-    # `{` is escaped in prose so stray braces in the sources cannot look like
-    # attribute references. Substituted [def]s therefore go in as sentinels and
-    # become real braces on the way out of inline().
-    ATTR_OPEN, ATTR_CLOSE = "\x01", "\x02"
+    DEF_RE = re.compile(r"__[A-Za-z0-9_]+?__")
 
     def subst_defs(self, text, code=False):
+        """Expand [def] macros to their plain text, for code blocks."""
         def repl(m):
             name = m.group(0)
-            if name not in self.index.defs:
-                return name
-            if code:
-                return self.plain[name]
-            return "%s%s%s" % (self.ATTR_OPEN, attr_name(name), self.ATTR_CLOSE)
-        return re.sub(r"__[A-Za-z0-9_]+?__", repl, text)
+            return self.plain[name] if name in self.index.defs else name
+        return self.DEF_RE.sub(repl, text) if code else text
+
+    def build_def_table(self, page):
+        """Decide, once, what each [def] becomes in prose and in antora.yml.
+
+        Asciidoctor substitutes quotes *before* attributes, and a value coming
+        from an API attribute -- which is what antora.yml sets -- is inserted
+        without further substitution. So no formatting inside an attribute
+        value is ever processed: an attribute holding
+        `xref:page.adoc#a[\`BOOST_TEST\`]` renders with the backticks visible.
+
+        The ~80 defs that are link aliases therefore put only the link *target*
+        in the attribute and spell the macro name at each call site. That is
+        what keeps a reference page renameable in one place, and the label is
+        formatted normally because it is literal in the page. The three prose
+        defs carry no target worth naming and are expanded in place.
+        """
+        for name, value in self.index.defs.items():
+            attr = attr_name(name)
+            m = re.match(r"\[link\s+(\S+)\s+(.*)\]$", value.strip(), re.S)
+            hit = self.index.resolve(m.group(1)) if m else None
+            if hit and hit[0] is not None and hit[0].page is not None:
+                owner, anchor = hit
+                target = owner.page + ("#" + anchor if anchor else "")
+                self.attributes[attr] = target
+                label = self.inline(m.group(2).strip(), page)
+                self.def_repl[name] = "xref:{%s}[%s]" % (attr, label)
+            else:
+                rendered = re.sub(r"\s+", " ", self.inline(value, page).strip())
+                # QuickBook's /slash italics/ survive only in the [def] bodies.
+                rendered = re.sub(r"(?<![\w/])/([^/]+)/(?![\w/])", r"_\1_", rendered)
+                if rendered.startswith("/") and not rendered.endswith("/"):
+                    rendered = "_%s_" % rendered[1:]   # unterminated in the source
+                self.def_repl[name] = rendered
 
     # -- inline -------------------------------------------------------------
 
     def inline(self, text, page):
-        text = self.subst_defs(text)
         out = []
         i = 0
         n = len(text)
@@ -533,6 +562,11 @@ class Renderer(object):
             elif c == "{":
                 out.append("\\{")
                 i += 1
+            elif c == "_" and self.DEF_RE.match(text, i):
+                m = self.DEF_RE.match(text, i)
+                # Already-rendered AsciiDoc: append it without rescanning.
+                out.append(self.def_repl.get(m.group(0), m.group(0)))
+                i = m.end()
             elif c == "/" and (not out or not re.match(r"[\w/]", out[-1][-1:])):
                 m = self.SLASH_ITALIC.match(text, i)
                 if m:
@@ -544,8 +578,7 @@ class Renderer(object):
             else:
                 out.append(c)
                 i += 1
-        return ("".join(out)
-                .replace(self.ATTR_OPEN, "{").replace(self.ATTR_CLOSE, "}"))
+        return "".join(out)
 
     def link_macro(self, target, label, page):
         # `boost.debug.under_debugger` and friends address the Doxygen-generated
@@ -1039,17 +1072,9 @@ def emit_nav(index, renderer, path):
 
 
 def emit_attributes(index, renderer, path):
-    lines = []
-    for name, value in index.defs.items():
-        rendered = renderer.inline(value, index.root).strip().replace("\n", " ")
-        rendered = re.sub(r"\s+", " ", rendered)
-        # QuickBook's /slash italics/ survive only in the [def] bodies.
-        rendered = re.sub(r"(?<![\w/])/([^/]+)/(?![\w/])", r"_\1_", rendered)
-        if rendered.startswith("/") and not rendered.endswith("/"):
-            rendered = "_%s_" % rendered[1:]        # unterminated in the source
-        lines.append("    %s: '%s'\n" % (attr_name(name), rendered.replace("'", "''")))
     with open(path, "w", encoding="utf-8") as fh:
-        fh.writelines(lines)
+        for name, value in renderer.attributes.items():
+            fh.write("    %s: '%s'\n" % (name, value.replace("'", "''")))
 
 
 def main():

@@ -25,7 +25,7 @@
 |Instructs the framework to detect memory leaks (on supported platforms).
 
 |xref:utf_reference/rt_param_reference.adoc#help[`help`]
-|Provides help on the {utf} parameters.
+|Provides help on the _Unit Test Framework_ parameters.
 
 |xref:utf_reference/rt_param_reference.adoc#list_content[`list_content`]
 |Lists the tests units, their organization in the test tree, their enabled/disabled state...
@@ -66,7 +66,7 @@
 |xref:utf_reference/rt_param_reference.adoc#result_code[`result_code`]
 |Instructs the framework to return or ignore a result code indicating an error in the tests.
 
-|{param_run_test}
+|xref:{param_run_test}[`run_test`]
 |Allows to filter which test units to execute at runtime.
 
 |xref:utf_reference/rt_param_reference.adoc#save_pattern[`save_pattern`]

@@ -1,7 +1,7 @@
 = Test unit filtering
 :page-aliases: boost_test/runtime_config/test_unit_filtering.adoc
 
-The {utf} offers a number of ways to run only a subset of all test cases registered in the test tree.
+The _Unit Test Framework_ offers a number of ways to run only a subset of all test cases registered in the test tree.
 
 [#ref_default_run_status]
 == Default run status
@@ -16,7 +16,7 @@ Initially, the master test suite has default run status set to _true_. All other
 This implies that, unless any additional configuration is applied, all tests are designated to be run.
 
 You can set a different default run status in any test unit by using xref:tests_organization/decorators.adoc[decorators]:
-{decorator_disabled}, {decorator_enabled} and {decorator_enable_if}. The default run status is set once, upon testing program
+xref:{decorator_disabled}[`disabled`], xref:{decorator_enabled}[`enabled`] and xref:{decorator_enable_if}[`enable_if`]. The default run status is set once, upon testing program
 initialization, and cannot be changed. The disabled tests are not executed by default, but are still present in the test tree,
 and are listed along with other tests when you use command-line argument
 xref:utf_reference/rt_param_reference.adoc#list_content[`list_content`].
@@ -35,14 +35,14 @@ before executing the test unit. If the condition is met, the test unit is execut
 It is possible to add two dependencies:
 
 . Upon another test unit. In this case the decorated test case is skipped if the test unit specified in the dependency is either
-failed or skipped or disabled. This can be declared with decorator {decorator_depends_on}.
-. Upon an arbitrary predicate. This can be declared with decorator {decorator_precondition}.
+failed or skipped or disabled. This can be declared with decorator xref:{decorator_depends_on}[`depends_on`].
+. Upon an arbitrary predicate. This can be declared with decorator xref:{decorator_precondition}[`precondition`].
 
 [#ref_command_line_control]
 == Command-line control
 
 Static configuration of the test-case filtering is used by default, unless command-line filtering is applied. With command-line argument
-{param_run_test} it is possible to alter the static pre-set in a number of ways:
+xref:{param_run_test}[`run_test`] it is possible to alter the static pre-set in a number of ways:
 
 . Ignore the static configuration and manually specify test cases to be run.
 . Augment the statically defined set by enabling the disabled test cases.
@@ -56,7 +56,7 @@ is completely ignored and the tests to be run are specified manually from scratc
 units are registered in the test tree the user needs to use command-line argument
 xref:utf_reference/rt_param_reference.adoc#list_content[`list_content`].
 Next, in order to specify a set of test cases, the user needs to use command-line argument
-{param_run_test} with absolute value:
+xref:{param_run_test}[`run_test`] with absolute value:
 
 [source,cpp]
 ----
@@ -106,7 +106,7 @@ The following table illustrates how different values of `<test_set>` control whi
 a|
 [subs="+macros,+attributes,+quotes"]
 ....
-{param_run_test}=test_1
+xref:{param_run_test}[`run_test`]=test_1
 ....
 a|
 ....
@@ -117,7 +117,7 @@ test_1
 a|
 [subs="+macros,+attributes,+quotes"]
 ....
-{param_run_test}=suite_1/suite_1/test_1
+xref:{param_run_test}[`run_test`]=suite_1/suite_1/test_1
 ....
 a|
 ....
@@ -128,8 +128,8 @@ suite_1/suite_1/test_1
 a|
 [subs="+macros,+attributes,+quotes"]
 ....
-{param_run_test}=suite_1/suite_2
-{param_run_test}=suite_1/suite_2/*
+xref:{param_run_test}[`run_test`]=suite_1/suite_2
+xref:{param_run_test}[`run_test`]=suite_1/suite_2/*
 ....
 a|
 ....
@@ -141,7 +141,7 @@ suite_1/suite_2/test_2
 a|
 [subs="+macros,+attributes,+quotes"]
 ....
-{param_run_test}=suite_1/test_1,suite_2
+xref:{param_run_test}[`run_test`]=suite_1/test_1,suite_2
 ....
 a|
 ....
@@ -154,7 +154,7 @@ suite_1/test_1
 a|
 [subs="+macros,+attributes,+quotes"]
 ....
-{param_run_test}=suite_1/test_1:test_1
+xref:{param_run_test}[`run_test`]=suite_1/test_1:test_1
 ....
 a|
 ....
@@ -166,7 +166,7 @@ test_1
 a|
 [subs="+macros,+attributes,+quotes"]
 ....
-{param_run_test}=@L1
+xref:{param_run_test}[`run_test`]=@L1
 ....
 a|
 ....
@@ -179,7 +179,7 @@ suite_1/test_1
 a|
 [subs="+macros,+attributes,+quotes"]
 ....
-{param_run_test}=*
+xref:{param_run_test}[`run_test`]=*
 ....
 a|
 ....
@@ -198,7 +198,7 @@ suite_1/test_2A
 a|
 [subs="+macros,+attributes,+quotes"]
 ....
-{param_run_test}=suite_1/test*
+xref:{param_run_test}[`run_test`]=suite_1/test*
 ....
 a|
 ....
@@ -211,7 +211,7 @@ suite_1/test_2A
 a|
 [subs="+macros,+attributes,+quotes"]
 ....
-{param_run_test}=suite_1/*_1
+xref:{param_run_test}[`run_test`]=suite_1/*_1
 ....
 a|
 ....
@@ -224,7 +224,7 @@ suite_1/test_1
 a|
 [subs="+macros,+attributes,+quotes"]
 ....
-{param_run_test}=suite_1/\*_2\*
+xref:{param_run_test}[`run_test`]=suite_1/\*_2\*
 ....
 a|
 ....
@@ -238,7 +238,7 @@ suite_1/test_2A
 a|
 [subs="+macros,+attributes,+quotes"]
 ....
-{param_run_test}=\*/\*/test_2
+xref:{param_run_test}[`run_test`]=\*/\*/test_2
 ....
 a|
 ....
@@ -251,9 +251,9 @@ suite_1/suite_2/test_2
 For the syntax productions describing the structure of `<test_set>` value see xref:utf_reference/rt_param_reference.adoc#run_test[here].
 
 While using manual absolute test case specification ignores the default run status, it does not ignore the dynamic test dependencies.
-If test unit `B` depends on test unit `A` and test `B` is specified to be run by {param_run_test}, `A` is also run, even
+If test unit `B` depends on test unit `A` and test `B` is specified to be run by xref:{param_run_test}[`run_test`], `A` is also run, even
 if it is not specified, and its failure may cause the execution of `B` to be skipped. Similarly, the failed check of
-the {decorator_precondition} may cause the test selected test to be skipped.
+the xref:{decorator_precondition}[`precondition`] may cause the test selected test to be skipped.
 
 // tag reference: doc/modules/ROOT/examples/decorator_21.run-fail.cpp
 :bt-name: decorator_21
@@ -267,7 +267,7 @@ include::partial$bt_example.adoc[]
 Term 'relative' in this context means that the configuration is based on either the default run status of the test units or
 by the command-line override specified by the _absolute specification_; and atop of this, we additionally either enable
 some disabled test units or disable some enabled tests units. The relative specification is controlled by command-line
-argument {param_run_test}, with the value using similar syntax as in the absolute specification, but preceded with
+argument xref:{param_run_test}[`run_test`], with the value using similar syntax as in the absolute specification, but preceded with
 either character `'!'` for disabling enabled test units or with character `'+'` for enabling the disabled test units.
 This can be summarized with the following table:
 
@@ -280,7 +280,7 @@ This can be summarized with the following table:
 a|
 [subs="+macros,+attributes,+quotes"]
 ....
-> test_program --{param_run_test}=!<absolute_spec>
+> test_program --xref:{param_run_test}[`run_test`]=!<absolute_spec>
 ....
 |disabler
 |Enabled test units that match `<absolute_spec>` become disabled.
@@ -288,7 +288,7 @@ a|
 a|
 [subs="+macros,+attributes,+quotes"]
 ....
-> test_program --{param_run_test}=+<absolute_spec>
+> test_program --xref:{param_run_test}[`run_test`]=+<absolute_spec>
 ....
 |enabler
 |Disabled test units that match `<absolute_spec>` as well as their upstream dependencies become enabled.
@@ -316,6 +316,6 @@ the disabler takes the precedence over the enabler.
 
 [NOTE]
 ====
-While enabler additionally enables the upstream dependencies (introduced with decorator {decorator_depends_on}),
+While enabler additionally enables the upstream dependencies (introduced with decorator xref:{decorator_depends_on}[`depends_on`]),
  disabler does not disable them. Therefore when you enable and then disable the same test, you do not disable its upstream dependencies.
 ====

@@ -15,8 +15,8 @@ to validate aspects less important then correctness: performance, portability, u
 
 For example:
 
-* xref:utf_reference/testing_tool_ref.adoc#assertion_boost_level_throw[`BOOST_REQUIRE_THROW`], {boost_test_require}
-* `BOOST_CHECK_THROW`, `BOOST_TEST` footnote:[{boost_test} is equivalent to `BOOST_TEST_CHECK`]
+* xref:utf_reference/testing_tool_ref.adoc#assertion_boost_level_throw[`BOOST_REQUIRE_THROW`], xref:{boost_test_require}[`BOOST_TEST_REQUIRE`]
+* `BOOST_CHECK_THROW`, `BOOST_TEST` footnote:[xref:{boost_test}[`BOOST_TEST`\] is equivalent to `BOOST_TEST_CHECK`]
 * `BOOST_WARN_THROW`, `BOOST_TEST_WARN`
 
 These three levels of assertions are filtered by the framework and reported into the test log and output:

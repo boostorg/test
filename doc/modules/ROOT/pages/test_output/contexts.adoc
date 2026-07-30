@@ -1,7 +1,7 @@
 = Contexts
 :page-aliases: boost_test/test_output/test_tools_support_for_logging/contexts.adoc
 
-Contexts are a facility provided by the {utf} in order to be able to trace the location of assertions better. To grasp
+Contexts are a facility provided by the _Unit Test Framework_ in order to be able to trace the location of assertions better. To grasp
 the idea, consider the following example:
 
 [source,cpp]
@@ -122,7 +122,7 @@ BOOST_AUTO_TEST_CASE(test1)
 == Scope-bound context
 
 In the previous example, the information stored inside the calls to `BOOST_TEST_INFO` were all consumed by the next assertion. There are cases
-where we would like this information be persistent for the current scope. {utf} provides two tools to achieve this:
+where we would like this information be persistent for the current scope. _Unit Test Framework_ provides two tools to achieve this:
 
 * `BOOST_TEST_CONTEXT` defines a diagnostic message and a scope. The message is bound to every assertion in that scope,
 and is displayed along with every failed assertion.

@@ -21,16 +21,16 @@ These units are the *test cases*, the *test suites* and the *fixtures*.
 |===
 |Declaration
 a|
-The {utf} supports several methods for declaring a xref:tests_organization/test_cases.adoc[test case].
+The _Unit Test Framework_ supports several methods for declaring a xref:tests_organization/test_cases.adoc[test case].
     Test cases can be implemented using free function like syntax or based on actual free function, function object,
     that can be defined with or without parameters/data, or as template functions to be run against various types.
 
 |Organization
 a|
-The {utf} provides facilities to group several test cases into xref:tests_organization/test_suite.adoc[test suites].
+The _Unit Test Framework_ provides facilities to group several test cases into xref:tests_organization/test_suite.adoc[test suites].
     The test suites can be nested, and the set of test suites and test cases defines the xref:tests_organization/test_tree.adoc[test tree],
     where the leaves are the test cases.
-    Besides hierarchical structure the {utf} allows you to organize the test tree using xref:tests_organization/tests_grouping.adoc[logical grouping]
+    Besides hierarchical structure the _Unit Test Framework_ allows you to organize the test tree using xref:tests_organization/tests_grouping.adoc[logical grouping]
     and xref:tests_organization/tests_dependencies.adoc[dependencies]
     and provides you with controls to utilize the defined test tree organization the way you want (eg. from command line).
 
@@ -44,6 +44,6 @@ It is possible to specify test unit _attributes_ by using xref:tests_organizatio
 a|
 When several tests shares the same set-up (environment, test data preparation, etc.), the preparation and cleanup code
      may be factorized in xref:tests_organization/fixtures.adoc[fixtures].
-     In the {utf}, fixtures can be associated to test cases, test suites or globally to the test module.
+     In the _Unit Test Framework_, fixtures can be associated to test cases, test suites or globally to the test module.
 
 |===

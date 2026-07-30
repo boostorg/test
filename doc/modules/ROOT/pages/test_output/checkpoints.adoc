@@ -1,14 +1,14 @@
 = Checkpoints for accurate failure location
 :page-aliases: boost_test/test_output/test_tools_support_for_logging/checkpoints.adoc
 
-In most cases, the {utf} can't provide an exact location where system error occurs or uncaught C++ exception
-is thrown from. To be able to pinpoint it as close as possible the {utf} keeps track of *checkpoints* - the
+In most cases, the _Unit Test Framework_ can't provide an exact location where system error occurs or uncaught C++ exception
+is thrown from. To be able to pinpoint it as close as possible the _Unit Test Framework_ keeps track of *checkpoints* - the
 location a test module passed through.
 
-The {utf} keeps track of checkpoints at test case entrance, exit, fixture initialization, and at test tool invocation point.
+The _Unit Test Framework_ keeps track of checkpoints at test case entrance, exit, fixture initialization, and at test tool invocation point.
 
 Any other checkpoints should be entered by you manually if you need more granularity in case a fatal
-error occurs during the test. The {utf} provides two macros for this purpose:
+error occurs during the test. The _Unit Test Framework_ provides two macros for this purpose:
 
 * xref:test_output/checkpoints.adoc#ref_named_checkpoint[`BOOST_TEST_CHECKPOINT`] to specify a _named_ checkpoint and
 * xref:test_output/checkpoints.adoc#ref_unnamed_checkpoint[`BOOST_TEST_PASSPOINT`] to specify an _unnamed_ checkpoint.
@@ -20,7 +20,7 @@ xref:test_output/contexts.adoc[contexts]).
 [#ref_named_checkpoint]
 == Named checkpoints
 
-The macro {boost_test_checkpoint} is intended to be used to inject *named* checkpoint position. The
+The macro xref:{boost_test_checkpoint}[`BOOST_TEST_CHECKPOINT`] is intended to be used to inject *named* checkpoint position. The
 macro signature is as follows:
 
 [source,cpp]
@@ -29,19 +29,19 @@ BOOST_TEST_CHECKPOINT(checkpoint_message);
 ----
 
 The message formatted at the checkpoint position is saved and reported by the exception logging functions (if any
-occurs). Similarly to the {boost_test_message} the message can be formatted from any standard
+occurs). Similarly to the xref:{boost_test_message}[`BOOST_TEST_MESSAGE`] the message can be formatted from any standard
 output stream compliant components.
 
 // tag reference: doc/modules/ROOT/examples/example22.run-fail.cpp
 :bt-name: example22
 :bt-rule: run-fail
-:bt-descr: {boost_test_checkpoint} usage
+:bt-descr: xref:{boost_test_checkpoint}[`BOOST_TEST_CHECKPOINT`] usage
 include::partial$bt_example.adoc[]
 
 [#ref_unnamed_checkpoint]
 == Unnamed checkpoints
 
-The macro {boost_test_passpoint} is intended to be used to inject an *unnamed* checkpoint position. The
+The macro xref:{boost_test_passpoint}[`BOOST_TEST_PASSPOINT`] is intended to be used to inject an *unnamed* checkpoint position. The
 macro signature is as follows:
 
 [source,cpp]
@@ -49,12 +49,12 @@ macro signature is as follows:
 BOOST_TEST_PASSPOINT();
 ----
 
-Unlike the macro {boost_test_checkpoint} this macro doesn't require any message to be
+Unlike the macro xref:{boost_test_checkpoint}[`BOOST_TEST_CHECKPOINT`] this macro doesn't require any message to be
 supplied with it. It's just a simple "been there" marker that records file name and line number
 code passes through.
 
 // tag reference: doc/modules/ROOT/examples/example23.run-fail.cpp
 :bt-name: example23
 :bt-rule: run-fail
-:bt-descr: {boost_test_passpoint} usage
+:bt-descr: xref:{boost_test_passpoint}[`BOOST_TEST_PASSPOINT`] usage
 include::partial$bt_example.adoc[]

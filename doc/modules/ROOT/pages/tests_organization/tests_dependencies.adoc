@@ -6,7 +6,7 @@ cases where a dependency cannot be avoided and an order for executing the tests 
 
 In the general setup and for any two test cases `TA` and `TB`, `TB` should not take for granted that `TA` has already
 executed, even if `TA` is declared before `TB` in the same translation unit.
-The only ordering-related guarantee that {utf} makes by default is that if test cases `TA` and `TB` are declared in the
+The only ordering-related guarantee that _Unit Test Framework_ makes by default is that if test cases `TA` and `TB` are declared in the
 same test suite, no test case (call it `TX`) from any other test suite is executed between `TA` and `TB`, even if the
 declaration of `TX` appears between the declarations of `TA` and `TB`. In other words, all tests from a suite are
 executed in one go, even if the test suite namespace is opened multiple times.
@@ -20,12 +20,12 @@ robust against an erroneous implicit ordering.
 
 If there exist a dependency between test units, and an ordering is required between the execution of those tests,
 it has to be declared explicitly.
-Dependencies in the {utf} affect two dimensions of test units, which are:
+Dependencies in the _Unit Test Framework_ affect two dimensions of test units, which are:
 
 * the order of execution of these units
 * the execution of a test unit, which is conditioned by the state of its parents
 
-xref:tests_organization/decorators.adoc[Decorator] {decorator_depends_on} associates the decorated test case
+xref:tests_organization/decorators.adoc[Decorator] xref:{decorator_depends_on}[`depends_on`] associates the decorated test case
 (call it `TB`) with another test case (call it `TA`) specified by name. This affects the processing the test tree in two
 ways:
 

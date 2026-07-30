@@ -2,7 +2,7 @@
 :page-aliases: boost_test/test_output/logging_api.adoc
 
 While many test log configuration tasks can be performed at runtime using predefined framework parameters, the
-{utf} provides a compile time interface as well. The interface gives you full power over what, where and how to
+_Unit Test Framework_ provides a compile time interface as well. The interface gives you full power over what, where and how to
 log. The interface of the logger is provided by singleton class cpp:boost::unit_test::unit_test_log_t[boost::unit_test::unit_test_log_t] and is
 accessible through local file scope reference to single instance of this class
 
@@ -11,7 +11,7 @@ accessible through local file scope reference to single instance of this class
 boost::unit_test::unit_test_log
 ----
 
-In order to install customization of the logger, the {utf} provides the {boost_test_global_configuration} facility
+In order to install customization of the logger, the _Unit Test Framework_ provides the xref:{boost_test_global_configuration}[`BOOST_TEST_GLOBAL_CONFIGURATION`] facility
 that acts in a similar fashion to a global fixture.
 
 [#log_ct_output_stream_redirection]
@@ -83,7 +83,7 @@ include::partial$bt_example.adoc[]
 [#log_ct_log_format]
 == Predefined log format selection
 
-The select at compile time the log format from the list of the formats supplied by the {utf}
+The select at compile time the log format from the list of the formats supplied by the _Unit Test Framework_
 
 [source,cpp]
 ----

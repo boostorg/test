@@ -6,70 +6,70 @@
 |Assertions
 |Short description
 
-|{boost_test}, {boost_test_level}
+|xref:{boost_test}[`BOOST_TEST`], xref:{boost_test_level}[`BOOST_TEST_<level>`]
 |General purpose assertion macro.
 
-|{boost_level}
+|xref:{boost_level}[`BOOST_<level>`]
 |Simple validation of a boolean predicate value.
 
-|{boost_level_bitwise_equal}
+|xref:{boost_level_bitwise_equal}[`BOOST_<level>_BITWISE_EQUAL`]
 |Bitwise equality test of two elements.
 
-|{boost_level_equal}
+|xref:{boost_level_equal}[`BOOST_<level>_EQUAL`]
 |Equality test of two elements.
 
-|{boost_level_equal_collections}
+|xref:{boost_level_equal_collections}[`BOOST_<level>_EQUAL_COLLECTIONS`]
 |Element-wise equality test of two collections.
 
-|{boost_level_close}
+|xref:{boost_level_close}[`BOOST_<level>_CLOSE`]
 |Floating point comparison using a percentage of deviation.
 
-|{boost_level_close_fraction}
+|xref:{boost_level_close_fraction}[`BOOST_<level>_CLOSE_FRACTION`]
 |Floating point comparison using the fraction of the compared operands.
 
-|{boost_level_exception}
+|xref:{boost_level_exception}[`BOOST_<level>_EXCEPTION`]
 |Exception detection and validation check.
 
-|{boost_level_ge}
+|xref:{boost_level_ge}[`BOOST_<level>_GE`]
 |Comparison of two values (with convenient reporting).
 
-|{boost_level_gt}
+|xref:{boost_level_gt}[`BOOST_<level>_GT`]
 |Comparison of two values (with convenient reporting).
 
-|{boost_level_le}
+|xref:{boost_level_le}[`BOOST_<level>_LE`]
 |Comparison of two values (with convenient reporting).
 
-|{boost_level_lt}
+|xref:{boost_level_lt}[`BOOST_<level>_LT`]
 |Comparison of two values (with convenient reporting).
 
-|{boost_level_message}
-|Same as {boost_level} with a custom message in case of failure.
+|xref:{boost_level_message}[`BOOST_<level>_MESSAGE`]
+|Same as xref:{boost_level}[`BOOST_<level>`] with a custom message in case of failure.
 
-|{boost_level_ne}
+|xref:{boost_level_ne}[`BOOST_<level>_NE`]
 |Comparison of two values (with convenient reporting).
 
-|{boost_level_no_throw}
+|xref:{boost_level_no_throw}[`BOOST_<level>_NO_THROW`]
 |Checks an expression does not throw any exception.
 
-|{boost_level_predicate}
+|xref:{boost_level_predicate}[`BOOST_<level>_PREDICATE`]
 |Checks a list of arguments against a predicate functor.
 
-|{boost_level_small}
+|xref:{boost_level_small}[`BOOST_<level>_SMALL`]
 |Checks a value is small according to a tolerance.
 
-|{boost_level_throw}
+|xref:{boost_level_throw}[`BOOST_<level>_THROW`]
 |Checks an expression throws a specific type of expression.
 
-|{boost_auto_test_case_expected_failures}
+|xref:{boost_auto_test_case_expected_failures}[`BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES`]
 |Indicates the number of expected failures for a test case
 
-|{boost_error}
+|xref:{boost_error}[`BOOST_ERROR`]
 |Logs an error message, fails but does not abort the current test.
 
-|{boost_fail}
+|xref:{boost_fail}[`BOOST_FAIL`]
 |Logs an error message, fails and aborts the current test.
 
-|{boost_is_defined}
+|xref:{boost_is_defined}[`BOOST_IS_DEFINED`]
 |Checks at runtime whether or not the supplied preprocessor symbol is defined.
 
 |===
@@ -79,13 +79,13 @@
 |Decorators
 |Short description
 
-|{decorator_expected_failures}
+|xref:{decorator_expected_failures}[`expected_failures`]
 |Indicates the expected failures of a test unit.
 
-|{decorator_timeout}
+|xref:{decorator_timeout}[`timeout`]
 |Sets the maximum amount of time a test unit should take.
 
-|{decorator_tolerance}
+|xref:{decorator_tolerance}[`tolerance`]
 |Sets the floating point comparison tolerance for a test unit.
 
 |===
@@ -95,10 +95,10 @@
 |Control macros
 |Short description
 
-|{boost_test_tools_under_debugger}
+|xref:{boost_test_tools_under_debugger}[`BOOST_TEST_TOOLS_UNDER_DEBUGGER`]
 |When defined, test assertions are compiled in debugger-friendly mode.
 
-|{boost_test_tools_debuggable}
+|xref:{boost_test_tools_debuggable}[`BOOST_TEST_TOOLS_DEBUGGABLE`]
 |When defined, test assertions are compiled in two modes (debugger-friendly and full-featured), and the version is selected at run-time.
 
 |===

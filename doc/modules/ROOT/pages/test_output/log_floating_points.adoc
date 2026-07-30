@@ -1,7 +1,7 @@
 = Logging floating point type numbers
 :page-aliases: boost_test/test_output/test_tools_support_for_logging/log_floating_points.adoc
 
-It may appear that floating-point numbers are displayed by the {utf} with an excessive number of decimal digits.
+It may appear that floating-point numbers are displayed by the _Unit Test Framework_ with an excessive number of decimal digits.
 However the number of digits shown is chosen to avoid apparently nonsensical displays like `[1.00000 != 1.00000]`
 when comparing exactly unity against a value which is increased by just one least significant binary digit using
 the default precision for float of just 6 decimal digits, given by
@@ -15,8 +15,8 @@ string.
 So a much more helpful display using 9 decimal digits is thus:
 `[1.00000000 != 1.00000012]` showing that the two values are in fact different.
 
-For {ieee754} 32-bit float values - 9 decimal digits are shown. For 64-bit {ieee754} double - 17 decimal digits. For
-{ieee754} extended long double using 80-bit - 21 decimal digits. For {ieee754} quadruple long double 128-bit, and SPARC
+For *IEEE754* 32-bit float values - 9 decimal digits are shown. For 64-bit *IEEE754* double - 17 decimal digits. For
+*IEEE754* extended long double using 80-bit - 21 decimal digits. For *IEEE754* quadruple long double 128-bit, and SPARC
 extended long double 128-bit - 36 decimal digits. For floating-point types, a convenient formula to calculate
 `max_digits10` is: `2 + std::numeric_limits<FPT>::digits * 3010/10000`;
 

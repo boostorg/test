@@ -1,7 +1,7 @@
 = Enabling or disabling test unit execution
 :page-aliases: boost_test/tests_organization/enabling.adoc
 
-The {utf} provides a way for enabling or disabling a test unit execution. If a test case is disabled, it will not be
+The _Unit Test Framework_ provides a way for enabling or disabling a test unit execution. If a test case is disabled, it will not be
 run by the test runner. If a test suite is disabled, its status is inherited by the test units under its subtree, unless
 otherwise specified.
 
@@ -13,14 +13,14 @@ filtering] section covers this feature in details.
 ====
 There is a difference between a disabled test and a skipped test:
 
-* a disabled test has a run status set to disabled, and is completely discarded by the {utf}.
+* a disabled test has a run status set to disabled, and is completely discarded by the _Unit Test Framework_.
 ** a skipped test is a test that has a run status set to enabled, but which execution has been skipped at runtime.
 ====
 
 == Unconditional run status
 
-Decorator {decorator_disabled} indicates that the test unit's {default_run_status} is _false_. This means that that
-test cases inside this test unit will not be run by default, unless otherwise specified. Decorator {decorator_enabled}
+Decorator xref:{decorator_disabled}[`disabled`] indicates that the test unit's xref:{default_run_status}[_default run status_] is _false_. This means that that
+test cases inside this test unit will not be run by default, unless otherwise specified. Decorator xref:{decorator_enabled}[`enabled`]
 indicates that the test unit's default run status is _true_. This means that that test cases inside this test unit will
 be run by default, unless otherwise specified.
 
@@ -35,7 +35,7 @@ as set-up error when the test program is run.
 
 == Compilation-time run status
 
-Decorator {decorator_enable_if} indicates that the test unit's {default_run_status} is either _true_ or _false_,
+Decorator xref:{decorator_enable_if}[`enable_if`] indicates that the test unit's xref:{default_run_status}[_default run status_] is either _true_ or _false_,
 depending on the value of `Condition`. This means that that test cases inside this test unit will or will not be run by
 default.
 
@@ -50,14 +50,14 @@ decorator `disabled()`.
 
 == Runtime run status
 
-Decorator {decorator_precondition} associates a _predicate_ with a test unit. Before the test unit is executed, the
+Decorator xref:{decorator_precondition}[`precondition`] associates a _predicate_ with a test unit. Before the test unit is executed, the
 predicate is evaluated with the test unit's ID passed as the argument. If it evaluates to `false`, execution of the test
 unit is skipped. Skipping a test suite means skipping the execution of every test unit inside.
 
 [TIP]
 ====
 The precondition may return an cpp:boost::test_tools::assertion_result[assertion_result] instead of a boolean.
- In that case, the message contained in the `assertion_result` will be printed by the {utf}.
+ In that case, the message contained in the `assertion_result` will be printed by the _Unit Test Framework_.
 ====
 
 // tag reference: doc/modules/ROOT/examples/decorator_08.run-fail.cpp
@@ -76,7 +76,7 @@ precondition is not satisfied, therefore `test4` is skipped.
 
 [NOTE]
 ====
-A {decorator_precondition} that evaluates to `false` does not yield an error and does not fail the attached unit test. However
- the {utf} returns an error if the test tree is empty (see xref:tests_organization/test_tree_content.adoc[this section]
+A xref:{decorator_precondition}[`precondition`] that evaluates to `false` does not yield an error and does not fail the attached unit test. However
+ the _Unit Test Framework_ returns an error if the test tree is empty (see xref:tests_organization/test_tree_content.adoc[this section]
  for more details).
 ====

@@ -2,7 +2,7 @@
 :page-aliases: boost_test/usage_recommendations.adoc
 
 [#ref_usage_recommendations]
-Following pages present tips and recommendations on how to use and apply the {utf} in your real life practice.
+Following pages present tips and recommendations on how to use and apply the _Unit Test Framework_ in your real life practice.
 You don't necessarily need to follow them, but we found them handy.
 
 Here you will also find some tutorials from Boost.Test authors and world wide.
@@ -26,7 +26,7 @@ It's really easy to switch to automatic registration. And you don't need to worr
 In some cases you are reusing the same template based code from within one test case (actually we recommend
 better solution in such case - see below). Now if an error gets reported by the test tool within that reused
 code you may have difficulty locating were exactly error occurred. To address this issue you could either a add
-{boost_test_message} statements in templated code that log current type id of template parameters or you can use special hook located in
+xref:{boost_test_message}[`BOOST_TEST_MESSAGE`] statements in templated code that log current type id of template parameters or you can use special hook located in
 `unit_test_result.hpp` called `first_failed_assertion()`. If you set a breakpoint right on the line where this
 function is defined you will be able to unroll the stack and see where error actually occurred.
 

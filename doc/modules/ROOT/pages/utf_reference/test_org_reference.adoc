@@ -25,7 +25,7 @@ See xref:tests_organization/test_organization_templates.adoc#ref_BOOST_AUTO_TEST
 [#test_org_boost_test_case_template]
 == `BOOST_TEST_CASE_TEMPLATE`
 
-Creates a typed test case. The test case should have been declared with the macro {boost_test_case_template_function}.
+Creates a typed test case. The test case should have been declared with the macro xref:{boost_test_case_template_function}[`BOOST_TEST_CASE_TEMPLATE_FUNCTION`].
 The registration in the test tree should be performed manually.
 
 See xref:tests_organization/test_organization_templates.adoc#ref_BOOST_TEST_CASE_TEMPLATE[here] for more details.
@@ -34,7 +34,7 @@ See xref:tests_organization/test_organization_templates.adoc#ref_BOOST_TEST_CASE
 == `BOOST_TEST_CASE_TEMPLATE_FUNCTION`
 
 Declares a typed test case. The registration in the test tree should be performed manually, using the macro
-{boost_test_case_template}.
+xref:{boost_test_case_template}[`BOOST_TEST_CASE_TEMPLATE`].
 
 See xref:tests_organization/test_organization_templates.adoc#ref_BOOST_TEST_CASE_TEMPLATE[here] for more details.
 
@@ -86,7 +86,7 @@ same as the second form, but for dataset of arity `N`.
 
 For compilers *lacking the variadic template* support, the maximal arity (the maximal value of `N`) is controlled by the macro
 `BOOST_TEST_DATASET_MAX_ARITY` which is set to `10` by default. If you need a greater value, define `BOOST_TEST_DATASET_MAX_ARITY`
-to the desired value *before* including the {utf} headers.
+to the desired value *before* including the _Unit Test Framework_ headers.
 
 See xref:tests_organization/test_case_generation.adoc#datasets_auto_registration[here] for more details.
 
@@ -94,7 +94,7 @@ See xref:tests_organization/test_case_generation.adoc#datasets_auto_registration
 == `BOOST_DATA_TEST_CASE_F`
 
 Declares and registers a data-driven test case, using a particular dataset and a fixture. This is basically the same as
-{boost_data_test_case} with fixture support added.
+xref:{boost_data_test_case}[`BOOST_DATA_TEST_CASE`] with fixture support added.
 
 [source,cpp]
 ----
@@ -137,7 +137,7 @@ See xref:tests_organization/test_suite.adoc#ref_BOOST_AUTO_TEST_SUITE[here] for 
 == `BOOST_AUTO_TEST_SUITE_END`
 
 Indicates the end of a test suite. Test suites can be nested. This macro should appear as many times as there is a
-{boost_auto_test_suite}.
+xref:{boost_auto_test_suite}[`BOOST_AUTO_TEST_SUITE`].
 
 See xref:tests_organization/test_suite.adoc#ref_BOOST_AUTO_TEST_SUITE[here] for more details.
 
@@ -163,7 +163,7 @@ See xref:tests_organization/fixtures.adoc#case[here] for more details.
 [#test_org_boost_global_fixture]
 == `BOOST_GLOBAL_FIXTURE`
 
-This macro is deprecated in favor of {boost_test_global_fixture} and {boost_test_global_configuration}.
+This macro is deprecated in favor of xref:{boost_test_global_fixture}[`BOOST_TEST_GLOBAL_FIXTURE`] and xref:{boost_test_global_configuration}[`BOOST_TEST_GLOBAL_CONFIGURATION`].
 
 [#test_org_boost_test_global_fixture]
 == `BOOST_TEST_GLOBAL_FIXTURE`
@@ -215,7 +215,7 @@ enabled();
 disabled();
 ----
 
-Sets the test unit's {default_run_status} to _true_ or _false_.
+Sets the test unit's xref:{default_run_status}[_default run status_] to _true_ or _false_.
 See xref:tests_organization/enabling.adoc[here] for more details.
 
 [#decorator_enable_if]
@@ -226,7 +226,7 @@ See xref:tests_organization/enabling.adoc[here] for more details.
 template <bool Condition> enable_if();
 ----
 
-Sets the test unit's {default_run_status} to _true_ or _false_, depending on a compilation-time
+Sets the test unit's xref:{default_run_status}[_default run status_] to _true_ or _false_, depending on a compilation-time
 constant.
 See xref:tests_organization/enabling.adoc[here] for more details.
 
@@ -297,5 +297,5 @@ typedef boost::function<[classref boost::test_tools::assertion_result test_tools
 precondition(predicate_t predicate);
 ----
 
-Associates a _predicate_ with a test unit that will determine its {default_run_status} at run-time.
+Associates a _predicate_ with a test unit that will determine its xref:{default_run_status}[_default run status_] at run-time.
 See xref:tests_organization/enabling.adoc[here] for more details.

@@ -47,7 +47,7 @@ There are several issues with above test.
 . Would exception happen in test_object construction of method `is_valid` invocation, the program will crash.
 . You won't see any output, would you run this test manually.
 
-The {utf} solves all these issues. To integrate with it above program needs to be changed to:
+The _Unit Test Framework_ solves all these issues. To integrate with it above program needs to be changed to:
 
 [source,cpp]
 ----
@@ -63,7 +63,7 @@ BOOST_AUTO_TEST_CASE( my_test )
 ----
 
 Now, you not only receive uniform result code, even in case of exception, but also nicely formatted output from
-{boost_test} tool, would you choose to see it. Is there any other ways to perform checks? The following example test
+xref:{boost_test}[`BOOST_TEST`] tool, would you choose to see it. Is there any other ways to perform checks? The following example test
 program shows several different ways to detect and report an error in the `add()` function.
 
 [source,cpp]

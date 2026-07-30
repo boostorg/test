@@ -10,7 +10,7 @@ arguments is the following:
 ----
 
 This means that everything that is passed after "`--`" is considered as a custom parameter and will not be intercepted nor interpreted
-by the {utf}. This avoids any troubleshooting between the {utf} parameters and the custom ones.
+by the _Unit Test Framework_. This avoids any troubleshooting between the _Unit Test Framework_ parameters and the custom ones.
 
 There are several use cases for accessing the arguments passed on the command line:
 
@@ -22,7 +22,7 @@ test module with different parameters (different graphic cards...) in a batched 
 for instance a set of parameters that define test cases.
 
 In the first scenario, xref:runtime_config/runtime_custom.adoc#ref_consuming_cmd_test_case[test cases] or fixtures, including
-xref:runtime_config/runtime_custom.adoc#ref_consuming_cmd_global_fixture[global fixtures], may be used. Since those are part of the test tree, they can benefit from the {utf} rich set of assertions
+xref:runtime_config/runtime_custom.adoc#ref_consuming_cmd_global_fixture[global fixtures], may be used. Since those are part of the test tree, they can benefit from the _Unit Test Framework_ rich set of assertions
 and controlled execution environment.
 
 In the second scenario, the command line argument interact directly with the content of the test tree: by passing specific
@@ -78,9 +78,9 @@ The module requires `3` arguments on the command line:
 * `framework::master_test_suite().argv[1]` should be equal to `--device-name`
 * `framework::master_test_suite().argv[2]` should be the name of the device to instantiate
 
-As it can be seen in the shell outputs, any command line argument consumed by the {utf} is removed from
-`argc` / `argv`. Since global fixtures are running in the {utf} controlled environment, any fatal error reported
-by the fixture (through the {boost_test_require} assertion) aborts the test execution. Non fatal errors
+As it can be seen in the shell outputs, any command line argument consumed by the _Unit Test Framework_ is removed from
+`argc` / `argv`. Since global fixtures are running in the _Unit Test Framework_ controlled environment, any fatal error reported
+by the fixture (through the xref:{boost_test_require}[`BOOST_TEST_REQUIRE`] assertion) aborts the test execution. Non fatal errors
 on the other hand do not abort the test-module and are reported as assertion failure, and would not prevent the execution
 of the test case `check_device_has_meaningful_name`.
 
@@ -96,11 +96,11 @@ It is possible to have several global fixtures in a test module, spread over sev
 The initialization function are described in details in this xref:adv_scenarios/test_module_init_overview.adoc[section].
 The initialization function is called before any other test or fixture, and before entering the master test suite. The initialization
 function is not considered as a test-case, although it is called under the controlled execution
-environment of the {utf}. This means that:
+environment of the _Unit Test Framework_. This means that:
 
 * the errors will be properly handled,
 * loggers are not fully operational,
-* it is not possible to use the {utf} assertion macros like {boost_test} as it is not a test-case.
+* it is not possible to use the _Unit Test Framework_ assertion macros like xref:{boost_test}[`BOOST_TEST`] as it is not a test-case.
 
 The following example shows how to use the command line arguments parsing described above to create/add new test cases
 to the test tree. It also shows very limited support to messages (does not work for all loggers), and error handling.
@@ -114,7 +114,7 @@ include::partial$bt_example.adoc[]
 As seen in this example, the error handling is quite different than a regular test-case:
 
 * For the _alternative_ initialization API (see
-{boost_test_alternative_init_api}), the easiest way to indicate an error would be to return `false`
+xref:{boost_test_alternative_init_api}[`BOOST_TEST_ALTERNATIVE_INIT_API`]), the easiest way to indicate an error would be to return `false`
 in case of failure.
 * For the _obsolete_ and _alternative_, raising an exception such as `std::runtime_error` or
 cpp:boost::unit_test::framework::setup_error[boost::unit_test::framework::setup_error] as above works as well.
@@ -145,7 +145,7 @@ include::partial$bt_example.adoc[]
 let the dataset generator access the `argc` and `argv` of the master test suite.
 * The generation of the test-cases out of this dataset happens before the global fixture are reached (and before
 any test cases), and after the initialization function.
-* The generator of the dataset is *not* considered being a test case and the {utf} assertions are not accessible.
-However, the {utf} will catch the exceptions raised during the generation of the test-cases by the dataset.
+* The generator of the dataset is *not* considered being a test case and the _Unit Test Framework_ assertions are not accessible.
+However, the _Unit Test Framework_ will catch the exceptions raised during the generation of the test-cases by the dataset.
 To report an error, a `std::logic_error` or cpp:boost::unit_test::framework::setup_error[boost::unit_test::framework::setup_error] can be raised
-and will be reported by the {utf}.
+and will be reported by the _Unit Test Framework_.

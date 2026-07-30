@@ -5,9 +5,9 @@ Once a test case has been declared, the body of this test should be written. A t
 sequence of operations in which *assertions* are inserted. Those assertions evaluate _statements_ that implement the expectation being validated,
 and report failures and/or information in a uniform manner, depending on the xref:utf_reference/rt_param_reference.adoc#log_level[log level].
 
-The {utf}'s supplies a toolbox of assertions to ease the creation and maintenance of test cases and
+The _Unit Test Framework_'s supplies a toolbox of assertions to ease the creation and maintenance of test cases and
 provide a uniform error reporting mechanism. The toolbox supplied is in most part in a form of macro declarations.
-An (almost) unique interface to all of them implemented by the macro {boost_test}.
+An (almost) unique interface to all of them implemented by the macro xref:{boost_test}[`BOOST_TEST`].
 
 NOTE: All macros arguments are calculated once, so it's safe to pass complex expressions in their place.
 

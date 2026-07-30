@@ -150,8 +150,8 @@ and it is not possible to interrupt a test even in case of time out.
 * Time-out now applies to test-suites as well: a test-suite is marked as timed-out if it exceeds the allocated
 time. The test units that were not executed at the time-point of the time-out are skipped.
 * It is now possible to pass several values for the same context via the tool
-{boost_test_context}.
-* A new macro {boost_test_info_scope} let define a context for the current scope in a sticky way.
+xref:{boost_test_context}[`BOOST_TEST_CONTEXT`].
+* A new macro xref:{boost_test_info_scope}[`BOOST_TEST_INFO_SCOPE`] let define a context for the current scope in a sticky way.
 * It is now possible to use xref:testing_tools/floating_point.adoc[floating point]
 comparison without being required to cast both operands to floating point types. Now Boost.Test uses floating
 point comparisons for expressions such as
@@ -233,7 +233,7 @@ to accept an additional boolean argument. If you have a custom logger, you will 
 * Official support of header-only variant of Boost.Test with multiple translation units. This feature
 was available but needed to be properly documented (xref:adv_scenarios/single_header_customizations.adoc#multiple_translation_units[here]
 and xref:usage_variants.adoc[here]).
-* It is now possible to manually add a test case by specifying its name, with {boost_test_case_name}
+* It is now possible to manually add a test case by specifying its name, with xref:{boost_test_case_name}[`BOOST_TEST_CASE_NAME`]
 * Better logging of messages in `boost::exception`
 
 === Bugfixes and feature requests
@@ -330,18 +330,18 @@ registered tests. Make sure you have no duplicate names.
 
 === Breaking changes
 
-* {boost_global_fixture} is flagged as deprecated and will be removed in a later version
-* Using test assertions and macros is not allowed when used inside {boost_global_fixture}. Please use {boost_test_global_fixture}
+* xref:{boost_global_fixture}[`BOOST_GLOBAL_FIXTURE`] is flagged as deprecated and will be removed in a later version
+* Using test assertions and macros is not allowed when used inside xref:{boost_global_fixture}[`BOOST_GLOBAL_FIXTURE`]. Please use xref:{boost_test_global_fixture}[`BOOST_TEST_GLOBAL_FIXTURE`]
 instead (see below).
 * the interface for loggers has slightly changed to take into account the current log level. This is for addressing {trac-url}/12631[#12631].
 
 === New features
 
 * VS2017 / C++17 compatibility (thanks to Daniela Engert)
-* Deprecating {boost_global_fixture} in favor of {boost_test_global_fixture} and {boost_test_global_configuration}. This
+* Deprecating xref:{boost_global_fixture}[`BOOST_GLOBAL_FIXTURE`] in favor of xref:{boost_test_global_fixture}[`BOOST_TEST_GLOBAL_FIXTURE`] and xref:{boost_test_global_configuration}[`BOOST_TEST_GLOBAL_CONFIGURATION`]. This
 helps separating the logic of the fixtures associated to the master test suite, from the one used for setting up the logging
 and reporting facility, and results in a general cleaner design.
-* It is possible to use now the {boost_test} check to comparing a collection with respect to regular arrays. See
+* It is possible to use now the xref:{boost_test}[`BOOST_TEST`] check to comparing a collection with respect to regular arrays. See
 xref:testing_tools/collections.adoc#ref_boost_test_coll_c_arrays[this section] for more details.
 
 === Bugfixes and feature requests
@@ -390,7 +390,7 @@ otherwise not possible to execute the tests reported by `--list_content`. See {t
 
 === New features
 
-* Now xref:testing_tools/collections.adoc#boost_test_coll_perelement[`per_element`] and xref:testing_tools/collections.adoc#boost_test_coll_default_lex[`lexicographic`] modifiers of {boost_test}
+* Now xref:testing_tools/collections.adoc#boost_test_coll_perelement[`per_element`] and xref:testing_tools/collections.adoc#boost_test_coll_default_lex[`lexicographic`] modifiers of xref:{boost_test}[`BOOST_TEST`]
 can also be applied to string comparison. See
 xref:testing_tools/strings.adoc[string comparison] for more details.
 
@@ -419,9 +419,9 @@ for more details,
 xref:utf_reference/rt_param_reference.adoc#run_test[`--run_test`]
 generates tokens as if `--run_test` has been repeated, which enables the set up of several test filters
 through the associated environment variable `BOOST_TEST_RUN_FILTERS`
-* the {utf} learned to log the messages in the xUnit/JUNIT log format.
+* the _Unit Test Framework_ learned to log the messages in the xUnit/JUNIT log format.
 See xref:test_output/log_formats.adoc#log_junit_format[here] for more details.
-* the {utf} learned to have several loggers at the same time, each of which with their own log level and log sink.
+* the _Unit Test Framework_ learned to have several loggers at the same time, each of which with their own log level and log sink.
 See the associated command line switch xref:utf_reference/rt_param_reference.adoc#logger[`--logger`] and
 corresponding environment variable `BOOST_TEST_LOGGER` for more details.
 * loggers are now able to indicate their default output stream and log level.
@@ -507,7 +507,7 @@ should be rewritten to
 
 === New major features
 
-* {boost_test} generic assertion
+* xref:{boost_test}[`BOOST_TEST`] generic assertion
 * xref:tests_organization/test_case_generation.adoc[data driven test cases]: supersedes the parametric test case (unary test cases)
 * test units xref:tests_organization/decorators.adoc[attributes], that allow finer control over test units property and behavior
 * logical grouping of the test units using xref:tests_organization/tests_grouping.adoc[labels]

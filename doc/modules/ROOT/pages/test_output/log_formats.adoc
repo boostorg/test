@@ -1,7 +1,7 @@
 = Log formats
 :page-aliases: boost_test/test_output/log_formats.adoc
 
-The {utf} supports several log formats:
+The _Unit Test Framework_ supports several log formats:
 
 * xref:test_output/log_formats.adoc#log_human_readable_format[HRF]: human readable format
 * xref:test_output/log_formats.adoc#log_xml_format[XML]: an machine interpretable log format
@@ -56,12 +56,12 @@ the list of all levels in order of increasing 'importance':
 |This category includes messages that provide information on successfully passed assertions
 
 |Test tree traversal
-|This category includes messages that are produced by the {utf} core and indicate which test suites/cases are currently being executed or skipped
+|This category includes messages that are produced by the _Unit Test Framework_ core and indicate which test suites/cases are currently being executed or skipped
 
 |General information
 a|
 This category includes general information messages produced in most cases by a test module author using the
-       macro {boost_test_message}
+       macro xref:{boost_test_message}[`BOOST_TEST_MESSAGE`]
 
 |Warning
 |This category includes messages produced by failed `WARNING` level assertions
@@ -71,18 +71,18 @@ This category includes general information messages produced in most cases by a 
 
 |Uncaught C++ exceptions
 a|
-This category includes messages that are produced by the {utf} and provide detailed information on the C++
+This category includes messages that are produced by the _Unit Test Framework_ and provide detailed information on the C++
        exceptions uncaught by the test case body.
 
 |Non-fatal system error
 a|
-This category includes messages that are produced by the {utf} itself and provides information about caught
+This category includes messages that are produced by the _Unit Test Framework_ itself and provides information about caught
        non-fatal system error. For example it includes messages produced in the case of test case timeout or if
        floating  point values calculation errors are caught.
 
 |Fatal system error
 a|
-This category includes messages produced by failed require level assertions and by the {utf} itself in case of
+This category includes messages produced by failed require level assertions and by the _Unit Test Framework_ itself in case of
        abnormal test case termination.
 
 |===

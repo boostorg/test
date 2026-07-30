@@ -24,8 +24,8 @@ void combined_test()
 The approach above has several drawbacks:
 
 * the logic for running the tests is inside a test itself: `single_test` in the above example is run from the test
-case `combined_test` while its execution would be better handled by the {utf}
-* in case of fatal failure for one of the values in `param` array above (say a failure in {boost_test_require}),
+case `combined_test` while its execution would be better handled by the _Unit Test Framework_
+* in case of fatal failure for one of the values in `param` array above (say a failure in xref:{boost_test_require}[`BOOST_TEST_REQUIRE`]),
 the test `combined_test` is aborted and the next test-case in the test tree is executed.
 * in case of failure, the reporting is not accurate enough: the test should certainly be reran during debugging
 sessions by a human or additional logic for reporting should be implemented in the test itself.
@@ -82,18 +82,18 @@ Indeed, the parametrized test may test for some points around (0,1), but will fa
 
 == Data driven tests in the Boost.Test framework
 
-The facilities provided by the {utf} addressed the issues described above:
+The facilities provided by the _Unit Test Framework_ addressed the issues described above:
 
 * the notion of *datasets* eases the description of the class of inputs for test cases. The datasets also implement several
 operations that enable their combinations to create new, more complex datasets,
-* two macros, {boost_data_test_case} and {boost_data_test_case_f}, respectively without and with fixture support,
+* two macros, xref:{boost_data_test_case}[`BOOST_DATA_TEST_CASE`] and xref:{boost_data_test_case_f}[`BOOST_DATA_TEST_CASE_F`], respectively without and with fixture support,
 are used for the declaration and registration of a test case over a collection of values (samples),
 * each test case, associated to a unique value, is executed independently from others. These tests are guarded in the same
 way regular test cases are, which makes the execution of the tests over each sample of a dataset isolated, robust,
 repeatable and ease the debugging,
-* several datasets generating functions are provided by the {utf}
+* several datasets generating functions are provided by the _Unit Test Framework_
 
-The remainder of this section covers the notions and feature provided by the {utf} about the data-driven test cases, in
+The remainder of this section covers the notions and feature provided by the _Unit Test Framework_ about the data-driven test cases, in
 particular:
 
 . the notion of xref:tests_organization/test_case_generation.adoc#datasets[*dataset* and *sample*] is introduced
@@ -117,7 +117,7 @@ A *dataset* is a _collection of samples_, that
 
 Hence the dataset implements the notion of _sequence_.
 
-The descriptive power of the datasets in {utf} comes from
+The descriptive power of the datasets in _Unit Test Framework_ comes from
 
 * the xref:tests_organization/test_case_generation.adoc#dataset_interface[interface] for creating a custom datasets, which is quite simple,
 * the xref:tests_organization/test_case_generation.adoc#operations[operations] they provide for combining different datasets
@@ -174,7 +174,7 @@ To overcome this, a *delayed* dataset instantiation interface has been introduce
 which *lazyly* instantiates the dataset.
 
 To instantiate a delayed dataset, the cpp:boost::unit_test::data::monomorphic::make_delayed[boost::unit_test::data::monomorphic::make_delayed] function should be used in the
-{boost_data_test_case} call. The following snippet:
+xref:{boost_data_test_case}[`BOOST_DATA_TEST_CASE`] call. The following snippet:
 
 [source,cpp]
 ----
@@ -202,7 +202,7 @@ See the class cpp:boost::unit_test::data::monomorphic::delayed_dataset[`monomorp
 [#datasets_auto_registration]
 == Declaring and registering test cases with datasets
 
-In order to declare and register a data-driven test-case, the macros {boost_data_test_case} or {boost_data_test_case_f}
+In order to declare and register a data-driven test-case, the macros xref:{boost_data_test_case}[`BOOST_DATA_TEST_CASE`] or xref:{boost_data_test_case_f}[`BOOST_DATA_TEST_CASE_F`]
 should be used. Those two forms are equivalent, with the difference that `BOOST_DATA_TEST_CASE_F` supports fixtures.
 
 Those macros are variadic and can be used in the following forms:
@@ -252,14 +252,14 @@ case of arity 1.
 ====
 A compilation-time check is performed on the coherence of the arity of the dataset and the number of variables `var1`... `varN`.
  For compilers *without C++11* support, the maximal supported arity is controlled by the macro
- {boost_test_dataset_max_arity}, that can be overridden _prior_ to including the {utf} headers.
+ xref:{boost_test_dataset_max_arity}[`BOOST_TEST_DATASET_MAX_ARITY`], that can be overridden _prior_ to including the _Unit Test Framework_ headers.
 ====
 
-CAUTION: The macros {boost_data_test_case} and {boost_data_test_case_f} are available only for compilers with support for *variadic macros*.
+CAUTION: The macros xref:{boost_data_test_case}[`BOOST_DATA_TEST_CASE`] and xref:{boost_data_test_case_f}[`BOOST_DATA_TEST_CASE_F`] are available only for compilers with support for *variadic macros*.
 
 === Samples and test tree
 
-It should be emphasized that those macros do not declare a single test case (as {boost_auto_test_case} would do) but declare and
+It should be emphasized that those macros do not declare a single test case (as xref:{boost_auto_test_case}[`BOOST_AUTO_TEST_CASE`] would do) but declare and
 register as many test cases as there are samples in the dataset given in argument. Each test case runs on exactly *one*
 sample of the dataset.
 
@@ -279,7 +279,7 @@ in the database prefixed by `+_+` and starting at index `0` ("`+_0+`", "`+_1+`",
 This make it easy to:
 
 * identify which sample is failing (say "`test_case_name/_3`"),
-* replay the test for one or several samples (or the full dataset) from the command line using the xref:runtime_config/test_unit_filtering.adoc[test filtering features] provided by the {utf},
+* replay the test for one or several samples (or the full dataset) from the command line using the xref:runtime_config/test_unit_filtering.adoc[test filtering features] provided by the _Unit Test Framework_,
 * apply a xref:tests_organization/decorators.adoc#explicit_decorator_declaration[decorator] to each individual test cases of the
 dataset, as the decorator would apply to the test suite.
 
@@ -293,7 +293,7 @@ This context contains the sample names and values for which the test failed, whi
 [#operations]
 == Operations on dataset
 
-As mentioned earlier, one of the major aspects of using the {utf} datasets lies in the number of operations provided
+As mentioned earlier, one of the major aspects of using the _Unit Test Framework_ datasets lies in the number of operations provided
 for their combination.
 
 For that purpose, three operators are provided:
@@ -374,7 +374,7 @@ A particular handling is performed if `dsa` and `dsb` are of different size. The
 [CAUTION]
 ====
 If the _zip_ operation is not supported for your compiler, the macro xref:utf_reference/link_references.adoc#config_no_zip_composition[`BOOST_TEST_NO_ZIP_COMPOSITION_AVAILABLE`]
- will be automatically set by the {utf}
+ will be automatically set by the _Unit Test Framework_
 ====
 
 // tag reference: doc/modules/ROOT/examples/dataset_example61.run.cpp
@@ -408,7 +408,7 @@ The following properties hold:
 [CAUTION]
 ====
 If the _grid_ operation is not supported for your compiler, the macro xref:utf_reference/link_references.adoc#config_no_grid_composition[`BOOST_TEST_NO_GRID_COMPOSITION_AVAILABLE`]
- will be automatically set by the {utf}
+ will be automatically set by the _Unit Test Framework_
 ====
 
 In the following example, the random number generator is the second dataset. Its state is evaluated 6 times (3 times for the first `xrange` - first dimension -
@@ -424,7 +424,7 @@ include::partial$bt_example.adoc[]
 [#generators]
 == Datasets generators
 
-Several _generators_ for datasets are implemented in {utf}:
+Several _generators_ for datasets are implemented in _Unit Test Framework_:
 
 * xref:tests_organization/test_case_generation.adoc#singletons[Singletons]
 * xref:tests_organization/test_case_generation.adoc#stl[`forward iterable`] containers and
@@ -556,7 +556,7 @@ specified.
 ====
 The random value generator is available only for C++11 capable compilers. If this feature is not supported for your compiler,
  the macro xref:utf_reference/link_references.adoc#config_no_random_dataset[`BOOST_TEST_NO_RANDOM_DATASET_AVAILABLE`]
- will be automatically set by the {utf}
+ will be automatically set by the _Unit Test Framework_
 ====
 
 It is possible to construct a random sequence using the factory cpp:boost::unit_test::data::random[boost::unit_test::data::random], available in the overloads below:

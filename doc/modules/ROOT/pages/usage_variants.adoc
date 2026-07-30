@@ -1,7 +1,7 @@
 = Usage variants
 :page-aliases: boost_test/usage_variants.adoc
 
-The {utf} supports three different usage variants:
+The _Unit Test Framework_ supports three different usage variants:
 
 . xref:usage_variants.adoc#single_header[The header-only variant]
 . xref:usage_variants.adoc#static_lib[The static library variant]
@@ -14,7 +14,7 @@ clear reasons why would you prefer each one. Following sections should help you 
 == Header-only usage variant
 
 If you prefer to avoid the compilation of standalone library, you should use the
-header-only variant of the {utf}. This variant only requires you to include
+header-only variant of the _Unit Test Framework_. This variant only requires you to include
 the unique header: `+#include <boost/test/included/unit_test.hpp>+`
 and there is no need to link with any library. There are several ways to perform
 the initialization, but the simplest way is the following:
@@ -25,7 +25,7 @@ the initialization, but the simplest way is the following:
 #include <boost/test/included/unit_test.hpp> /* path is different than the other variants! */
 ----
 
-{boost_test_module} macro needs to be defined *before* the include and should indicate
+xref:{boost_test_module}[`BOOST_TEST_MODULE`] macro needs to be defined *before* the include and should indicate
 the name of the test module. This name can include spaces and does not need to be wrapped in quotes.
 
 xref:adv_scenarios/single_header_customizations.adoc[This section]
@@ -37,47 +37,47 @@ xref:adv_scenarios/single_header_customizations.adoc#multiple_translation_units[
 == Static library usage variant
 
 For most users, who has an access to pre-built static library footnote:[these files are distributed
-with the packaging systems on Linux and OSX for instance] of the {utf} or can
+with the packaging systems on Linux and OSX for instance] of the _Unit Test Framework_ or can
 xref:adv_scenarios/build_utf.adoc[build it] themselves, following usage can be most versatile
  and simple approach. This usage variant entails two steps.
 
 . First, the following line needs to be added to all translation units in the test module:
 `+#include <boost/test/unit_test.hpp>+`
 One and *only one* translation unit should include following lines:
-`+#define {boost_test_module} test module name
+`+#define BOOST_TEST_MODULE test module name
 #include <boost/test/unit_test.hpp>+`
-{boost_test_module} macro needs to be defined *before* the include and should indicate the
+xref:{boost_test_module}[`BOOST_TEST_MODULE`] macro needs to be defined *before* the include and should indicate the
 name of the test module. This name can include spaces and does not need to be wrapped in quotes.
-. The second step is to link with the {utf} *static* library.
+. The second step is to link with the _Unit Test Framework_ *static* library.
 
 NOTE: Header `<boost/test/unit_test.hpp>` is an _aggregate_ header: it includes most of the other headers that contains the Unit Test Framework definitions.
 
 The flip side of this usage variant is that each test module following this usage variant is going
-to be statically linked with {utf}, which might be something you want to avoid (to save space
+to be statically linked with _Unit Test Framework_, which might be something you want to avoid (to save space
 for example). For more information about these configuration options check
 xref:adv_scenarios/static_lib_customizations.adoc[this section].
 
 [#shared_lib]
 == Shared library usage variant
 
-In the project with large number of test modules the static library variant of the {utf} may
+In the project with large number of test modules the static library variant of the _Unit Test Framework_ may
 cause you to waste a lot of disk space. The solution is to link test module dynamically with the
-{utf} built as a shared library.
+_Unit Test Framework_ built as a shared library.
 This usage variant entails two steps.
 
 . First you need to add following lines to all translation units in a test module:
-`+#define {boost_test_dyn_link}
+`+#define BOOST_TEST_DYN_LINK
 #include <boost/test/unit_test.hpp>+`
 and *only one* translation unit should include following lines
-`+#define {boost_test_module} test module name
-#define {boost_test_dyn_link}
+`+#define BOOST_TEST_MODULE test module name
+#define BOOST_TEST_DYN_LINK
 #include <boost/test/unit_test.hpp>+`
 `BOOST_TEST_MODULE` and `BOOST_TEST_DYN_LINK` macros needs to be defined *before* the include.
 `BOOST_TEST_MODULE` should be set to test module name. This name can include spaces and does
 not need to be wrapped in quotes.
-. The second step is to link with the {utf} *shared* library.
+. The second step is to link with the _Unit Test Framework_ *shared* library.
 
-The flip side of this usage variant is that you will need to make sure the {utf} shared library
+The flip side of this usage variant is that you will need to make sure the _Unit Test Framework_ shared library
 is accessible at runtime to a test module.
 
 In addition shared library usage variant facilitates custom test runners. For more information about this
@@ -85,7 +85,7 @@ check xref:adv_scenarios/shared_lib_customizations.adoc[this section].
 
 [CAUTION]
 ====
-On Windows, the test module and the {utf} shared library should link to the same CRT. Not doing
- so (for instance {utf} shared library in _release_ mode while the test module is in _debug_) will
+On Windows, the test module and the _Unit Test Framework_ shared library should link to the same CRT. Not doing
+ so (for instance _Unit Test Framework_ shared library in _release_ mode while the test module is in _debug_) will
  lead to crashes.
 ====

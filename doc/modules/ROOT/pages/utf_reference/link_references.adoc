@@ -5,28 +5,28 @@
 == `BOOST_TEST_MAIN`
 
 When defined, this macro creates a stub for the test module initialization (the main entry part). This
-macro also expands properly into a `main` function in case the shared library variant of the {utf} is used.
+macro also expands properly into a `main` function in case the shared library variant of the _Unit Test Framework_ is used.
 
 [CAUTION]
 ====
 This macro should
 
-. be defined before any inclusion directive to {utf} headers
+. be defined before any inclusion directive to _Unit Test Framework_ headers
 . be defined exactly for one compilation unit of your test module
 ====
 
-TIP: The macro {boost_test_module} should be preferred
+TIP: The macro xref:{boost_test_module}[`BOOST_TEST_MODULE`] should be preferred
 
 [#link_boost_test_module_macro]
 == `BOOST_TEST_MODULE`
 
-Serves the same purpose as the macro {boost_test_main} but, in addition, defines the name of the master test suite.
+Serves the same purpose as the macro xref:{boost_test_main}[`BOOST_TEST_MAIN`] but, in addition, defines the name of the master test suite.
 
 [CAUTION]
 ====
-As {boost_test_main}, this macro should
+As xref:{boost_test_main}[`BOOST_TEST_MAIN`], this macro should
 
-. be defined before any inclusion directive to {utf} headers
+. be defined before any inclusion directive to _Unit Test Framework_ headers
 . be defined exactly for one compilation unit of your test module
 ====
 
@@ -37,14 +37,14 @@ An example may be found xref:tests_organization/master_test_suite.adoc#ref_BOOST
 
 [WARNING]
 ====
-This macro should be defined before any include directive to the {utf} headers and is
-mutually exclusive with the {boost_test_module} macro.
+This macro should be defined before any include directive to the _Unit Test Framework_ headers and is
+mutually exclusive with the xref:{boost_test_module}[`BOOST_TEST_MODULE`] macro.
 ====
 
-In case of custom initialization of the test module entry point, this macro indicates the {utf} to
+In case of custom initialization of the test module entry point, this macro indicates the _Unit Test Framework_ to
 use the new API. The differences between the new and old APIs are described in xref:adv_scenarios/obsolete_init_func.adoc[this section].
 
-The way to customize the entry point of the test-module depends on the variant of the {utf} in use.
+The way to customize the entry point of the test-module depends on the variant of the _Unit Test Framework_ in use.
 Several sections in the documentation are devoted to this:
 
 * xref:adv_scenarios/single_header_customizations.adoc#entry_point[this section] for single header variant,
@@ -56,20 +56,20 @@ Several sections in the documentation are devoted to this:
 
 Define this flag to prevent auto-linking.
 
-NOTE: The same flag is used for the {utf} and the {pem} components.
+NOTE: The same flag is used for the _Unit Test Framework_ and the _Program Execution Monitor_ components.
 
 [#link_boost_test_dyn_link]
 == `BOOST_TEST_DYN_LINK`
 
-Define this flag to link against the {utf} shared library.
+Define this flag to link against the _Unit Test Framework_ shared library.
 
-NOTE: The same flag is used for the {utf} and the {pem} components.
+NOTE: The same flag is used for the _Unit Test Framework_ and the _Program Execution Monitor_ components.
 
 [#link_boost_test_no_main]
 == `BOOST_TEST_NO_MAIN`
 
 Prevents the auto generation of the test module initialization functions. This macro is particularly relevant for
-manually registered tests in conjunction with dynamic variant of the {utf}. When defined, a `main` function
+manually registered tests in conjunction with dynamic variant of the _Unit Test Framework_. When defined, a `main` function
 registering all the tests should be implemented.
 
 An example of a module initialization would be
@@ -121,9 +121,9 @@ No logging or any other call to the framework assertion is allowed in the constr
 
 Disables the support of the alternative stack.
 
-Define this macro before the inclusion of any {utf} header to disable the support
+Define this macro before the inclusion of any _Unit Test Framework_ header to disable the support
 of the http://www.gnu.org/software/libc/manual/html_node/Signal-Stack.html[alternative stack],
-in case your compiler does not support it and the {utf} cannot automatically guess the lack of support.
+in case your compiler does not support it and the _Unit Test Framework_ cannot automatically guess the lack of support.
 
 See xref:utf_reference/rt_param_reference.adoc#use_alt_stack[`use_alt_stack`]
 and xref:utf_reference/link_references.adoc#config_disable_alt_stack[`BOOST_TEST_DISABLE_ALT_STACK`] for more details.

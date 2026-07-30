@@ -28,7 +28,7 @@ There several problems/inconveniences with above approach, including:
 * You need to repeat function invocation manually for all the parameters you are interested in
 * You need two functions to implement the test
 
-The {utf} provides a facility, the *template test case*, to create a series of
+The _Unit Test Framework_ provides a facility, the *template test case*, to create a series of
 test cases based on a list of desired types and _nullary_ function. This facility comes with an
 xref:tests_organization/test_organization_templates.adoc#ref_BOOST_AUTO_TEST_CASE_TEMPLATE[automatic] and
 xref:tests_organization/test_organization_templates.adoc#ref_BOOST_TEST_CASE_TEMPLATE[manual] registration interface.
@@ -45,7 +45,7 @@ the sub test case.
 == Template test case with automated registration
 
 A template test case, registered automatically and in place of its implementation, is declared through the macro
-{boost_auto_test_case_template}:
+xref:{boost_auto_test_case_template}[`BOOST_AUTO_TEST_CASE_TEMPLATE`]:
 
 [source,cpp]
 ----
@@ -59,10 +59,10 @@ The arguments are as follow:
 name of the type the test case template is instantiated with
 . `collection_of_types`: the collection of types to instantiate test case template with.
 This is an *arbitrary MPL sequence* or a sequence of types wrapped in a `std::tuple`
-(since xref:change_log.adoc#ref_CHANGE_LOG_3_7[{utf} v3.7], if supported by the compiler)
+(since xref:change_log.adoc#ref_CHANGE_LOG_3_7[_Unit Test Framework_ v3.7], if supported by the compiler)
 
 The resulting name of the test is a composition of the `test_case_name` parameter and the current
-type being tested. Since xref:change_log.adoc#ref_CHANGE_LOG_3_12[{utf} v3.12], the framework tries to unify
+type being tested. Since xref:change_log.adoc#ref_CHANGE_LOG_3_12[_Unit Test Framework_ v3.12], the framework tries to unify
 the name of the resulting type across various platforms such that they are easier to reference
 from the xref:runtime_config/test_unit_filtering.adoc[command line filter].
 
@@ -74,7 +74,7 @@ include::partial$bt_example.adoc[]
 
 [WARNING]
 ====
-Since xref:change_log.adoc#ref_CHANGE_LOG_3_7[{utf} v3.7], the {utf} does not allow for duplicate test case name
+Since xref:change_log.adoc#ref_CHANGE_LOG_3_7[_Unit Test Framework_ v3.7], the _Unit Test Framework_ does not allow for duplicate test case name
  under the same test suite. As test names are derived from the types in the `collection_of_types`,
  this indirectly means that *having a duplicate type* in the
  `collection_of_types` *yields an error*.
@@ -82,7 +82,7 @@ Since xref:change_log.adoc#ref_CHANGE_LOG_3_7[{utf} v3.7], the {utf} does not al
 
 [NOTE]
 ====
-If you prefer having the template parameter list directly in the declaration of {boost_auto_test_case_template},
+If you prefer having the template parameter list directly in the declaration of xref:{boost_auto_test_case_template}[`BOOST_AUTO_TEST_CASE_TEMPLATE`],
   you may use the macro http://www.boost.org/doc/libs/release/libs/utility/identity_type/doc/html/index.html[`BOOST_IDENTITY_TYPE`].
   The previous example gives (note the double parenthesis around the MPL list):
 
@@ -109,10 +109,10 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(
 
 To manually register template test cases, two macros should be used:
 
-* {boost_test_case_template_function} to define the template test case body
-* {boost_test_case_template} to register the test case based on the previous declaration
+* xref:{boost_test_case_template_function}[`BOOST_TEST_CASE_TEMPLATE_FUNCTION`] to define the template test case body
+* xref:{boost_test_case_template}[`BOOST_TEST_CASE_TEMPLATE`] to register the test case based on the previous declaration
 
-The macro {boost_test_case_template_function} requires two arguments:
+The macro xref:{boost_test_case_template_function}[`BOOST_TEST_CASE_TEMPLATE_FUNCTION`] requires two arguments:
 
 . the name of the test case template and
 . the name of the format type parameter
@@ -130,7 +130,7 @@ BOOST_TEST_CASE_TEMPLATE_FUNCTION( test_case_name, type_name )
 }
 ----
 
-The macro {boost_test_case_template_function} is intended to be used in place of nullary function template
+The macro xref:{boost_test_case_template_function}[`BOOST_TEST_CASE_TEMPLATE_FUNCTION`] is intended to be used in place of nullary function template
 signature:
 
 [source,cpp]
@@ -142,10 +142,10 @@ void test_case_name()
 }
 ----
 
-The only difference is that the {boost_test_case_template_function} makes the test case template name usable in
+The only difference is that the xref:{boost_test_case_template_function}[`BOOST_TEST_CASE_TEMPLATE_FUNCTION`] makes the test case template name usable in
 the template argument list.
 
-{boost_test_case_template} requires two arguments:
+xref:{boost_test_case_template}[`BOOST_TEST_CASE_TEMPLATE`] requires two arguments:
 
 . the name of the test case template and
 . Boost.MPL compatible collection of types to instantiate it with.
@@ -163,7 +163,7 @@ BOOST_TEST_CASE_TEMPLATE(test_case_name, collection_of_types);
 :bt-descr: Manually registered test case template
 include::partial$bt_example.adoc[]
 
-{boost_test_case_template} creates an instance of the test case generator. When passed to the method cpp:boost::unit_test::test_suite::add[`test_suite::add`], the generator produces a separate sub test case for each type in
+xref:{boost_test_case_template}[`BOOST_TEST_CASE_TEMPLATE`] creates an instance of the test case generator. When passed to the method cpp:boost::unit_test::test_suite::add[`test_suite::add`], the generator produces a separate sub test case for each type in
 the supplied collection of types and registers it immediately in the test suite. Each test case is based on the test
 case template body instantiated with a particular test type.
 
@@ -173,7 +173,7 @@ Both test cases creation and registration is performed in the test module initia
 
 [WARNING]
 ====
-Since xref:change_log.adoc#ref_CHANGE_LOG_3_7[{utf} v3.7], the {utf} does not allow for duplicate test case name
+Since xref:change_log.adoc#ref_CHANGE_LOG_3_7[_Unit Test Framework_ v3.7], the _Unit Test Framework_ does not allow for duplicate test case name
  under the same test suite. As test names are derived from the types in the `collection_of_types`,
  this indirectly means that having a duplicate of types in the
  `collection_of_types` will yield an error.

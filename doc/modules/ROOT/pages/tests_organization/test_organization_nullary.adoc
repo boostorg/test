@@ -1,14 +1,14 @@
 = Test cases without parameters
 :page-aliases: boost_test/tests_organization/test_cases/test_organization_nullary.adoc
 
-The most common scenario is that you want to write test case without any parameters. The {utf} provides you with both
+The most common scenario is that you want to write test case without any parameters. The _Unit Test Framework_ provides you with both
 automatic and manual registration APIs to declare such test case.
 
 [#ref_BOOST_AUTO_TEST_CASE]
 == Automated registration
 
 To declare a test case without parameters, which is registered in place of implementation, employ the
-macro {boost_auto_test_case}.
+macro xref:{boost_auto_test_case}[`BOOST_AUTO_TEST_CASE`].
 
 [source,cpp]
 ----
@@ -31,20 +31,20 @@ registers the test case with the name `free_test_function` automatically.
 [#ref_BOOST_TEST_CASE]
 == Manual registration
 
-The {utf} allows to manually create test case without parameters based on nullary free functions, nullary
+The _Unit Test Framework_ allows to manually create test case without parameters based on nullary free functions, nullary
 function objects (including those created with `boost::bind` and nullary `boost::function`
-instances). To do this, employ the macro {boost_test_case}:
+instances). To do this, employ the macro xref:{boost_test_case}[`BOOST_TEST_CASE`]:
 
 [source,cpp]
 ----
 BOOST_TEST_CASE(test_function);
 ----
 
-{boost_test_case} creates an instance of the class cpp:boost::unit_test::test_case[boost::unit_test::test_case] and returns a pointer to the
+xref:{boost_test_case}[`BOOST_TEST_CASE`] creates an instance of the class cpp:boost::unit_test::test_case[boost::unit_test::test_case] and returns a pointer to the
 constructed instance. The test case name is deduced from the macro argument test_function. If you prefer to
 assign a different test case name, you have either to
 
-* use the macro {boost_test_case_name} instead
+* use the macro xref:{boost_test_case_name}[`BOOST_TEST_CASE_NAME`] instead
 * or use the underlying link:{base-url}/boost/test/tree/test_unit.hpp[`make_test_case`] interface instead.
 
 To register a new test case, employ the method cpp:boost::unit_test::test_suite::add[`test_suite::add`].
@@ -52,7 +52,7 @@ Both test case creation and registration are performed in the
 xref:adv_scenarios/test_module_init_overview.adoc[test module initialization function].
 
 Here is the simplest example of manually registered test case. A single test case is created and registered inside
-the test module initialization routine. Note that the free function name is passed by address to the macro {boost_test_case}\`.
+the test module initialization routine. Note that the free function name is passed by address to the macro xref:{boost_test_case}[`BOOST_TEST_CASE`]\`.
 
 [#ref_bt_example01]
 // tag reference: doc/modules/ROOT/examples/example01.run.cpp
@@ -63,7 +63,7 @@ include::partial$bt_example.adoc[]
 
 A test case can be implemented as a method of a class. In this case a pointer to the class instance has to be
 bound to the test method to create a test case. You can use the same instance of the class for multiple test
-cases. The {utf} doesn't take an ownership of the class instance and you are required to manage the class
+cases. The _Unit Test Framework_ doesn't take an ownership of the class instance and you are required to manage the class
 instance lifetime yourself.
 
 [WARNING]

@@ -9,8 +9,8 @@ test only (covered in xref:runtime_config/test_unit_filtering.adoc[this section]
 However, the subtrees might not reflect all the possible grouping of test units the usage of the test module would
 require footnote:[For instance, selecting two siblings without the parent node].
 
-The {utf} provides a flexible way of grouping test units by the use of _labels_, using the decorator
-{decorator_label}. It is possible to associate more than one label with a test unit.
+The _Unit Test Framework_ provides a flexible way of grouping test units by the use of _labels_, using the decorator
+xref:{decorator_label}[`label`]. It is possible to associate more than one label with a test unit.
 
 Labels can be associated to test cases and test suites. For the latter, the label is inherited by all the nodes in the
 subtree defined by the labelled test suite: decorating a test suite with label `L` is equivalent to decorating every test

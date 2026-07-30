@@ -6,25 +6,25 @@
 |Macro
 |Short description
 
-|{boost_test_message}
+|xref:{boost_test_message}[`BOOST_TEST_MESSAGE`]
 |Custom message output
 
-|{boost_test_dont_print_log_value}
+|xref:{boost_test_dont_print_log_value}[`BOOST_TEST_DONT_PRINT_LOG_VALUE`]
 |Disabling the printing of a specific type in case of test failure
 
-|{boost_test_checkpoint}
+|xref:{boost_test_checkpoint}[`BOOST_TEST_CHECKPOINT`]
 |Indicates a named checkpoint that will be printed in case of failure
 
-|{boost_test_passpoint}
+|xref:{boost_test_passpoint}[`BOOST_TEST_PASSPOINT`]
 |Indicates an unnamed checkpoint that will be printed in case of failure
 
-|{boost_test_info}
+|xref:{boost_test_info}[`BOOST_TEST_INFO`]
 |Defines a message to be printed as part of the context of the first encountered assertion, if it fails
 
-|{boost_test_context}
+|xref:{boost_test_context}[`BOOST_TEST_CONTEXT`]
 |Defines a scope and a message to be printed as part of the context of every failed assertion within the scope
 
-|{boost_test_info_scope}
-|Defines a sticky scoped version of {boost_test_info} that is attached to all the assertions coming after this declaration and within the current scope.
+|xref:{boost_test_info_scope}[`BOOST_TEST_INFO_SCOPE`]
+|Defines a sticky scoped version of xref:{boost_test_info}[`BOOST_TEST_INFO`] that is attached to all the assertions coming after this declaration and within the current scope.
 
 |===

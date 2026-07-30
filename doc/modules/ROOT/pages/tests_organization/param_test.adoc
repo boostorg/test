@@ -25,7 +25,7 @@ void combined_test()
 }
 ----
 
-The {utf} presents a better solution for this problem: the unary function based test case, also referred as
+The _Unit Test Framework_ presents a better solution for this problem: the unary function based test case, also referred as
 _parametrized test case_. The unary test function can be a free function, unary functor (for example created
 with `boost::bind`) or unary method of a class with bound test class instance). The test function is converted
 into test case using the macro `BOOST_PARAM_TEST_CASE`. The macro expects a collection of parameters (passed as

@@ -1,7 +1,7 @@
 = BOOST_TEST: universal and general purpose assertions
 :page-aliases: boost_test/testing_tools/boost_test_universal_macro.adoc
 
-The {utf} provides an almost unique interface to a great range of test-case scenarios, through the {boost_test}
+The _Unit Test Framework_ provides an almost unique interface to a great range of test-case scenarios, through the xref:{boost_test}[`BOOST_TEST`]
 macro. The general form of `BOOST_TEST` is the following:
 
 BOOST_TEST(statement);

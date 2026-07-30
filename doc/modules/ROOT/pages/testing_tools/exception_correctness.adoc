@@ -13,12 +13,12 @@ include::partial$bt_example.adoc[]
 More control over the exception correctness is often required, for instance to test that
 an expression is raising a specific exception, intentionally.
 
-The {utf} provides several assertions for testing a code with respect to the exceptions correctness.
+The _Unit Test Framework_ provides several assertions for testing a code with respect to the exceptions correctness.
 The following assertions are available:
 
-* {boost_level_no_throw} checks that no exception is raised from an expression,
-* {boost_level_throw} checks that an expression raises an exception of a specific type
-* {boost_level_exception} checks that an expression raises an exception of a specific type,
+* xref:{boost_level_no_throw}[`BOOST_<level>_NO_THROW`] checks that no exception is raised from an expression,
+* xref:{boost_level_throw}[`BOOST_<level>_THROW`] checks that an expression raises an exception of a specific type
+* xref:{boost_level_exception}[`BOOST_<level>_EXCEPTION`] checks that an expression raises an exception of a specific type,
 a passes the exception instance to a predicate function for further validation (introspection
 for instance)
 

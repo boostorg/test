@@ -9,7 +9,7 @@ the following sections.
 == Test case decorators
 
 You can apply more than one decorator to the same test unit. A list of decorators is applied to a test case by specifying
-it as the second argument to macro {boost_auto_test_case} or the third argument to macro {boost_fixture_test_case}.
+it as the second argument to macro xref:{boost_auto_test_case}[`BOOST_AUTO_TEST_CASE`] or the third argument to macro xref:{boost_fixture_test_case}[`BOOST_FIXTURE_TEST_CASE`].
 
 // tag reference: doc/modules/ROOT/examples/decorator_01.run.cpp
 :bt-name: decorator_01
@@ -20,7 +20,7 @@ include::partial$bt_example.adoc[]
 Each decorator in the list is preceded by an asterisk (`+*+`); the subsequent syntax resembles a function call and is
 specified in detail for each decorator. If there is more than one decorator in the list, they are concatenated with no
 additional separator; each asterisk indicates the beginning of a decorator. In the above example, test case `test_case1`
-has one associated _decorator:_ {decorator_label}. This means that when test units are filtered based on label, this
+has one associated _decorator:_ xref:{decorator_label}[`label`]. This means that when test units are filtered based on label, this
 test case will match to label `"trivial"`. Test case `test_case2` has three associated decorators: two of type `label`
 and one of type `description`.
 
@@ -28,8 +28,8 @@ and one of type `description`.
 == Suite-level decorators
 
 Similarly to test case it is possible to apply list of decorators to test suite. It is done by specifying a list of
-decorators as the second argument to the macro {boost_auto_test_suite} or the third argument to the macro
-{boost_fixture_test_suite}.
+decorators as the second argument to the macro xref:{boost_auto_test_suite}[`BOOST_AUTO_TEST_SUITE`] or the third argument to the macro
+xref:{boost_fixture_test_suite}[`BOOST_FIXTURE_TEST_SUITE`].
 
 // tag reference: doc/modules/ROOT/examples/decorator_02.run.cpp
 :bt-name: decorator_02
@@ -52,7 +52,7 @@ the list of decorators applied to the test suite is the union of decorators spec
 include::partial$bt_example.adoc[]
 
 In the above example, the scope of test suite `suite1` is opened three times. This results in a test suite containing
-three test cases and associated with two {decorator_label} decorators. Therefore running tests by label `"trivial"` as
+three test cases and associated with two xref:{decorator_label}[`label`] decorators. Therefore running tests by label `"trivial"` as
 well as by label `"simple"` both result in executing all three test cases from the suite.
 
 [CAUTION]
@@ -65,7 +65,7 @@ described below.
 [#explicit_decorator_declaration]
 == Explicit decorator declaration
 
-There is another way of associating a decorator set with test units. Macro {boost_test_decorator} indicates that its set
+There is another way of associating a decorator set with test units. Macro xref:{boost_test_decorator}[`BOOST_TEST_DECORATOR`] indicates that its set
 of decorators is to be applied to the test unit or _test case sequence_ that immediately follows the declaration.
 
 // tag reference: doc/modules/ROOT/examples/decorator_00.run.cpp
@@ -74,8 +74,8 @@ of decorators is to be applied to the test unit or _test case sequence_ that imm
 :bt-descr: explicit decorator declaration
 include::partial$bt_example.adoc[]
 
-In the above example a decorator is applied to a xref:tests_organization/test_case_generation.adoc[data-driven test case]. Macro {boost_data_test_case} cannot take the decorator set as one of its arguments, therefore
-the explicit decorator declaration is used. Macro {boost_data_test_case} generates a sequence of 4 test cases. The
+In the above example a decorator is applied to a xref:tests_organization/test_case_generation.adoc[data-driven test case]. Macro xref:{boost_data_test_case}[`BOOST_DATA_TEST_CASE`] cannot take the decorator set as one of its arguments, therefore
+the explicit decorator declaration is used. Macro xref:{boost_data_test_case}[`BOOST_DATA_TEST_CASE`] generates a sequence of 4 test cases. The
 decorator set is applied to each of them.
 
 Another use case for the explicit decorator declaration is when you intend for your test program to compile also on

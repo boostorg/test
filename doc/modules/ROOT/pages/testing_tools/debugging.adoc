@@ -2,7 +2,7 @@
 :page-aliases: boost_test/testing_tools/debugging.adoc
 
 In case you observe a failure in unit tests and you are using a debugger to determine the cause,
-it may get really difficult to step into the expression inside an assertion. Because {boost_test}
+it may get really difficult to step into the expression inside an assertion. Because xref:{boost_test}[`BOOST_TEST`]
 builds an expression tree before evaluating it, the "Step Into" function of the debugger will have
 to step into every step of building the expression tree before, you can go into the evaluation of
 the expression.
@@ -10,8 +10,8 @@ the expression.
 In order to mitigate the problem, the test module can be build in the mode which disables the
 building of expression trees inside assertions.
 In this mode, the first thing the assertion does is to eagerly evaluate the tested expression.
-You enable this mode by defining symbol {boost_test_tools_under_debugger} (either with `+#define+`
-or with compiler option `-D`) prior to including any of the {utf} headers.
+You enable this mode by defining symbol xref:{boost_test_tools_under_debugger}[`BOOST_TEST_TOOLS_UNDER_DEBUGGER`] (either with `+#define+`
+or with compiler option `-D`) prior to including any of the _Unit Test Framework_ headers.
 
 [CAUTION]
 ====
@@ -23,11 +23,11 @@ _literally_: this automatically disables any special semantics,
  ill-formed program, if the sequences of different types are being compared.
 ====
 
-The inconvenience with {boost_test_tools_under_debugger} is that you have to recompile the test module.
-The {utf} gives you another option to compile two versions of the assertions and select the one to be used dynamically
+The inconvenience with xref:{boost_test_tools_under_debugger}[`BOOST_TEST_TOOLS_UNDER_DEBUGGER`] is that you have to recompile the test module.
+The _Unit Test Framework_ gives you another option to compile two versions of the assertions and select the one to be used dynamically
 depending on whether the test module is run under debugger or not.
-This mode is enabled by defining symbol {boost_test_tools_debuggable} (either with `+#define+` or with
-compiler option `-D`) prior to the inclusion of any of the {utf} headers.
+This mode is enabled by defining symbol xref:{boost_test_tools_debuggable}[`BOOST_TEST_TOOLS_DEBUGGABLE`] (either with `+#define+` or with
+compiler option `-D`) prior to the inclusion of any of the _Unit Test Framework_ headers.
 
 In order to determine if the test module is run under debugger or not, function
 cpp:boost::debug::under_debugger[`boost::debug::under_debugger`] is used.
