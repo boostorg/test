@@ -1,5 +1,5 @@
 = Floating point comparison
-:page-aliases: boost_test/testing_tools/extended_comparison/floating_point.adoc
+:page-aliases: boost_test/testing_tools/extended_comparison/floating_point.adoc, boost_test/testing_tools/extended_comparison/floating_point/customizing_for_tolerance.adoc, boost_test/testing_tools/extended_comparison/floating_point/floating_points_comparison_impl.adoc, boost_test/testing_tools/extended_comparison/floating_point/floating_points_comparison_theory.adoc
 
 Unless specified otherwise, when a value of floating-point type is compared inside a xref:{boost_test}[`BOOST_TEST`] assertion,
 operators `==`, `!=` , `<` etc. defined for this type are used. However for floating point type, in most cases what is needed is not an _exact_

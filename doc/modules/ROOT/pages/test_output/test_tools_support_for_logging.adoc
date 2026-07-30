@@ -1,5 +1,5 @@
 = Tools supports for logging
-:page-aliases: boost_test/test_output/test_tools_support_for_logging.adoc
+:page-aliases: boost_test/test_output/test_tools_support_for_logging.adoc, boost_test/test_output/test_tools_support_for_logging/test_output_macro_message.adoc, boost_test/test_output/test_tools_support_for_logging/testing_tool_output_disable.adoc
 
 [#testing_tool_output_disable]
 == Logging user defined types

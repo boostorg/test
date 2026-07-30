@@ -1,5 +1,5 @@
 = Logging API
-:page-aliases: boost_test/test_output/logging_api.adoc
+:page-aliases: boost_test/test_output/logging_api.adoc, boost_test/test_output/logging_api/custom_log_formatter.adoc, boost_test/test_output/logging_api/log_ct_log_format.adoc, boost_test/test_output/logging_api/log_ct_log_level.adoc, boost_test/test_output/logging_api/log_ct_output_stream_redirection.adoc
 
 While many test log configuration tasks can be performed at runtime using predefined framework parameters, the
 _Unit Test Framework_ provides a compile time interface as well. The interface gives you full power over what, where and how to

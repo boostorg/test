@@ -1,5 +1,5 @@
 = Practical usage recommendations
-:page-aliases: boost_test/usage_recommendations.adoc
+:page-aliases: boost_test/usage_recommendations.adoc, boost_test/usage_recommendations/command_line_usage_recommendations.adoc, boost_test/usage_recommendations/general.adoc, boost_test/usage_recommendations/ide_usage_recommendations.adoc, boost_test/usage_recommendations/tutorials.adoc
 
 [#ref_usage_recommendations]
 Following pages present tips and recommendations on how to use and apply the _Unit Test Framework_ in your real life practice.

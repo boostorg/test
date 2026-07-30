@@ -1,5 +1,5 @@
 = Fixtures
-:page-aliases: boost_test/tests_organization/fixtures.adoc
+:page-aliases: boost_test/tests_organization/fixtures.adoc, boost_test/tests_organization/fixtures/case.adoc, boost_test/tests_organization/fixtures/global.adoc, boost_test/tests_organization/fixtures/models.adoc, boost_test/tests_organization/fixtures/per_test_suite_fixture.adoc
 
 In general terms a test fixture or test context is the collection of one or more of the following items, required
 to perform the test:

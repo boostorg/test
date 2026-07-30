@@ -1,5 +1,5 @@
 = Controlling tests outputs
-:page-aliases: boost_test/utf_reference/testout_reference.adoc
+:page-aliases: boost_test/utf_reference/testout_reference.adoc, boost_test/utf_reference/testout_reference/test_output_macro_checkpoint.adoc, boost_test/utf_reference/testout_reference/test_output_macro_context.adoc, boost_test/utf_reference/testout_reference/test_output_macro_context_sticky.adoc, boost_test/utf_reference/testout_reference/test_output_macro_disable_type.adoc, boost_test/utf_reference/testout_reference/test_output_macro_info.adoc, boost_test/utf_reference/testout_reference/test_output_macro_message.adoc, boost_test/utf_reference/testout_reference/test_output_macro_passpoint.adoc
 
 [#test_output_macro_checkpoint]
 == `BOOST_TEST_CHECKPOINT`

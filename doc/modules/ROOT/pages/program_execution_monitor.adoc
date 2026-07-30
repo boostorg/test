@@ -1,5 +1,5 @@
 = Program Execution Monitor
-:page-aliases: boost_test/pem.adoc
+:page-aliases: boost_test/pem.adoc, boost_test/pem/implementation.adoc, boost_test/pem/runtime_configuration.adoc, boost_test/pem/section_pem_compilation.adoc, boost_test/pem/section_pem_compilation/section_pem_full_include.adoc, boost_test/pem/section_pem_compilation/section_pem_standalone.adoc, boost_test/pem/section_pem_compilation/section_pem_standalone/section_pem_compilation_dynamic.adoc, boost_test/pem/section_pem_compilation/section_pem_standalone/section_pem_compilation_static.adoc, boost_test/pem/section_pem_compilation/support_of_the_auto_linking_feature.adoc, boost_test/pem/usage.adoc
 
 The components of a C++ program may report user-detected errors in several ways, such as via a return value or
 throwing an exception. System-detected errors such as dereferencing an invalid pointer are reported in other ways,

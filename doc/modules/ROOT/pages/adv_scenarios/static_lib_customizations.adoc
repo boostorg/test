@@ -1,5 +1,5 @@
 = Static-library variant customizations
-:page-aliases: boost_test/adv_scenarios/static_lib_customizations.adoc
+:page-aliases: boost_test/adv_scenarios/static_lib_customizations.adoc, boost_test/adv_scenarios/static_lib_customizations/entry_point.adoc, boost_test/adv_scenarios/static_lib_customizations/init_func.adoc
 
 [#entry_point]
 == Customizing the module's entry point

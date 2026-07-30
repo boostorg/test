@@ -1,5 +1,5 @@
 = Decorators
-:page-aliases: boost_test/tests_organization/decorators.adoc
+:page-aliases: boost_test/tests_organization/decorators.adoc, boost_test/tests_organization/decorators/explicit_decorator_declaration.adoc, boost_test/tests_organization/decorators/suite_level_decorators.adoc
 
 "Decorator" is a uniform mechanism for updating various attributes of the automatically registered test units. These
 attributes affect how the test tree is processed during the execution of the test module and include test unit

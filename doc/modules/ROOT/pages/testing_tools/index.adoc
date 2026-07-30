@@ -1,5 +1,5 @@
 = Writing unit tests
-:page-aliases: boost_test/testing_tools.adoc
+:page-aliases: boost_test/testing_tools.adoc, boost_test/testing_tools/extended_comparison.adoc
 
 Once a test case has been declared, the body of this test should be written. A test case is a
 sequence of operations in which *assertions* are inserted. Those assertions evaluate _statements_ that implement the expectation being validated,

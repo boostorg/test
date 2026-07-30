@@ -1,5 +1,5 @@
 = Build scenarios and behaviors
-:page-aliases: boost_test/utf_reference/link_references.adoc
+:page-aliases: boost_test/utf_reference/link_references.adoc, boost_test/utf_reference/link_references/config_disable_alt_stack.adoc, boost_test/utf_reference/link_references/config_no_grid_composition.adoc, boost_test/utf_reference/link_references/config_no_random_dataset.adoc, boost_test/utf_reference/link_references/config_no_zip_composition.adoc, boost_test/utf_reference/link_references/link_boost_test_alternative_init_macro.adoc, boost_test/utf_reference/link_references/link_boost_test_dyn_link.adoc, boost_test/utf_reference/link_references/link_boost_test_global_configuration.adoc, boost_test/utf_reference/link_references/link_boost_test_main_macro.adoc, boost_test/utf_reference/link_references/link_boost_test_module_macro.adoc, boost_test/utf_reference/link_references/link_boost_test_no_lib.adoc, boost_test/utf_reference/link_references/link_boost_test_no_main.adoc
 
 [#link_boost_test_main_macro]
 == `BOOST_TEST_MAIN`

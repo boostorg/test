@@ -1,5 +1,5 @@
 = Header-only variant customizations
-:page-aliases: boost_test/adv_scenarios/single_header_customizations.adoc
+:page-aliases: boost_test/adv_scenarios/single_header_customizations.adoc, boost_test/adv_scenarios/single_header_customizations/entry_point.adoc, boost_test/adv_scenarios/single_header_customizations/init_func.adoc, boost_test/adv_scenarios/single_header_customizations/multiple_translation_units.adoc
 
 [#multiple_translation_units]
 == Header-only with multiple translation units

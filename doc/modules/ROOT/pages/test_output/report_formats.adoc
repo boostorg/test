@@ -1,5 +1,5 @@
 = Report formats
-:page-aliases: boost_test/test_output/report_formats.adoc
+:page-aliases: boost_test/test_output/report_formats.adoc, boost_test/test_output/report_formats/report_human_readable_format.adoc, boost_test/test_output/report_formats/report_xml_format.adoc
 
 [#report_human_readable_format]
 == Human readable report format

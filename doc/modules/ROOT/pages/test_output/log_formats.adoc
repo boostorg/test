@@ -1,5 +1,5 @@
 = Log formats
-:page-aliases: boost_test/test_output/log_formats.adoc
+:page-aliases: boost_test/test_output/log_formats.adoc, boost_test/test_output/log_formats/log_human_readable_format.adoc, boost_test/test_output/log_formats/log_junit_format.adoc, boost_test/test_output/log_formats/log_xml_format.adoc, boost_test/test_output/log_formats/test_log_output.adoc
 
 The _Unit Test Framework_ supports several log formats:
 

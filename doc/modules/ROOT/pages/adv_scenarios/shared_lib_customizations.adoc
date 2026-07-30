@@ -1,5 +1,5 @@
 = Shared-library variant customizations
-:page-aliases: boost_test/adv_scenarios/shared_lib_customizations.adoc
+:page-aliases: boost_test/adv_scenarios/shared_lib_customizations.adoc, boost_test/adv_scenarios/shared_lib_customizations/entry_point.adoc, boost_test/adv_scenarios/shared_lib_customizations/init_func.adoc
 
 [CAUTION]
 ====
