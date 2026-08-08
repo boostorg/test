@@ -90,6 +90,13 @@ jobs:
           scan-modules-dir: .
           scan-modules-ignore: test
 
+      # The superproject looks for each library of BOOST_INCLUDE_LIBRARIES under
+      # <boost>/libs/<name>, and the clone above deliberately leaves that slot
+      # empty for `test`. Fill it with this checkout, so that MrDocs configures
+      # against the sources under review rather than a second copy of them.
+      - name: Graft Boost.Test into the Boost superproject
+        run: ln -s "$(pwd)" ../boost-source/libs/test
+
       - uses: actions/setup-node@v4
         with:
           node-version: 18
