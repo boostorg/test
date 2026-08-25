@@ -175,8 +175,38 @@ namespace { void _set_se_translator( void* ) {} }
 #    define BOOST_TEST_CATCH_SIGPOLL
 #  endif
 
+#  if defined(__linux__) && defined(__has_include)
+#    if __has_include(<sys/auxv.h>)
+#      include <sys/auxv.h>
+#      define BOOST_TEST_HAS_SYS_AUXV
+// Not defined by every libc's <sys/auxv.h>; the value is kernel ABI.
+#      ifndef AT_MINSIGSTKSZ
+#        define AT_MINSIGSTKSZ 51
+#      endif
+#    endif
+#  endif
+
 #  ifdef BOOST_TEST_USE_ALT_STACK
-#    define BOOST_TEST_ALT_STACK_SIZE SIGSTKSZ
+// SIGSTKSZ is not a reliable size for the alternate signal stack.
+//
+// glibc 2.34+ made it dynamic -- sysconf(_SC_SIGSTKSZ) -- so it reflects what
+// the running kernel requires. Other C libraries still define it as a compile
+// time constant; musl uses 8192.
+//
+// The kernel derives its actual minimum from the CPU's XSAVE area and publishes
+// it as auxv AT_MINSIGSTKSZ. On hardware with large register state that value
+// exceeds a hardcoded SIGSTKSZ -- measured 11952 on an AMX-capable CPU, against
+// musl's 8192 -- and sigaltstack(2) then fails with ENOMEM, aborting the test
+// binary before any test runs.
+//
+// Prefer the kernel's own figure where it is available, and never go below
+// MINSIGSTKSZ.
+#    if defined(__linux__) && defined(BOOST_TEST_HAS_SYS_AUXV)
+#      define BOOST_TEST_ALT_STACK_SIZE ::boost::detail::alt_stack_size()
+#    else
+#      define BOOST_TEST_ALT_STACK_SIZE ((std::size_t)SIGSTKSZ > (std::size_t)MINSIGSTKSZ \
+                                            ? (std::size_t)SIGSTKSZ : (std::size_t)MINSIGSTKSZ)
+#    endif
 #  endif
 
 
@@ -664,6 +694,41 @@ system_signal_exception::report() const
 }
 
 //____________________________________________________________________________//
+
+// ************************************************************************** //
+// **************        boost::detail::alt_stack_size         ************** //
+// ************************************************************************** //
+
+#if defined(BOOST_TEST_USE_ALT_STACK) && defined(BOOST_TEST_HAS_SYS_AUXV)
+
+inline std::size_t alt_stack_size_impl()
+{
+    std::size_t candidate = static_cast<std::size_t>( SIGSTKSZ );
+
+    std::size_t const from_kernel = static_cast<std::size_t>( ::getauxval( AT_MINSIGSTKSZ ) );
+    if( from_kernel > candidate )
+        candidate = from_kernel;
+
+    if( candidate < static_cast<std::size_t>( MINSIGSTKSZ ) )
+        candidate = static_cast<std::size_t>( MINSIGSTKSZ );
+
+    return candidate;
+}
+
+//! Size for the alternate signal stack, taken from the running kernel.
+//!
+//! AT_MINSIGSTKSZ is what the kernel says a signal frame needs on this CPU. It
+//! is derived from the XSAVE area, so it grows with the register state the
+//! hardware carries, and it is the figure sigaltstack(2) validates against.
+//! Falls back to SIGSTKSZ where the kernel does not publish it.
+inline std::size_t alt_stack_size()
+{
+    static std::size_t const size = alt_stack_size_impl();
+
+    return size;
+}
+
+#endif
 
 // ************************************************************************** //
 // **************         boost::detail::signal_action         ************** //
