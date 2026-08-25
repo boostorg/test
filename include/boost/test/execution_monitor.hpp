@@ -344,7 +344,7 @@ public:
 
     ///  Should monitor use alternative stack for the signal catching.
     ///
-    /// The @em p_use_alt_stack property is a boolean flag (default value is false) specifying whether or not execution_monitor should use an alternative stack
+    /// The @em p_use_alt_stack property is a boolean flag (default value is true) specifying whether or not execution_monitor should use an alternative stack
     /// for the sigaction based signal catching. When enabled the signals are delivered to the execution_monitor on a stack different from current execution
     /// stack, which is safer in case if it is corrupted by monitored function. For more details on alternative stack handling see appropriate manuals.
     unit_test::readwrite_property<bool> p_use_alt_stack;
