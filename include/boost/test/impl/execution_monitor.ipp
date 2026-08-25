@@ -175,13 +175,17 @@ namespace { void _set_se_translator( void* ) {} }
 #    define BOOST_TEST_CATCH_SIGPOLL
 #  endif
 
+// AT_MINSIGSTKSZ lets the alternate signal stack be sized from what the running
+// kernel requires rather than from SIGSTKSZ. Both glibc and musl expose the
+// constant through <sys/auxv.h>, so it is taken from there rather than being
+// restated here -- the value is kernel ABI (linux/auxvec.h) and does not belong
+// in this header. Where a libc provides the header but not the constant, the
+// feature is simply not enabled and SIGSTKSZ is used as before.
 #  if defined(__linux__) && defined(__has_include)
 #    if __has_include(<sys/auxv.h>)
 #      include <sys/auxv.h>
-#      define BOOST_TEST_HAS_SYS_AUXV
-// Not defined by every libc's <sys/auxv.h>; the value is kernel ABI.
-#      ifndef AT_MINSIGSTKSZ
-#        define AT_MINSIGSTKSZ 51
+#      ifdef AT_MINSIGSTKSZ
+#        define BOOST_TEST_HAS_SYS_AUXV
 #      endif
 #    endif
 #  endif
