@@ -852,6 +852,14 @@ private:
     sigjmp_buf              m_sigjmp_buf;
     system_signal_exception m_sys_sig;
 
+#ifdef BOOST_TEST_USE_ALT_STACK
+    // Whether THIS handler installed the alternate stack, and what was in place
+    // before it did. Restoring beats unconditionally disabling: a caller may have
+    // installed its own alternate stack, and that is not ours to discard.
+    bool                    m_installed_alt_stack;
+    stack_t                 m_prev_alt_stack;
+#endif
+
     static signal_handler*  s_active_handler;
 };
 
@@ -877,6 +885,9 @@ signal_handler::signal_handler( bool catch_system_errors,
 #endif
 , m_ABRT_action( SIGABRT, catch_system_errors,      attach_dbg, alt_stack )
 , m_ALRM_action( SIGALRM, timeout_microseconds > 0, attach_dbg, alt_stack )
+#ifdef BOOST_TEST_USE_ALT_STACK
+, m_installed_alt_stack( false )
+#endif
 {
     s_active_handler = this;
 
@@ -892,11 +903,15 @@ signal_handler::signal_handler( bool catch_system_errors,
 
         BOOST_TEST_SYS_ASSERT( ::sigaltstack( 0, &sigstk ) != -1 );
 
+        m_prev_alt_stack = sigstk;
+
         if( sigstk.ss_flags & SS_DISABLE ) {
             sigstk.ss_sp    = alt_stack;
             sigstk.ss_size  = BOOST_TEST_ALT_STACK_SIZE;
             sigstk.ss_flags = 0;
             BOOST_TEST_SYS_ASSERT( ::sigaltstack( &sigstk, 0 ) != -1 );
+
+            m_installed_alt_stack = true;
         }
     }
 #endif
@@ -921,13 +936,23 @@ signal_handler::~signal_handler()
     stack_t sigstk = { };
 #endif
 
-    sigstk.ss_size  = MINSIGSTKSZ;
-    sigstk.ss_flags = SS_DISABLE;
-    if( ::sigaltstack( &sigstk, 0 ) == -1 ) {
-        int error_n = errno;
-        std::cerr << "******** errors disabling the alternate stack:" << std::endl
-                  << "\t#error:" << error_n << std::endl
-                  << "\t" << std::strerror( error_n ) << std::endl;
+    // Only undo what this handler did. If it did not install the alternate stack,
+    // something else owns it -- possibly the calling program, which may have
+    // installed one deliberately -- and tearing that down is not ours to do.
+    //
+    // Where we did install, put back exactly what was there before, which the
+    // constructor captured. That was a disabled stack in every case reachable
+    // today, since the install only happens when SS_DISABLE was set, but
+    // restoring the saved value keeps this correct if that guard ever relaxes.
+    if( m_installed_alt_stack ) {
+        sigstk = m_prev_alt_stack;
+
+        if( ::sigaltstack( &sigstk, 0 ) == -1 ) {
+            int error_n = errno;
+            std::cerr << "******** errors restoring the alternate stack:" << std::endl
+                      << "\t#error:" << error_n << std::endl
+                      << "\t" << std::strerror( error_n ) << std::endl;
+        }
     }
 #endif
 
