@@ -495,7 +495,7 @@ public:
 };
 
 //!@internal
-#define BOOST_TEST_SYS_ASSERT( cond ) BOOST_TEST_I_ASSRT( cond, ::boost::system_error( BOOST_STRINGIZE( exp ) ) )
+#define BOOST_TEST_SYS_ASSERT( cond ) BOOST_TEST_I_ASSRT( cond, ::boost::system_error( BOOST_STRINGIZE( cond ) ) )
 
 // ************************************************************************** //
 // **************Floating point exception management interface ************** //
