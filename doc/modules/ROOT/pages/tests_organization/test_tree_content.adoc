@@ -1,0 +1,12 @@
+= Test tree content
+:page-aliases: boost_test/tests_organization/test_tree/test_tree_content.adoc
+
+The test module, and hence the test tree, should have at least one test-case scheduled for execution, otherwise the _Unit Test Framework_
+returns an error.
+
+This check is performed *after* the filtering of the tests has occurred. The sections about
+xref:tests_organization/enabling.adoc[tests enabling/disabling], xref:tests_organization/tests_dependencies.adoc[tests dependencies]
+and xref:runtime_config/test_unit_filtering.adoc[runtime filtering]
+explain various methods that modify the tests that are being run.
+
+NOTE: A xref:tests_organization/fixtures.adoc#global[global fixture] is not considered as a test case.

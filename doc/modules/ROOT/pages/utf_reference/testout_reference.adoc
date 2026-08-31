@@ -1,0 +1,53 @@
+= Controlling tests outputs
+:page-aliases: boost_test/utf_reference/testout_reference.adoc, boost_test/utf_reference/testout_reference/test_output_macro_checkpoint.adoc, boost_test/utf_reference/testout_reference/test_output_macro_context.adoc, boost_test/utf_reference/testout_reference/test_output_macro_context_sticky.adoc, boost_test/utf_reference/testout_reference/test_output_macro_disable_type.adoc, boost_test/utf_reference/testout_reference/test_output_macro_info.adoc, boost_test/utf_reference/testout_reference/test_output_macro_message.adoc, boost_test/utf_reference/testout_reference/test_output_macro_passpoint.adoc
+
+[#test_output_macro_checkpoint]
+== `BOOST_TEST_CHECKPOINT`
+
+Sets up a named check point.
+
+TIP: See the xref:test_output/checkpoints.adoc[checkpoint] section for more details.
+
+[#test_output_macro_passpoint]
+== `BOOST_TEST_PASSPOINT`
+
+Sets up an unnamed check point.
+
+TIP: See the xref:test_output/checkpoints.adoc[checkpoint] section for more details.
+
+[#test_output_macro_message]
+== `BOOST_TEST_MESSAGE`
+
+Outputs a custom message into the test log.
+
+TIP: See the xref:test_output/test_tools_support_for_logging.adoc#test_output_macro_message[corresponding] section for more details.
+
+[#test_output_macro_info]
+== `BOOST_TEST_INFO`
+
+Defines a message to be printed as part of the context of the first encountered assertion, if it fails.
+For more details see xref:test_output/contexts.adoc[here].
+
+[#test_output_macro_context]
+== `BOOST_TEST_CONTEXT`
+
+Defines a scope and a message to be printed as part of the context of every failed assertion within the scope.
+For more details see xref:test_output/contexts.adoc[here].
+
+[#test_output_macro_context_sticky]
+== `BOOST_TEST_INFO_SCOPE`
+
+Defines a sticky version of xref:{boost_test_info}[`BOOST_TEST_INFO`]: the message stored in `BOOST_TEST_INFO_SCOPE` is printed for all failed assertions that come
+after the declaration of `BOOST_TEST_INFO_SCOPE` and within the current scope.
+For more details see xref:test_output/contexts.adoc[here].
+
+[#test_output_macro_disable_type]
+== `BOOST_TEST_DONT_PRINT_LOG_VALUE`
+
+Disables the automatic printing of a value. This macro is relevant
+
+* a type is used in a comparison assertion (such as xref:{boost_level_ge}[`BOOST_<level>_GE`] for instance)
+* when the type being compared does not implement a suitable `operator <<` for streaming out the value into the
+test log stream
+
+TIP: See the xref:test_output/test_tools_support_for_logging.adoc#testing_tool_output_disable[corresponding] section for more details.

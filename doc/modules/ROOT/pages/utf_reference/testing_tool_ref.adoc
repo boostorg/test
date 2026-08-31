@@ -1,0 +1,745 @@
+= Reference API for writing tests
+:page-aliases: boost_test/utf_reference/testing_tool_ref.adoc, boost_test/utf_reference/testing_tool_ref/assertion_boost_error.adoc, boost_test/utf_reference/testing_tool_ref/assertion_boost_fail.adoc, boost_test/utf_reference/testing_tool_ref/assertion_boost_is_defined.adoc, boost_test/utf_reference/testing_tool_ref/assertion_boost_level.adoc, boost_test/utf_reference/testing_tool_ref/assertion_boost_level_bitwise_eq.adoc, boost_test/utf_reference/testing_tool_ref/assertion_boost_level_close.adoc, boost_test/utf_reference/testing_tool_ref/assertion_boost_level_close_fraction.adoc, boost_test/utf_reference/testing_tool_ref/assertion_boost_level_eq.adoc, boost_test/utf_reference/testing_tool_ref/assertion_boost_level_eq_collections.adoc, boost_test/utf_reference/testing_tool_ref/assertion_boost_level_exception.adoc, boost_test/utf_reference/testing_tool_ref/assertion_boost_level_ge.adoc, boost_test/utf_reference/testing_tool_ref/assertion_boost_level_gt.adoc, boost_test/utf_reference/testing_tool_ref/assertion_boost_level_le.adoc, boost_test/utf_reference/testing_tool_ref/assertion_boost_level_lt.adoc, boost_test/utf_reference/testing_tool_ref/assertion_boost_level_message.adoc, boost_test/utf_reference/testing_tool_ref/assertion_boost_level_ne.adoc, boost_test/utf_reference/testing_tool_ref/assertion_boost_level_no_throw.adoc, boost_test/utf_reference/testing_tool_ref/assertion_boost_level_predicate.adoc, boost_test/utf_reference/testing_tool_ref/assertion_boost_level_small.adoc, boost_test/utf_reference/testing_tool_ref/assertion_boost_level_throw.adoc, boost_test/utf_reference/testing_tool_ref/assertion_boost_test_universal_macro.adoc, boost_test/utf_reference/testing_tool_ref/assertion_control_under_debuggable.adoc, boost_test/utf_reference/testing_tool_ref/assertion_control_under_debugger.adoc, boost_test/utf_reference/testing_tool_ref/decorator_expected_failures.adoc, boost_test/utf_reference/testing_tool_ref/decorator_timeout.adoc, boost_test/utf_reference/testing_tool_ref/decorator_tolerance.adoc, boost_test/utf_reference/testing_tool_ref/test_org_boost_test_case_expected_failure.adoc
+
+[#assertion_boost_test_universal_macro]
+== `BOOST_TEST`
+
+[source,cpp]
+----
+BOOST_TEST(statement);
+BOOST_TEST_<level>(statement);
+
+// replacement failure message, requires variadic macros
+BOOST_TEST(statement, "failure message");
+
+// Floating point comparison, requires variadic macros, auto and decltype
+BOOST_TEST(statement, floating_point_comparison_manipulation);
+
+// bitwise comparison, requires variadic macros, auto and decltype
+BOOST_TEST(statement, boost::test_tools::bitwise() );
+
+// element-wise comparison, for containers
+BOOST_TEST(statement, boost::test_tools::per_element() );
+
+// lexicographic comparison, for containers
+BOOST_TEST(statement, boost::test_tools::lexicographic() );
+----
+
+The full documentation of this macro is located xref:testing_tools/boost_test_universal_macro.adoc[here].
+
+The macro is available in three variants, corresponding to different xref:testing_tools/tools_assertion_severity_level.adoc[assertion severity levels]:
+
+[source,cpp]
+----
+BOOST_TEST // or BOOST_TEST_CHECK
+BOOST_TEST_REQUIRE
+BOOST_TEST_WARN
+----
+
+* `"failure message"` is a C-string printed in case of failure in place of the default message.
+See xref:testing_tools/reports.adoc[this section] for
+more details.
+* `floating_point_comparison_manipulation` is one of the floating point comparison manipulators.
+See xref:testing_tools/boost_test_universal_macro.adoc[this section]
+for more details.
+* cpp:boost::test_tools::bitwise[boost::test_tools::bitwise] is a manipulator indicating that the comparison should be performed bitwise. See
+xref:testing_tools/bitwise.adoc[this section] for more details
+* cpp:boost::test_tools::per_element[boost::test_tools::per_element] is a manipulator indicating that the comparison should be performed on each element, in sequence, rather
+than on containers. See
+xref:testing_tools/collections.adoc#boost_test_coll_perelement[this section] for more details
+* cpp:boost::test_tools::lexicographic[boost::test_tools::lexicographic] is a manipulator indicating that the comparison should be performed with the lexicographic order. See
+xref:testing_tools/collections.adoc#boost_test_coll_default_lex[this section] for more details
+
+=== Limitations and workaround
+
+There are some restrictions on the statements that are supported by this tool. Those are explained in details in
+xref:testing_tools/boost_test_universal_macro.adoc#boost_test_statement_limitations[this] section.
+
+[#decorator_expected_failures]
+== expected_failures (decorator)
+
+[source,cpp]
+----
+expected_failures(counter_t number);
+----
+
+Indicates the expected failures for a test unit.
+See xref:testing_tools/expected_failures.adoc[here] for more details.
+
+[#decorator_timeout]
+== timeout (decorator)
+
+[source,cpp]
+----
+timeout(unsigned int seconds);
+----
+
+Specifies a time-out for a *test-case* or a *test-suite*, in wall-clock time.
+
+If a test-case lasts longer than the timeout, the test is flagged as failed. On some systems (see below),
+the test-case is forced to stop.
+
+For test-suites, the mechanism is similar: every test-unit under the test-suite is allocated a maximum
+duration time that is the remainder of the timeout after the previous tests have been executed. If a timeout occurs
+during the execution of the suite, the suite is flagged as timed-out and the remaining test-units are skipped.
+
+See xref:testing_tools/timeout.adoc[here] for more details.
+
+[NOTE]
+====
+The macro
+  `BOOST_SIGACTION_BASED_SIGNAL_HANDLING` is defined
+  if Boost.Test is able to force the test-case to stop.
+====
+
+NOTE: The support for test suites has been added in xref:change_log.adoc#ref_CHANGE_LOG_3_10[Boost 1.70 / _Unit Test Framework_ v3.10]
+
+[#decorator_tolerance]
+== tolerance (decorator)
+
+[source,cpp]
+----
+template <typename FPT>
+  tolerance(FPT eps);
+
+template <typename FPT>
+  tolerance(test_tools::fpc::percent_tolerance_t<FPT> eps)
+----
+
+Decorator `tolerance` specifies the default comparison tolerance for floating point type `FTP` in the decorated test
+unit. The default tolerance only applies to a particular type, so it makes sense to provide more than one `tolerance`
+decorator if we are comparing different floating point types.
+The variant with `percent_tolerance` uses value `eps / 100` as tolerance.
+
+[NOTE]
+====
+For more details see the
+  xref:testing_tools/floating_point.adoc[floating points comparison] section.
+====
+
+// tag reference: doc/modules/ROOT/examples/decorator_13.run-fail.cpp
+:bt-name: decorator_13
+:bt-rule: run-fail
+:bt-descr: decorator tolerance
+include::partial$bt_example.adoc[]
+
+In the above example,  in `test1`, checks on `double`s fail because they differ by more what tolerance for `double`s
+specifies. In `test2` the tolerance for `double`s is greater and therefore the checks succeed. In `test3`, we specify
+only tolerance for type `float`, and since the checks use type `double` the specified tolerance does not apply. Tolerance
+in `test4` is equivalent to that in `test1`, therefore its checks also fail. Tolerance in `test5` is equivalent to
+that in `test2`, therefore its checks also succeed.
+
+[#assertion_boost_level]
+== `BOOST_<level>`
+
+[#ref_BOOST_level]
+[source,cpp]
+----
+BOOST_WARN(predicate);
+BOOST_CHECK(predicate);
+BOOST_REQUIRE(predicate);
+----
+
+These tools are used to validate the predicate value. The only parameter for these tools is a boolean predicate
+value that gets validated. It could be any expression that could be evaluated and converted to boolean value. The
+expression gets evaluated only once, so it's safe to pass complex expression for validation.
+
+// tag reference: doc/modules/ROOT/examples/example34.run-fail.cpp
+:bt-name: example34
+:bt-rule: run-fail
+:bt-descr: BOOST_<level> usage
+include::partial$bt_example.adoc[]
+
+See also:
+
+* xref:{boost_level_message}[`BOOST_<level>_MESSAGE`]
+
+[#assertion_boost_level_bitwise_eq]
+== `BOOST_<level>_BITWISE_EQUAL`
+
+[source,cpp]
+----
+BOOST_WARN_BITWISE_EQUAL(left, right);
+BOOST_CHECK_BITWISE_EQUAL(left, right);
+BOOST_REQUIRE_BITWISE_EQUAL(left, right);
+----
+
+These tools are used to perform bitwise comparison of two values. The check shows all positions where left and
+right value's bits mismatch.
+
+The first parameter is the left compared value. The second parameter is the right compared value. Parameters are
+not required to be of the same type, but warning is issued if their type's size does not coincide.
+
+// tag reference: doc/modules/ROOT/examples/example33.run-fail.cpp
+:bt-name: example33
+:bt-rule: run-fail
+:bt-descr: BOOST_<level>_BITWISE_EQUAL usage
+include::partial$bt_example.adoc[]
+
+See also:
+
+* xref:{boost_level_equal}[`BOOST_<level>_EQUAL`]
+
+[#assertion_boost_level_eq]
+== `BOOST_<level>_EQUAL`
+
+[source,cpp]
+----
+BOOST_WARN_EQUAL(left, right);
+BOOST_CHECK_EQUAL(left, right);
+BOOST_REQUIRE_EQUAL(left, right);
+----
+
+Check performed by these tools is the same as the one performed by `BOOST_<level>(left == right)`.
+The difference is that the mismatched values are reported as well.
+
+[NOTE]
+====
+It is bad idea to use these tools to compare floating point values. Use xref:{boost_level_close}[`BOOST_<level>_CLOSE`] or
+      xref:{boost_level_close_fraction}[`BOOST_<level>_CLOSE_FRACTION`] tools instead.
+====
+
+// tag reference: doc/modules/ROOT/examples/example35.run-fail.cpp
+:bt-name: example35
+:bt-rule: run-fail
+:bt-descr: BOOST_<level>_EQUAL usage
+include::partial$bt_example.adoc[]
+
+See also:
+
+* xref:{boost_level}[`BOOST_<level>`]
+* xref:{boost_level_close}[`BOOST_<level>_CLOSE`]
+* xref:{boost_level_ne}[`BOOST_<level>_NE`]
+* xref:{boost_level_equal_collections}[`BOOST_<level>_EQUAL_COLLECTIONS`]
+
+[#assertion_boost_level_eq_collections]
+== `BOOST_<level>_EQUAL_COLLECTIONS`
+
+[source,cpp]
+----
+BOOST_WARN_EQUAL_COLLECTIONS(left_begin, left_end, right_begin, right_end);
+BOOST_CHECK_EQUAL_COLLECTIONS(left_begin, left_end, right_begin, right_end);
+BOOST_REQUIRE_EQUAL_COLLECTIONS(left_begin, left_end, right_begin, right_end);
+----
+
+These tools are used to perform an element by element comparison of two collections. They print all mismatched
+positions, collection elements at these positions and check that the collections have the same size. The first two
+parameters designate begin and end of the first collection. The two last parameters designate begin and end of the
+second collection.
+
+// tag reference: doc/modules/ROOT/examples/example36.run-fail.cpp
+:bt-name: example36
+:bt-rule: run-fail
+:bt-descr: BOOST_<level>_EQUAL_COLLECTIONS usage
+include::partial$bt_example.adoc[]
+
+See also:
+
+* xref:{boost_level_equal}[`BOOST_<level>_EQUAL`]
+
+[#assertion_boost_level_close]
+== `BOOST_<level>_CLOSE`
+
+[source,cpp]
+----
+BOOST_WARN_CLOSE(left, right, tolerance);
+BOOST_CHECK_CLOSE(left, right, tolerance);
+BOOST_REQUIRE_CLOSE(left, right, tolerance);
+----
+
+These tools are used to check on closeness using strong relationship defined by the predicate
+
+[source,cpp]
+----
+check_is_close( left, right, tolerance )
+----
+
+To check for the weak relationship use
+xref:{boost_level_predicate}[`BOOST_<level>_PREDICATE`] family of tools with explicit `check_is_close` invocation.
+
+The first parameter is the _left_ compared value. The second parameter is the
+_right_ compared value. Last third parameter defines the tolerance for the comparison in
+xref:testing_tools/floating_point.adoc[*percentage units*].
+
+[NOTE]
+====
+It is required for left and right parameters to be of the same floating point type. You will need to explicitly
+      resolve any type mismatch to select which type to use for comparison.
+====
+
+[NOTE]
+====
+The floating point comparison tools are automatically added if the _Unit Test Framework_
+  is included as indicated in the previous sections. The tools are implemented is in the header
+  link:{base-url}/boost/test/tools/floating_point_comparison.hpp[`boost/test/tools/floating_point_comparison.hpp`].
+====
+
+// tag reference: doc/modules/ROOT/examples/example42.run-fail.cpp
+:bt-name: example42
+:bt-rule: run-fail
+:bt-descr: BOOST_<level>_CLOSE usage with small values
+include::partial$bt_example.adoc[]
+
+// tag reference: doc/modules/ROOT/examples/example43.run.cpp
+:bt-name: example43
+:bt-rule: run
+:bt-descr: BOOST_<level>_CLOSE usage with big values
+include::partial$bt_example.adoc[]
+
+See also:
+
+* xref:{boost_level_close_fraction}[`BOOST_<level>_CLOSE_FRACTION`]
+* xref:{boost_level_small}[`BOOST_<level>_SMALL`]
+* xref:{boost_level_equal}[`BOOST_<level>_EQUAL`]
+* xref:{floating_points_testing_tools}[Floating point comparison algorithms]
+
+[#assertion_boost_level_close_fraction]
+== `BOOST_<level>_CLOSE_FRACTION`
+
+[source,cpp]
+----
+BOOST_WARN_CLOSE_FRACTION(left, right, tolerance);
+BOOST_CHECK_CLOSE_FRACTION(left, right, tolerance);
+BOOST_REQUIRE_CLOSE_FRACTION(left, right, tolerance);
+----
+
+These tools are used to check on closeness using strong relationship defined by the predicate
+
+[source,cpp]
+----
+check_is_close(left, right, tolerance)
+----
+
+To check for the weak relationship use xref:{boost_level_predicate}[`BOOST_<level>_PREDICATE`] family of tools with explicit `check_is_close` invocation.
+
+The first parameter is the _left_ compared value. The second parameter is the
+_right_ compared value. Last third parameter defines the tolerance for the comparison as
+xref:testing_tools/floating_point.adoc[*fraction of absolute values being compared*].
+
+[NOTE]
+====
+It is required for left and right parameters to be of the same floating point type. You will need to explicitly
+      resolve any type mismatch to select which type to use for comparison.
+====
+
+[NOTE]
+====
+The floating point comparison tools are automatically added if the _Unit Test Framework_
+  is included as indicated in the previous sections. The tools are implemented is in the header
+  link:{base-url}/boost/test/tools/floating_point_comparison.hpp[`boost/test/tools/floating_point_comparison.hpp`].
+====
+
+// tag reference: doc/modules/ROOT/examples/example44.run-fail.cpp
+:bt-name: example44
+:bt-rule: run-fail
+:bt-descr: BOOST_<level>_CLOSE_FRACTION usage
+include::partial$bt_example.adoc[]
+
+See also:
+
+* xref:{boost_level_close}[`BOOST_<level>_CLOSE`]
+* xref:{boost_level_small}[`BOOST_<level>_SMALL`]
+* xref:{boost_level_equal}[`BOOST_<level>_EQUAL`]
+* xref:{floating_points_testing_tools}[Floating point comparison algorithms]
+
+[#assertion_boost_level_ge]
+== `BOOST_<level>_GE`
+
+[source,cpp]
+----
+BOOST_WARN_GE(left, right);
+BOOST_CHECK_GE(left, right);
+BOOST_REQUIRE_GE(left, right);
+----
+
+Check performed by these tools is the same as the one performed by `BOOST_<level>( left >= right )`.
+The difference is that the argument values are reported as well.
+
+// tag reference: doc/modules/ROOT/examples/example57.run-fail.cpp
+:bt-name: example57
+:bt-rule: run-fail
+:bt-descr: BOOST_<level>_GE usage
+include::partial$bt_example.adoc[]
+
+See also:
+
+* xref:{boost_level_le}[`BOOST_<level>_LE`]
+* xref:{boost_level_lt}[`BOOST_<level>_LT`]
+* xref:{boost_level_gt}[`BOOST_<level>_GT`]
+
+[#assertion_boost_level_gt]
+== `BOOST_<level>_GT`
+
+[source,cpp]
+----
+BOOST_WARN_GT(left, right);
+BOOST_CHECK_GT(left, right);
+BOOST_REQUIRE_GT(left, right);
+----
+
+Check performed by these tools is the same as the one performed by xref:{boost_level}[`BOOST_<level>`]`( left > right )`.
+The difference is that the argument values are reported as well.
+
+// tag reference: doc/modules/ROOT/examples/example58.run-fail.cpp
+:bt-name: example58
+:bt-rule: run-fail
+:bt-descr: BOOST_<level>_GT usage
+include::partial$bt_example.adoc[]
+
+See also:
+
+* xref:{boost_level_le}[`BOOST_<level>_LE`]
+* xref:{boost_level_lt}[`BOOST_<level>_LT`]
+* xref:{boost_level_ge}[`BOOST_<level>_GE`]
+
+[#assertion_boost_level_le]
+== `BOOST_<level>_LE`
+
+[source,cpp]
+----
+BOOST_WARN_LE(left, right);
+BOOST_CHECK_LE(left, right);
+BOOST_REQUIRE_LE(left, right);
+----
+
+Check performed by these tools is the same as the one performed by `BOOST_<level>( left <= right )`.
+The difference is that the argument values are reported as well.
+
+// tag reference: doc/modules/ROOT/examples/example55.run-fail.cpp
+:bt-name: example55
+:bt-rule: run-fail
+:bt-descr: BOOST_<level>_LE usage
+include::partial$bt_example.adoc[]
+
+See also:
+
+* xref:{boost_level_le}[`BOOST_<level>_LE`]
+* xref:{boost_level_ge}[`BOOST_<level>_GE`]
+* xref:{boost_level_gt}[`BOOST_<level>_GT`]
+
+[#assertion_boost_level_lt]
+== `BOOST_<level>_LT`
+
+[source,cpp]
+----
+BOOST_WARN_LT(left, right);
+BOOST_CHECK_LT(left, right);
+BOOST_REQUIRE_LT(left, right);
+----
+
+Check performed by these tools is the same as the one performed by `BOOST_<level>( left < right )`.
+The difference is that the argument values are reported as well.
+
+// tag reference: doc/modules/ROOT/examples/example56.run-fail.cpp
+:bt-name: example56
+:bt-rule: run-fail
+:bt-descr: BOOST_<level>_LT usage
+include::partial$bt_example.adoc[]
+
+See also:
+
+* xref:{boost_level_le}[`BOOST_<level>_LE`]
+* xref:{boost_level_ge}[`BOOST_<level>_GE`]
+* xref:{boost_level_gt}[`BOOST_<level>_GT`]
+
+[#assertion_boost_level_message]
+== `BOOST_<level>_MESSAGE`
+
+[source,cpp]
+----
+BOOST_WARN_MESSAGE(predicate, message);
+BOOST_CHECK_MESSAGE(predicate, message);
+BOOST_REQUIRE_MESSAGE(predicate, message);
+----
+
+These tools perform exactly the same check as xref:{boost_level}[`BOOST_<level>`] tools. The only difference is that
+instead of generating an error/confirm message these use the supplied one.
+
+The first parameter is the boolean expression. The second parameter is the message reported in case of check
+failure. The message argument can be constructed of components of any type supporting the
+`std::ostream& operator<<(std::ostream&)`.
+
+// tag reference: doc/modules/ROOT/examples/example38.run.cpp
+:bt-name: example38
+:bt-rule: run
+:bt-descr: BOOST_<level>_MESSAGE usage
+include::partial$bt_example.adoc[]
+
+See also:
+
+* xref:{boost_level}[`BOOST_<level>`]
+
+[#assertion_boost_level_ne]
+== `BOOST_<level>_NE`
+
+[source,cpp]
+----
+BOOST_WARN_NE(left, right);
+BOOST_CHECK_NE(left, right);
+BOOST_REQUIRE_NE(left, right);
+----
+
+Check performed by these tools is the same as the one performed by `BOOST_<level>( left != right )`.
+The difference is that the matched values are reported as well.
+
+// tag reference: doc/modules/ROOT/examples/example54.run-fail.cpp
+:bt-name: example54
+:bt-rule: run-fail
+:bt-descr: BOOST_<level>_NE usage
+include::partial$bt_example.adoc[]
+
+See also:
+
+* xref:{boost_level_equal}[`BOOST_<level>_EQUAL`]
+
+[#assertion_boost_level_predicate]
+== `BOOST_<level>_PREDICATE`
+
+[source,cpp]
+----
+BOOST_WARN_PREDICATE(predicate, arguments_list);
+BOOST_CHECK_PREDICATE(predicate, arguments_list);
+BOOST_REQUIRE_PREDICATE(predicate, arguments_list);
+----
+
+These are generic tools used to validate an arbitrary supplied predicate functor (there is a compile time limit on
+predicate arity defined by the configurable macro `BOOST_TEST_MAX_PREDICATE_ARITY`). To
+validate zero arity predicate use xref:{boost_level}[`BOOST_<level>`] tools. In other cases prefer theses tools. The
+advantage of these tools is that they show arguments values in case of predicate failure.
+
+The first parameter is the predicate itself. The second parameter is the list of predicate arguments each wrapped
+in round brackets (`BOOST_PP` sequence format).
+
+// tag reference: doc/modules/ROOT/examples/example40.run.cpp
+:bt-name: example40
+:bt-rule: run
+:bt-descr: BOOST_<level>_PREDICATE usage
+include::partial$bt_example.adoc[]
+
+NOTE: Note difference in error log from xref:{boost_level}[`BOOST_<level>`]
+
+See also:
+
+* xref:{boost_level}[`BOOST_<level>`]
+
+[#assertion_boost_level_no_throw]
+== `BOOST_<level>_NO_THROW`
+
+[source,cpp]
+----
+BOOST_WARN_NO_THROW(expression);
+BOOST_CHECK_NO_THROW(expression);
+BOOST_REQUIRE_NO_THROW(expression);
+----
+
+These assertions validate that the execution of `expression` does not throw any exception.
+To that extent, all possible exception are caught by assertion itself and no exception is propagated to
+the test body.
+
+TIP: It is possible to test for complex expressions with the use of constructs such as `+do { /* ... */} while(0)+` block.
+
+// tag reference: doc/modules/ROOT/examples/exception_nothrow.run-fail.cpp
+:bt-name: exception_nothrow
+:bt-rule: run-fail
+:bt-descr: BOOST_<level>_NO_THROW usage
+include::partial$bt_example.adoc[]
+
+See also:
+
+* xref:{boost_level_throw}[`BOOST_<level>_THROW`]
+* xref:testing_tools/exception_correctness.adoc[Exception correctness] section
+
+[#assertion_boost_level_throw]
+== `BOOST_<level>_THROW`
+
+[source,cpp]
+----
+BOOST_WARN_THROW(expression, exception_type);
+BOOST_CHECK_THROW(expression, exception_type);
+BOOST_REQUIRE_THROW(expression, exception_type);
+----
+
+These assertions validate that the execution of `expression` raises an _expected_ exception, which means an exception of
+the supplied `exception_type` type or of any child type.
+
+* If `expression` raises an unexpected exception, this exception is not caught by `BOOST_<level>_THROW` assertion and
+might propagate to the test body. If not caught at all, the framework will catch it and terminate the test case
+with the status _failed_.
+* If `expression` does not raise any exception, the the assertion fails.
+
+WARNING: the assertion catches only the expected exceptions.
+
+TIP: It is possible to test for complex expressions with the use of constructs such as `+do { /* ... */} while(0)+` block.
+
+// tag reference: doc/modules/ROOT/examples/exception_check.run-fail.cpp
+:bt-name: exception_check
+:bt-rule: run-fail
+:bt-descr: BOOST_<level>_THROW usage
+include::partial$bt_example.adoc[]
+
+See also:
+
+* xref:{boost_level_no_throw}[`BOOST_<level>_NO_THROW`]
+* xref:testing_tools/exception_correctness.adoc[Exception correctness] section
+
+[#assertion_boost_level_exception]
+== `BOOST_<level>_EXCEPTION`
+
+[source,cpp]
+----
+BOOST_WARN_EXCEPTION(expression, exception_type, predicate);
+BOOST_CHECK_EXCEPTION(expression, exception_type, predicate);
+BOOST_REQUIRE_EXCEPTION(expression, exception_type, predicate);
+----
+
+As for xref:{boost_level_throw}[`BOOST_<level>_THROW`], these assertions validate that `expression` raises an exception of the
+type specified by `exception_type` or any of its child type, with additional checks on the exception instance.
+
+* If an expected exception is raised by `expression`, the instance of the exception is passed to `predicate`
+for further validation.
+* It behaves like xref:{boost_level_throw}[`BOOST_<level>_THROW`] if `expression` does not raise any exception, or an unrelated exception is raised.
+
+`predicate` should be a unary function accepting an instance of `exception_type` or any of its child, and that should return
+a boolean indicating a success (`true`) or a failure (`false`).
+
+WARNING: the assertion catches only the expected exceptions.
+
+TIP: It is possible to test for complex expressions with the use of constructs such as `+do { /* ... */} while(0)+` block.
+
+The example below checks that the exception carries the proper error code.
+
+// tag reference: doc/modules/ROOT/examples/exception_check_predicate.run-fail.cpp
+:bt-name: exception_check_predicate
+:bt-rule: run-fail
+:bt-descr: BOOST_<level>_EXCEPTION usage
+include::partial$bt_example.adoc[]
+
+See also:
+
+* xref:{boost_level_throw}[`BOOST_<level>_THROW`]
+* xref:testing_tools/exception_correctness.adoc[Exception correctness] section
+
+[#assertion_boost_level_small]
+== `BOOST_<level>_SMALL`
+
+[source,cpp]
+----
+BOOST_WARN_SMALL(value, tolerance);
+BOOST_CHECK_SMALL(value, tolerance);
+BOOST_REQUIRE_SMALL(value, tolerance);
+----
+
+These tools are used to check that supplied value is small enough. The "smallness" is defined by absolute value
+of the tolerance supplied as a second argument. Use these tools with caution. To compare to values on closeness
+it's preferable to use xref:{boost_level_close}[`BOOST_<level>_CLOSE`] tools instead.
+
+The first parameter is the value to check. The second parameter is the tolerance.
+
+[NOTE]
+====
+The floating point comparison tools are automatically added if the _Unit Test Framework_
+  is included as indicated in the previous sections. The tools are implemented is in the header
+  link:{base-url}/boost/test/tools/floating_point_comparison.hpp[`boost/test/tools/floating_point_comparison.hpp`].
+====
+
+// tag reference: doc/modules/ROOT/examples/example41.run-fail.cpp
+:bt-name: example41
+:bt-rule: run-fail
+:bt-descr: BOOST_<level>_SMALL usage
+include::partial$bt_example.adoc[]
+
+See also:
+
+* xref:{boost_level_close}[`BOOST_<level>_CLOSE`]
+* xref:{boost_level_close_fraction}[`BOOST_<level>_CLOSE_FRACTION`]
+* xref:{floating_points_testing_tools}[Floating point comparison algorithms]
+
+[#test_org_boost_test_case_expected_failure]
+== `BOOST_AUTO_TEST_CASE_EXPECTED_FAILURES`
+
+Indicates the number of failures for a test case.
+
+See xref:testing_tools/expected_failures.adoc[here] for more details.
+
+[#assertion_boost_error]
+== `BOOST_ERROR`
+
+[source,cpp]
+----
+BOOST_ERROR(message);
+----
+
+xref:{boost_error}[`BOOST_ERROR`] tool behave the same way as `BOOST_TEST(false, message)`. This tool is used for
+an unconditional error counter increasing and message logging.
+
+The tool's only parameter is an error message to log.
+
+// tag reference: doc/modules/ROOT/examples/example46.run-fail.cpp
+:bt-name: example46
+:bt-rule: run-fail
+:bt-descr: BOOST_ERROR usage
+include::partial$bt_example.adoc[]
+
+See also:
+
+* xref:{boost_test}[`BOOST_TEST`]
+
+[#assertion_boost_fail]
+== `BOOST_FAIL`
+
+[source,cpp]
+----
+BOOST_FAIL(message);
+----
+
+`BOOST_FAIL(message)` behave the same way as `BOOST_TEST_REQUIRE(false, message)`. This tool is used for an
+unconditional error counter increasing, message logging and the current test case aborting.
+
+The tool's only parameter is an error message to log.
+
+// tag reference: doc/modules/ROOT/examples/example47.run-fail.cpp
+:bt-name: example47
+:bt-rule: run-fail
+:bt-descr: BOOST_FAIL usage
+include::partial$bt_example.adoc[]
+
+See also:
+
+* xref:{boost_test}[`BOOST_TEST`]
+
+*
+
+[#assertion_boost_is_defined]
+== `BOOST_IS_DEFINED`
+
+[source,cpp]
+----
+BOOST_IS_DEFINED(symbol);
+----
+
+Unlike the rest of the tools in the toolbox this tool does not perform the logging itself. Its only purpose
+is to check at runtime whether or not the supplied preprocessor symbol is defined. Use it in combination with
+xref:{boost_level}[`BOOST_<level>`] to perform and log validation. Macros of any arity could be checked. To check the
+macro definition with non-zero arity specify dummy arguments for it. See below for example.
+
+The only tool's parameter is a preprocessor symbol that gets validated.
+
+// tag reference: doc/modules/ROOT/examples/example48.run-fail.cpp
+:bt-name: example48
+:bt-rule: run-fail
+:bt-descr: BOOST_IS_DEFINED usage
+include::partial$bt_example.adoc[]
+
+See also:
+
+* xref:{boost_level}[`BOOST_<level>`]
+
+[#assertion_control_under_debugger]
+== `BOOST_TEST_TOOLS_UNDER_DEBUGGER`
+
+When defined, assertions evaluate their expression eagerly, as described xref:testing_tools/debugging.adoc[here].
+
+[#assertion_control_under_debuggable]
+== `BOOST_TEST_TOOLS_DEBUGGABLE`
+
+When defined, test assertions are compiled in two modes (debugger-friendly and full-featured) and the version is selected at run-time, as described xref:testing_tools/debugging.adoc[here].

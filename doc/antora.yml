@@ -1,0 +1,130 @@
+#
+# Copyright (c) 2003 Boost.Test contributors
+#
+# Distributed under the Boost Software License, Version 1.0. (See accompanying
+# file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+#
+# Official repository: https://github.com/boostorg/test
+#
+
+name: test
+title: Boost.Test
+version: ~
+start_page: index.adoc
+
+asciidoc:
+  attributes:
+    source-language: cpp@
+    table-caption: false
+    # Base of the links to header sources. build_antora.sh overrides this with
+    # the exact commit when it can determine one; this is the fallback for
+    # builds that cannot, such as a local preview.
+    base-url: https://github.com/boostorg/test/blob/master
+    # Issue trackers referenced from the change log.
+    trac-url: https://svn.boost.org/trac/boost/ticket
+    pr-url: https://github.com/boostorg/test/pull
+    issue-url: https://github.com/boostorg/test/issues
+    # Targets for the cross-references into the reference chapter, so that a
+    # reference page can be renamed in one place instead of at ~2000 call
+    # sites. Only the target lives here; the label stays at the call site, as
+    # in xref:{boost_test}[`BOOST_TEST`]. It has to: Asciidoctor substitutes
+    # quotes before attributes, and a value coming from an API attribute --
+    # which is what this file sets -- is inserted without further
+    # substitution, so formatting inside a value would never be processed.
+    part_faq: 'section_faq.adoc'
+    floating_points_testing_tools: 'testing_tools/floating_point.adoc#floating_points_comparison_theory'
+    master_test_suite: 'tests_organization/master_test_suite.adoc'
+    runtime_configuration: 'runtime_config/index.adoc'
+    output_test_stream_tool: 'testing_tools/output_stream_testing.adoc'
+    auto_linking: 'program_execution_monitor.adoc#ref_pem_auto_link'
+    boost_test_alternative_init_api: 'utf_reference/link_references.adoc#link_boost_test_alternative_init_macro'
+    boost_test_main: 'utf_reference/link_references.adoc#link_boost_test_main_macro'
+    boost_test_dyn_link: 'utf_reference/link_references.adoc#link_boost_test_dyn_link'
+    boost_test_no_lib: 'utf_reference/link_references.adoc#link_boost_test_no_lib'
+    boost_test_no_main: 'utf_reference/link_references.adoc#link_boost_test_no_main'
+    boost_test_module: 'utf_reference/link_references.adoc#link_boost_test_module_macro'
+    boost_test_global_configuration: 'utf_reference/link_references.adoc#link_boost_test_global_configuration'
+    boost_test_checkpoint: 'utf_reference/testout_reference.adoc#test_output_macro_checkpoint'
+    boost_test_passpoint: 'utf_reference/testout_reference.adoc#test_output_macro_passpoint'
+    boost_test_message: 'utf_reference/testout_reference.adoc#test_output_macro_message'
+    boost_test_info: 'utf_reference/testout_reference.adoc#test_output_macro_info'
+    boost_test_context: 'utf_reference/testout_reference.adoc#test_output_macro_context'
+    boost_test_info_scope: 'utf_reference/testout_reference.adoc#test_output_macro_context_sticky'
+    boost_test_dont_print_log_value: 'utf_reference/testout_reference.adoc#test_output_macro_disable_type'
+    boost_test: 'utf_reference/testing_tool_ref.adoc#assertion_boost_test_universal_macro'
+    boost_test_level: 'utf_reference/testing_tool_ref.adoc#assertion_boost_test_universal_macro'
+    boost_test_require: 'utf_reference/testing_tool_ref.adoc#assertion_boost_test_universal_macro'
+    boost_level: 'utf_reference/testing_tool_ref.adoc#assertion_boost_level'
+    boost_level_message: 'utf_reference/testing_tool_ref.adoc#assertion_boost_level_message'
+    boost_level_equal: 'utf_reference/testing_tool_ref.adoc#assertion_boost_level_eq'
+    boost_level_predicate: 'utf_reference/testing_tool_ref.adoc#assertion_boost_level_predicate'
+    boost_level_equal_collections: 'utf_reference/testing_tool_ref.adoc#assertion_boost_level_eq_collections'
+    boost_level_ne: 'utf_reference/testing_tool_ref.adoc#assertion_boost_level_ne'
+    boost_level_ge: 'utf_reference/testing_tool_ref.adoc#assertion_boost_level_ge'
+    boost_level_gt: 'utf_reference/testing_tool_ref.adoc#assertion_boost_level_gt'
+    boost_level_le: 'utf_reference/testing_tool_ref.adoc#assertion_boost_level_le'
+    boost_level_lt: 'utf_reference/testing_tool_ref.adoc#assertion_boost_level_lt'
+    boost_level_no_throw: 'utf_reference/testing_tool_ref.adoc#assertion_boost_level_no_throw'
+    boost_level_throw: 'utf_reference/testing_tool_ref.adoc#assertion_boost_level_throw'
+    boost_level_exception: 'utf_reference/testing_tool_ref.adoc#assertion_boost_level_exception'
+    boost_level_bitwise_equal: 'utf_reference/testing_tool_ref.adoc#assertion_boost_level_bitwise_eq'
+    boost_error: 'utf_reference/testing_tool_ref.adoc#assertion_boost_error'
+    boost_fail: 'utf_reference/testing_tool_ref.adoc#assertion_boost_fail'
+    boost_is_defined: 'utf_reference/testing_tool_ref.adoc#assertion_boost_is_defined'
+    boost_auto_test_case_expected_failures: 'utf_reference/testing_tool_ref.adoc#test_org_boost_test_case_expected_failure'
+    boost_level_small: 'utf_reference/testing_tool_ref.adoc#assertion_boost_level_small'
+    boost_check_small: 'utf_reference/testing_tool_ref.adoc#assertion_boost_level_small'
+    boost_level_close: 'utf_reference/testing_tool_ref.adoc#assertion_boost_level_close'
+    boost_check_close: 'utf_reference/testing_tool_ref.adoc#assertion_boost_level_close'
+    boost_level_close_fraction: 'utf_reference/testing_tool_ref.adoc#assertion_boost_level_close_fraction'
+    boost_test_tools_under_debugger: 'utf_reference/testing_tool_ref.adoc#assertion_control_under_debugger'
+    boost_test_tools_debuggable: 'utf_reference/testing_tool_ref.adoc#assertion_control_under_debuggable'
+    boost_auto_test_case: 'utf_reference/test_org_reference.adoc#test_org_boost_auto_test_case'
+    boost_test_case: 'utf_reference/test_org_reference.adoc#test_org_boost_test_case'
+    boost_test_case_name: 'utf_reference/test_org_reference.adoc#test_org_boost_test_case'
+    boost_auto_test_case_template: 'utf_reference/test_org_reference.adoc#test_org_boost_test_case_auto_template'
+    boost_test_case_template: 'utf_reference/test_org_reference.adoc#test_org_boost_test_case_template'
+    boost_test_case_template_function: 'utf_reference/test_org_reference.adoc#test_org_boost_test_case_template_function'
+    boost_param_test_case: 'utf_reference/test_org_reference.adoc#test_org_boost_test_case_parameter'
+    boost_data_test_case: 'utf_reference/test_org_reference.adoc#test_org_boost_test_dataset'
+    boost_data_test_case_f: 'utf_reference/test_org_reference.adoc#test_org_boost_test_dataset_fixture'
+    boost_test_dataset_max_arity: 'utf_reference/test_org_reference.adoc#test_org_boost_test_dataset'
+    boost_auto_test_suite: 'utf_reference/test_org_reference.adoc#test_org_boost_auto_test_suite'
+    boost_auto_test_suite_end: 'utf_reference/test_org_reference.adoc#test_org_boost_auto_test_suite_end'
+    boost_test_suite: 'utf_reference/test_org_reference.adoc#test_org_boost_test_suite'
+    boost_test_decorator: 'utf_reference/test_org_reference.adoc#test_org_boost_test_decorator'
+    boost_fixture_test_case: 'utf_reference/test_org_reference.adoc#test_org_boost_test_case_fixture'
+    boost_fixture_test_suite: 'utf_reference/test_org_reference.adoc#test_org_boost_test_suite_fixture'
+    boost_global_fixture: 'utf_reference/test_org_reference.adoc#test_org_boost_global_fixture'
+    boost_test_global_fixture: 'utf_reference/test_org_reference.adoc#test_org_boost_test_global_fixture'
+    boost_test_log_level: 'utf_reference/rt_param_reference.adoc#log_level'
+    default_run_status: 'runtime_config/test_unit_filtering.adoc#ref_default_run_status'
+    param_run_test: 'utf_reference/rt_param_reference.adoc#run_test'
+    decorator_label: 'utf_reference/test_org_reference.adoc#decorator_label'
+    decorator_enabled: 'utf_reference/test_org_reference.adoc#decorator_enabled'
+    decorator_disabled: 'utf_reference/test_org_reference.adoc#decorator_enabled'
+    decorator_enable_if: 'utf_reference/test_org_reference.adoc#decorator_enable_if'
+    decorator_depends_on: 'utf_reference/test_org_reference.adoc#decorator_depends_on'
+    decorator_precondition: 'utf_reference/test_org_reference.adoc#decorator_precondition'
+    decorator_fixture: 'utf_reference/test_org_reference.adoc#decorator_fixture'
+    decorator_description: 'utf_reference/test_org_reference.adoc#decorator_description'
+    decorator_expected_failures: 'utf_reference/testing_tool_ref.adoc#decorator_expected_failures'
+    decorator_timeout: 'utf_reference/testing_tool_ref.adoc#decorator_timeout'
+    decorator_tolerance: 'utf_reference/testing_tool_ref.adoc#decorator_tolerance'
+
+nav:
+  - modules/ROOT/nav.adoc
+
+ext:
+  # Commenting this stanza out is the fast inner loop when editing prose: it
+  # skips MrDocs, and with it the reference module, entirely.
+  cpp-reference:
+    config: doc/mrdocs.yml
+  cpp-tagfiles:
+    using-namespaces:
+      - boost::unit_test
+      - boost::unit_test::data
+      - boost::unit_test::data::monomorphic
+      - boost::unit_test::framework
+      - boost::test_tools
+      - boost::debug

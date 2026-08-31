@@ -1,0 +1,30 @@
+= Summary of the API for controlling the output
+:page-aliases: boost_test/test_output/summary.adoc
+
+[%header%autowidth,cols="2*"]
+|===
+|Macro
+|Short description
+
+|xref:{boost_test_message}[`BOOST_TEST_MESSAGE`]
+|Custom message output
+
+|xref:{boost_test_dont_print_log_value}[`BOOST_TEST_DONT_PRINT_LOG_VALUE`]
+|Disabling the printing of a specific type in case of test failure
+
+|xref:{boost_test_checkpoint}[`BOOST_TEST_CHECKPOINT`]
+|Indicates a named checkpoint that will be printed in case of failure
+
+|xref:{boost_test_passpoint}[`BOOST_TEST_PASSPOINT`]
+|Indicates an unnamed checkpoint that will be printed in case of failure
+
+|xref:{boost_test_info}[`BOOST_TEST_INFO`]
+|Defines a message to be printed as part of the context of the first encountered assertion, if it fails
+
+|xref:{boost_test_context}[`BOOST_TEST_CONTEXT`]
+|Defines a scope and a message to be printed as part of the context of every failed assertion within the scope
+
+|xref:{boost_test_info_scope}[`BOOST_TEST_INFO_SCOPE`]
+|Defines a sticky scoped version of xref:{boost_test_info}[`BOOST_TEST_INFO`] that is attached to all the assertions coming after this declaration and within the current scope.
+
+|===

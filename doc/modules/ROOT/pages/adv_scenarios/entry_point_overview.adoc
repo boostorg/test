@@ -1,0 +1,32 @@
+= Test module's entry point
+:page-aliases: boost_test/adv_scenarios/entry_point_overview.adoc
+
+Typically, every C++ program contains exactly one definition of function `main`: the program's _entry point_.
+When using the _Unit Test Framework_ you do not have to define one. Function `main` will be generated for you by the framework.
+The only thing you are required to do in case your program consists of more than one translation unit (`cpp` file)
+is to indicate to the framework in which of the files it is supposed to generate function `main`.
+You do it by defining macro xref:{boost_test_module}[`BOOST_TEST_MODULE`] before the inclusion of any of the framework files.
+The value of this macro is used as a name of the xref:section_glossary.adoc#ref_test_module[test module] as well as the
+xref:tests_organization/master_test_suite.adoc[master test suite].
+
+The reason for defining function `main` for you is twofold:
+
+. This allows the _Unit Test Framework_ to perform some custom xref:adv_scenarios/test_module_init_overview.adoc[_test module initialization_].
+. This prevents you defining `main`, and accidentally forgetting to run all the test (in which case running the program would incorrectly indicate a clean run).
+
+By default, the test module's entry point is defined with signature:
+
+[source,cpp]
+----
+int main(int argc, char* argv[]);
+----
+
+It calls xref:adv_scenarios/test_module_init_overview.adoc[_test module initialization_] function, then calls the
+xref:adv_scenarios/test_module_runner_overview.adoc[_test module runner_] and forwards its return value to environment.
+
+The default entry point is sufficient in most of the cases. Occasionally, a need may arise to declare an entry point with a
+different name or signature. For overriding the definition of the default test module's entry point:
+
+* xref:adv_scenarios/single_header_customizations.adoc#entry_point[see here], for header-only usage variant,
+* xref:adv_scenarios/static_lib_customizations.adoc#entry_point[see here], for static library usage variant,
+* xref:adv_scenarios/shared_lib_customizations.adoc#entry_point[see here], for shared library usage variant.

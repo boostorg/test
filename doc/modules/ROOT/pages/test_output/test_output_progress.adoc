@@ -1,0 +1,36 @@
+= Progress display
+:page-aliases: boost_test/test_output/test_output_progress.adoc
+
+In case if the test module involves lengthy computation split among multiple test cases you may be interested in
+progress monitor. The test runners supplied with the _Unit Test Framework_ support simple text progress display, implemented based
+on
+
+[source,cpp]
+----
+boost::progress_display
+----
+
+footnote:[The _Unit Test Framework_ interfaces allow implementing an advanced GUI based test runner with arbitrary progress display controls].
+
+The progress display output is enabled using the _Unit Test Framework_ parameter
+xref:utf_reference/rt_param_reference.adoc#show_progress[`show_progress`].
+
+The _Unit Test Framework_ has no ability to estimate how long (in time duration) the test case execution is going to take and the manual test
+progress update is not supported at this point. The _Unit Test Framework_ tracks the progress on test case level. If you want to
+see more frequent progress update, you need to split the test into multiple test cases.
+
+In default configuration both test log and test progress outputs are directed into standard output stream. Any test
+log messages are going to interfere with test progress display. To prevent this you can either set log level to
+lower level or redirect either test log or test progress output into different stream during test module
+initialization. Use following interface to redirect test progress output:
+
+[source,cpp]
+----
+boost::unit_test::progress_monitor.set_stream( std::ostream& )
+----
+
+// tag reference: doc/modules/ROOT/examples/example49.run.cpp
+:bt-name: example49
+:bt-rule: run
+:bt-descr: Progress report for the test module with large amount of test cases
+include::partial$bt_example.adoc[]

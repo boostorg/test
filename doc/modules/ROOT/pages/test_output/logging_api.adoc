@@ -1,0 +1,149 @@
+= Logging API
+:page-aliases: boost_test/test_output/logging_api.adoc, boost_test/test_output/logging_api/custom_log_formatter.adoc, boost_test/test_output/logging_api/log_ct_log_format.adoc, boost_test/test_output/logging_api/log_ct_log_level.adoc, boost_test/test_output/logging_api/log_ct_output_stream_redirection.adoc
+
+While many test log configuration tasks can be performed at runtime using predefined framework parameters, the
+_Unit Test Framework_ provides a compile time interface as well. The interface gives you full power over what, where and how to
+log. The interface of the logger is provided by singleton class cpp:boost::unit_test::unit_test_log_t[boost::unit_test::unit_test_log_t] and is
+accessible through local file scope reference to single instance of this class
+
+[source,cpp]
+----
+boost::unit_test::unit_test_log
+----
+
+In order to install customization of the logger, the _Unit Test Framework_ provides the xref:{boost_test_global_configuration}[`BOOST_TEST_GLOBAL_CONFIGURATION`] facility
+that acts in a similar fashion to a global fixture.
+
+[#log_ct_output_stream_redirection]
+== Log output stream redirection
+
+If you want to redirect the test log output stream into something different from the logger default output stream
+(usually `std::cout`, `std::cerr` or a file), use the following interface:
+
+[source,cpp]
+----
+boost::unit_test::unit_test_log.set_stream( std::ostream& );
+----
+
+or for a particular log format:
+
+[source,cpp]
+----
+boost::unit_test::unit_test_log.set_stream( boost::unit_test::output_format, std::ostream& );
+----
+
+TIP: See cpp:boost::unit_test::unit_test_log_t::set_stream[boost::unit_test::unit_test_log_t::set_stream] and cpp:boost::unit_test::output_format[boost::unit_test::output_format] for more details
+
+You can reset the output stream at any time both during the test module initialization and from within test
+cases. There are no limitations on number of output stream resets neither.
+
+[WARNING]
+====
+If you redirect test log output stream from global fixture setup, you are *required* to reset it back to `std::cout`
+  during teardown to prevent dangling references access
+====
+
+// tag reference: doc/modules/ROOT/examples/example50.run-fail.cpp
+:bt-name: example50
+:bt-rule: run-fail
+:bt-descr: Compile-time log output redirection
+include::partial$bt_example.adoc[]
+
+[#log_ct_log_level]
+== Log level configuration
+
+[#ref_log_level_explanations]
+If you need to enforce specific log level from within your test module use the following interface:
+
+[source,cpp]
+----
+boost::unit_test::unit_test_log.set_threshold_level( boost::unit_test::log_level );
+----
+
+or for a specific logger:
+
+[source,cpp]
+----
+boost::unit_test::unit_test_log.set_threshold_level( boost::unit_test::output_format, boost::unit_test::log_level );
+----
+
+TIP: See cpp:boost::unit_test::unit_test_log_t::set_threshold_level[boost::unit_test::unit_test_log_t::set_threshold_level] and cpp:boost::unit_test::output_format[boost::unit_test::output_format] for more details
+
+In regular circumstances you shouldn't use this interface, since you not only override default log level, but also
+the one supplied at test execution time. Prefer to use runtime parameters
+xref:utf_reference/rt_param_reference.adoc#log_level[`--log_level`] or xref:utf_reference/rt_param_reference.adoc#logger[`--logger`]
+for log level selection.
+
+// tag reference: doc/modules/ROOT/examples/example51.run.cpp
+:bt-name: example51
+:bt-rule: run
+:bt-descr: Compile-time log level configuration
+include::partial$bt_example.adoc[]
+
+[#log_ct_log_format]
+== Predefined log format selection
+
+The select at compile time the log format from the list of the formats supplied by the _Unit Test Framework_
+
+[source,cpp]
+----
+boost::unit_test::unit_test_log.set_format( boost::unit_test::output_format );
+----
+
+or for adding a format:
+
+[source,cpp]
+----
+boost::unit_test::unit_test_log.add_format( boost::unit_test::output_format );
+----
+
+CAUTION: cpp:boost::unit_test::unit_test_log_t::set_format[boost::unit_test::unit_test_log_t::set_format] above disables all formatters but the one provided as argument.
+
+TIP: See cpp:boost::unit_test::unit_test_log_t::set_format[boost::unit_test::unit_test_log_t::set_format] and cpp:boost::unit_test::output_format[boost::unit_test::output_format] for more details
+
+In regular circumstances you shouldn't use this interface. Prefer to use runtime parameters
+xref:utf_reference/rt_param_reference.adoc#log_format[`--log_format`] or xref:utf_reference/rt_param_reference.adoc#logger[`--logger`]
+for predefined log format selection.
+
+// tag reference: doc/modules/ROOT/examples/example52.run-fail.cpp
+:bt-name: example52
+:bt-rule: run-fail
+:bt-descr: Compile-time log format selection
+include::partial$bt_example.adoc[]
+
+[#custom_log_formatter]
+== Custom log format support
+
+[#ref_log_formatter_api]
+It is possible to implement your own formatter: it should derive from cpp:boost::unit_test::unit_test_log_formatter[boost::unit_test::unit_test_log_formatter].
+
+It is possible to add a your own instance of a formatter to the set of formats using one of the two functions:
+
+[source,cpp]
+----
+boost::unit_test::unit_test_log.set_formatter( unit_test_log_formatter* );
+boost::unit_test::unit_test_log.add_formatter( unit_test_log_formatter* );
+----
+
+[TIP]
+====
+See cpp:boost::unit_test::unit_test_log_t::set_formatter[boost::unit_test::unit_test_log_t::set_formatter] and cpp:boost::unit_test::unit_test_log_t::add_formatter[boost::unit_test::unit_test_log_t::add_formatter]
+ for more details
+====
+
+[WARNING]
+====
+The call to `boost::unit_test::unit_test_log.set_formatter` is equivalent to
+ cpp:boost::unit_test::unit_test_log_t::set_format[boost::unit_test::unit_test_log_t::set_format] (xref:test_output/logging_api.adoc#log_ct_log_format[see here])
+ as it disables all other formatters.
+====
+
+[TIP]
+====
+More details about the class implementing the formatting of the logs can be found in the following reference sections:
+
+* cpp:boost::unit_test::unit_test_log_formatter[boost::unit_test::unit_test_log_formatter] defines the interface for all loggers. Built-in
+xref:test_output/log_formats.adoc#log_human_readable_format[HRF], xref:test_output/log_formats.adoc#log_xml_format[XML]
+and xref:test_output/log_formats.adoc#log_junit_format[JUNIT] loggers derive from this class
+* cpp:boost::unit_test::test_results[boost::unit_test::test_results] defines the information carried by the tests to provide reports and logs.
+====

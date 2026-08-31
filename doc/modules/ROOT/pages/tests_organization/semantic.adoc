@@ -1,0 +1,20 @@
+= Adding semantic to a test
+:page-aliases: boost_test/tests_organization/semantic.adoc
+
+It is sometimes useful to add a _semantic description_ to a test unit, which may be consulted by the user during a dry
+run. The user may then choose the test he/she wants to run based on this information, instead of basing his/her choice
+on the test unit _name_, or instead of looking at the code.
+
+The _Unit Test Framework_ provides the decorator xref:{decorator_description}[`description`] for that purpose.
+
+Decorator `description` attaches an arbitrary string to the test unit. All strings attached to test units can be
+displayed when running a test program with parameter xref:utf_reference/rt_param_reference.adoc#list_content[`list_content`].
+This can be used for conveying information from the person who composes the test tree to the person who will be
+running the test program. Applying more than one decorator `description` to the same test unit means that the two
+(or more) strings will be concatenated.
+
+// tag reference: doc/modules/ROOT/examples/decorator_09.run.cpp
+:bt-name: decorator_09
+:bt-rule: run
+:bt-descr: decorator description
+include::partial$bt_example.adoc[]

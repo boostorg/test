@@ -1,0 +1,26 @@
+// Replacement for the QuickBook `bt_example` template: shows a documentation
+// example's source next to the output it produces. Both files live under
+// modules/ROOT/examples and are compiled and run by the test suite, so what is
+// shown here is what the example actually does.
+//
+// Callers set three attributes and include this partial:
+//
+//   :bt-name:  example22          <- basename under modules/ROOT/examples
+//   :bt-rule:  run-fail           <- `run` or `run-fail`, part of the filename
+//   :bt-descr: BOOST_TEST_CHECKPOINT usage
+//   include::partial$bt_example.adoc[]
+//
+[#{bt-name}]
+.Example: {bt-descr}
+====
+.Code
+[source,cpp]
+----
+include::example${bt-name}.{bt-rule}.cpp[tag=example_code]
+----
+
+.Output
+....
+include::example${bt-name}.output[tag=example_output]
+....
+====

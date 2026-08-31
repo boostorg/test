@@ -1,0 +1,36 @@
+= Design rationale
+:page-aliases: boost_test/intro/design_rationale.adoc
+
+Unit testing tasks arise during many different stages of software development: from initial project
+implementation to its maintenance and later revisions. These tasks differ in their complexity and purpose
+and accordingly are approached differently by different developers. The wide spectrum of tasks in a problem
+domain cause many requirements (sometimes conflicting) to be placed on a unit testing framework. These
+include:
+
+* Writing a xref:section_glossary.adoc#ref_test_module[unit test module] should be simple and obvious for new users.
+* The framework should allow advanced users to perform non-trivial tests.
+* Test module should be able to have many small test cases and developer should be able to group them into
+test suites.
+* At the beginning of the development users want to see verbose and descriptive error messages.
+* During the regression testing users just want to know if any tests failed.
+* For small test modules, their execution time should prevail over compilation time: user don't want to wait a minute
+to compile a test that takes a second to run.
+* For long and complex tests users want to be able to see the testing progress.
+* Simplest tests shouldn't require an external library.
+* For long term usage users of the _Unit Test Framework_ should be able to build it as a standalone library.
+
+The _Unit Test Framework_ satisfies the requirements above, and provides versatile facilities to:
+
+* Easily specify all the expectations in the code being tested.
+* Organize these expectations into xref:section_glossary.adoc#test_case[test cases] and xref:section_glossary.adoc#test_suite[test suites].
+* Detect different kinds of errors, failures, time-outs and report them in a uniform customizable way.
+
+[#why_framework]
+== Why do you need a framework?
+
+While you can write a testing program yourself from scratch, the framework offers the following benefits:
+
+* You get an error report in a text format. Error reports are uniform and you can easily machine-analyze them.
+* Error reporting is separated from the testing code. You can easily change the error report format without affecting the testing code.
+* The framework automatically detects exceptions thrown by the tested components and time-outs, and reports them along other errors.
+* You can easily filter the test cases, and call only the desired ones. This does not require changing the testing code.

@@ -18,13 +18,13 @@ set(BOOST_TEST_EXAMPLES_FOLDER ${BOOST_TEST_ROOT_DIR}/example)
 file(GLOB_RECURSE
      BOOST_UTF_DOC_EXAMPLES
      CONFIGURE_DEPENDS
-     ${BOOST_TEST_ROOT_DIR}/doc/examples/*.cpp)
+     ${BOOST_TEST_ROOT_DIR}/doc/modules/ROOT/examples/*.cpp)
 
 foreach(_h IN LISTS BOOST_UTF_DOC_EXAMPLES)
   get_filename_component(_hh ${_h} NAME_WE)
   add_executable(doc-${_hh} 
     ${_h} 
-    ${BOOST_TEST_ROOT_DIR}/doc/examples/${_hh}.output)
+    ${BOOST_TEST_ROOT_DIR}/doc/modules/ROOT/examples/${_hh}.output)
   set_target_properties(doc-${_hh}
     PROPERTIES
         FOLDER "Doc examples"

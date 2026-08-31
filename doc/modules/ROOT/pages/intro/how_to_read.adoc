@@ -1,0 +1,23 @@
+= How to read this documentation
+:page-aliases: boost_test/intro/how_to_read.adoc
+
+This documentation is structured by what *you*, as a user, need to know to successfully use the _Unit Test Framework_ and the order of decisions
+you have to make and order of complexity of the problems you might encounter. If you ever find yourself facing with some unclear
+term feel free to jump directly to the xref:section_glossary.adoc[glossary] section, where short definitions for all used
+terms were collected.
+
+Typically, when writing a test module using the _Unit Test Framework_ you have to go through the following steps:
+
+* You decide how you want to incorporate the _Unit Test Framework_: `+#include+` it as a header-only library, or link with it as a static library,
+or use it as a shared (or dynamically loaded) library. For details on this topic see section xref:usage_variants.adoc[Usage variants].
+* You add a xref:section_glossary.adoc#test_case[test case] into a xref:section_glossary.adoc#ref_test_tree[test tree].
+For details, see section xref:tests_organization/test_cases.adoc[Test cases].
+* You perform correctness checks of the code under tested. For details, see section xref:testing_tools/index.adoc[Writing unit tests].
+* You perform the initialization of code under test before each test case.
+For details, see section xref:tests_organization/fixtures.adoc[Fixtures].
+* You might want to customize the way test failures are reported. For details, see section xref:test_output/index.adoc[Controlling output].
+* You can control the run-time behavior of the built test module (e.g., run only selected tests, change the output format).
+This is covered in section xref:runtime_config/index.adoc[Runtime configuration].
+
+If you can't find answer to your question in any of the section mentioned above or if you believe you need even more configuration options,
+you can check xref:adv_scenarios/index.adoc[Advanced usage scenarios] section.

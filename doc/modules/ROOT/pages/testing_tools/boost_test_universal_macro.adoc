@@ -1,0 +1,105 @@
+= BOOST_TEST: universal and general purpose assertions
+:page-aliases: boost_test/testing_tools/boost_test_universal_macro.adoc
+
+The _Unit Test Framework_ provides an almost unique interface to a great range of test-case scenarios, through the xref:{boost_test}[`BOOST_TEST`]
+macro. The general form of `BOOST_TEST` is the following:
+
+BOOST_TEST(statement);
+  BOOST_TEST_<level>(statement, optional_modifiers)
+
+An example of use might be the following:
+
+// tag reference: doc/modules/ROOT/examples/boost_test_macro_overview.run-fail.cpp
+:bt-name: boost_test_macro_overview
+:bt-rule: run-fail
+:bt-descr: BOOST_TEST overview
+include::partial$bt_example.adoc[]
+
+The major features of this tool are:
+
+* a great flexibility for `statement` which may be almost anything: full expression composed by several operations are supported
+and handled,
+* an extended reporting capability in case of failure: not only `BOOST_TEST` reports the location of the failure and a copy of `statement` itself,
+but also the values of the operands that permits a rapid identification of the issues related to the failed assertion,
+* the possibility to control better the behavior or the reports of the checks, in particular:
+** floating point comparison: the tolerance may be provided, either using the `BOOST_TEST`
+directly with `optional_modifiers`, or with _decorators_ (see xref:testing_tools/floating_point.adoc[here]
+for more details),
+** container/collection comparisons: different operations for comparison are provided out of the box for comparing collection of
+elements (default, per-element, lexicographic), with extended diagnostic on failures (covered in
+xref:testing_tools/collections.adoc[this] section),
+** string comparison: C-strings operands are automatically detected and the comparisons are performed as if `std::string` objects
+were used,
+** optional failure message,
+** bitwise comparison, providing extended diagnostic in case of failure
+
+[WARNING]
+====
+To get all the functionalities of `BOOST_TEST` family of assertions, a C++11 capable compiler is required, especially
+ supporting the `auto` and `decltype` keywords and the variadic macros. The documentation focuses on these set of compilers.
+ For compilers not supporting all the features of `BOOST_TEST`, the macro `BOOST_TEST_MACRO_LIMITED_SUPPORT`.
+====
+
+[#boost_test_statement_overloads]
+== Complex statements
+
+`BOOST_TEST` provides an enhanced reporting capability: additional details of the failing operands and operations are provided in the log,
+as shown on the example below:
+
+// tag reference: doc/modules/ROOT/examples/boost_test_macro3.run-fail.cpp
+:bt-name: boost_test_macro3
+:bt-rule: run-fail
+:bt-descr: BOOST_TEST enhanced reporting
+include::partial$bt_example.adoc[]
+
+`BOOST_TEST` parses the `statement` and constructs an expression out of it. `statement` may be a complex expressions
+containing almost any of the overloadable operators in C++:
+
+[%header%autowidth,cols="2*"]
+|===
+|Class of operation
+|operators
+
+|binary comparisons
+|`==`, `!=`, `<`, `>`, `<=`, `>=`
+
+|arithmetic compositions
+|`+`, `-`, `+*+`, `/`, `%`
+
+|bitwise compositions
+|`\|`, `&`, `+^+`, `<<`, `>>`
+
+|assignments
+|`=`, `+=`, `-=`, `+*=+`, `/=`, `%=`, `<<=`, `>>=`, `&=`, `+^=+`, `\|=`
+
+|===
+
+`statement` is evaluated and cast to `bool`, as if it would appear as argument to an `if` statement: this is the result of the assertion
+
+== Uniform reporting
+
+This tool is provided in three variants corresponding to the corresponding
+xref:testing_tools/tools_assertion_severity_level.adoc[severity levels]. These three levels of assertions are
+reported into the test log and output, as described in details in the section. The granularity of the
+report depends on the current xref:utf_reference/rt_param_reference.adoc#log_level[log level] and
+xref:utf_reference/rt_param_reference.adoc#report_level[report level].
+
+[#boost_test_statement_limitations]
+== Limitations & workaround
+
+There are a few constructions that are however unsupported, but adding an extra bracket usually solves that:
+
+* statements containing ternary conditions: those statement should be surrounded by parenthesis as they cannot be overloaded
+* statements containing commas: those statements will be intercepted by the preprocessor
+* compound statements containing any logical composition `||`, `&&`. Those are disabled intentionally and should be surrounded
+by parenthesis
++
+BOOST_TEST((true || false));
++
+The full details are given in xref:testing_tools/internal_details.adoc[this section].
+
+// tag reference: doc/modules/ROOT/examples/boost_test_macro_workaround.run.cpp
+:bt-name: boost_test_macro_workaround
+:bt-rule: run
+:bt-descr: BOOST_TEST limitation and workaround
+include::partial$bt_example.adoc[]

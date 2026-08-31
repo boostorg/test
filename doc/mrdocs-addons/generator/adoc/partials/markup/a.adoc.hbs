@@ -1,0 +1,44 @@
+{{!
+    Overrides the built-in markup/a partial, wrapping the upstream body in the
+    guard below. Everything inside the guard is the upstream template verbatim;
+    keep it that way so the file is easy to diff against a newer MrDocs.
+
+    Why the guard: Antora ignores files whose name begins with an underscore,
+    and MrDocs names a page after the symbol it documents. An unnamed enum
+    becomes `_04enum.adoc`, and the enums Boost.Test spells `enum _ { ... }` in
+    utils/setcolor.hpp become `_.adoc`. MrDocs writes those pages and links to
+    them, Antora never publishes them, and the build reports "target of xref
+    not found".
+
+    Boost.Test reaches this through `enum { type = TUT_CASE };`, the internal
+    tag constant in tree/test_unit.hpp, which puts an unnamed enum in the
+    member table of test_case, test_suite, test_unit, is_forward_iterable and
+    is_container_forward_iterable.
+
+    So when the target page would start with an underscore, emit the link text
+    alone: the member keeps its row in the table and only the dead link goes
+    away. This partial is the one chokepoint every generated link passes
+    through. The test is spelled with `replace` because `contains` only matches
+    within arrays, not within a string.
+
+    Delete this file once MrDocs stops emitting underscore-prefixed page names.
+
+    Do not relativize links as asciidoc does not support it.
+
+    https://gitlab.com/antora/antora/-/issues/428
+}}
+{{#if (eq (replace href "/_" "/") href)~}}
+    {{~#if (eq href @root.symbol.url)~}}
+        {{{> @partial-block }}}
+    {{~else if (starts_with href "#")~}}
+        link:{{{ href }}}[{{> @partial-block }}]
+    {{~else if (starts_with href "/")~}}
+        xref:{{{remove_prefix href "/"}}}[{{> @partial-block }}]
+    {{~else if (starts_with href ".")~}}
+        xref:{{{href}}}[{{> @partial-block }}]
+    {{~else~}}
+        {{{href}}}[{{> @partial-block }}{{#if blank}}^{{/if}}]
+    {{~/if~}}
+{{~else~}}
+    {{> @partial-block }}
+{{~/if~}}

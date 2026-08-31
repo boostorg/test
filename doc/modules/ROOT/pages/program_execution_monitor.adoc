@@ -1,0 +1,281 @@
+= Program Execution Monitor
+:page-aliases: boost_test/pem.adoc, boost_test/pem/implementation.adoc, boost_test/pem/runtime_configuration.adoc, boost_test/pem/section_pem_compilation.adoc, boost_test/pem/section_pem_compilation/section_pem_full_include.adoc, boost_test/pem/section_pem_compilation/section_pem_standalone.adoc, boost_test/pem/section_pem_compilation/section_pem_standalone/section_pem_compilation_dynamic.adoc, boost_test/pem/section_pem_compilation/section_pem_standalone/section_pem_compilation_static.adoc, boost_test/pem/section_pem_compilation/support_of_the_auto_linking_feature.adoc, boost_test/pem/usage.adoc
+
+The components of a C++ program may report user-detected errors in several ways, such as via a return value or
+throwing an exception. System-detected errors such as dereferencing an invalid pointer are reported in other ways,
+totally operating system and compiler dependent.
+
+Yet many C++ programs, both production and test, must run in an environment where uniform reporting of errors is
+necessary. For example, converting otherwise uncaught exceptions to non-zero program return codes allows many
+command line, script, or batch environments to continue processing in a controlled manner. Even some
+_GUI_ environments benefit from the unification of errors into program return codes.
+
+The Boost.Test Library's *Program Execution Monitor* relieves users from messy error
+detection and reporting duties by providing a replacement function `main()` which calls a user-supplied `cpp_main()`
+function within a monitored environment. The supplied `main()` then uniformly detects and reports the occurrence of
+several types of errors, reducing them to a uniform return code which is returned to the host environment.
+
+Uniform error reporting is particularly useful for programs running unattended under control of scripts or batch
+files. Some operating systems pop up message boxes if an uncaught exception occurs, and this requires manual
+intervention. By converting such exceptions into non-zero program return codes, the library makes the program a
+better citizen. More uniform reporting of errors isn't a benefit to some programs, particularly programs always
+run by hand of a knowledgeable person. So the _Program Execution Monitor_ wouldn't be worth using in that environment.
+
+Uniform error reporting can be also useful in test environments such as the Boost
+regression tests. Be aware though in such case it might be preferable to use the
+_Unit Test Framework_, because it allows one to use the
+xref:testing_tools/index.adoc[testing tools] and generate more detailed
+error information.
+
+[#usage]
+== Usage
+
+To facilitate uniform error reporting the _Program Execution Monitor_ supplies function `main()` as part if it's implementation. To use the
+_Program Execution Monitor_ instead of regular function `main` your program is required to supply a function `cpp_main()` with same signature.
+
+Here is the traditional _Hello World_ program implemented using the _Program Execution Monitor_:
+
+// tag reference: doc/modules/ROOT/examples/example24.run.cpp
+:bt-name: example24
+:bt-rule: run
+:bt-descr: Hello World with the Program Execution Monitor
+include::partial$bt_example.adoc[]
+
+It really is that simple - just change the name of your initial function from `main()` to `cpp_main()`. Do make sure
+the `argc` and `argv` parameters are specified (although you don't have to name them if you don't use them).
+
+The _Program Execution Monitor_ treats as errors:
+
+* Exceptions thrown from `cpp_main()`
+* Non-zero return from `cpp_main()`
+
+So what if some function had thrown a `std::runtime_error` with the message "big trouble" and it is not trapped by any
+catch clause? Like in a following example:
+
+// tag reference: doc/modules/ROOT/examples/example25.run-fail.cpp
+:bt-name: example25
+:bt-rule: run-fail
+:bt-descr: Standard exception detection within the _Program Execution Monitor_
+include::partial$bt_example.adoc[]
+
+[NOTE]
+====
+Note that in both examples above we used xref:program_execution_monitor.adoc#section_pem_full_include[header-only variant]
+of the _Program Execution Monitor_. Alternatively the binaries may be built and linked with
+a xref:program_execution_monitor.adoc#section_pem_standalone[standalone library] (in case of static library we are not required to include any _Program Execution Monitor_ related headers).
+====
+
+Let's consider an example where function `cpp_main()` had bubbled up a return code of 5:
+
+// tag reference: doc/modules/ROOT/examples/example26.run-fail.cpp
+:bt-name: example26
+:bt-rule: run-fail
+:bt-descr: Error return code detection of the _Program Execution Monitor_
+include::partial$bt_example.adoc[]
+
+The _Program Execution Monitor_ reports errors to both `std::cout` (details) and `std::cerr` (summary). Primary detailed error
+messages appear on standard output stream so that it is properly interlaced with other output, thus aiding error
+analysis. While the final error notification message appears on standard error stream. This increases the
+visibility of error notification if standard output and error streams are directed to different devices or files.
+
+The _Program Execution Monitor_'s supplied `main()` will return following result codes:
+
+* `boost::exit_success` - no errors
+* `boost::exit_failure` - non-zero and `non-boost::exit_success` return code from `cpp_main()`
+* `boost::exit_exception_failure` - `cpp_main()` throw an exception
+
+[#runtime_configuration]
+== Runtime configuration
+
+There are two aspects of the _Program Execution Monitor_ behavior that you can customize at runtime. Customization is performed using
+environment variables.
+
+[#id_pem_env]
+.The _Program Execution Monitor_ configuration environment variables
+[%header%autowidth,cols="2*"]
+|===
+|Flag
+|Usage
+
+|`BOOST_TEST_CATCH_SYSTEM_ERRORS`
+a|
+allows customizing behavior of the _Program Execution Monitor_ in regards of catching system errors. For more details about the
+     meaning of this option see the cpp:boost::execution_monitor[execution_monitor] class. If you
+     want to prevent the _Program Execution Monitor_ from catching system exception, set the value of this
+     variable to "no". The default value is "yes".
+
+|`BOOST_PRG_MON_CONFIRM`
+a|
+allows avoiding success confirmation message. Some users prefer to see a confirmation message in case if program
+       successfully executed. While others don't like the clutter or any output is prohibited by organization standards.
+       To avoid the message set the value of this variable to "no". The default value is "yes".
+
+|===
+
+[NOTE]
+====
+`BOOST_TEST_CATCH_SYSTEM_ERRORS` is similar to the _Unit Test Framework_'s
+ xref:utf_reference/rt_param_reference.adoc#catch_system[`catch_system_error`] command line parameter.
+====
+
+[#implementation]
+== Implementation
+
+[#ref_pem_implementation]
+To monitor execution of user supplied function `cpp_main()` the _Program Execution Monitor_ relies on the Boost.Test's
+xref:reference:boost/execution_monitor.adoc[Execution Monitor]. Also the _Program Execution Monitor_ supplies the function `main()` to facilitate
+uniform error reporting. Following files constitute the _Program Execution Monitor_ implementation:
+
+[#pem_implementation_file]
+._Program Execution Monitor_ implementation files
+[%header%autowidth,cols="2*"]
+|===
+|File name
+|Content
+
+|`boost/test/impl/execution_monitor.ipp`
+|provides __EM__ implementation for all supported configurations
+
+|`boost/test/impl/cpp_main.ipp`
+|supplies function `main()` for static library build
+
+|`boost/test/included/prg_exec_monitor.hpp`
+|combines all implementation files into single header to be use as inlined version of component
+
+|`boost/test/prg_exec_monitor.hpp`
+|contains definitions for `main()` function for dynamic library build and pragmas for auto-linking feature support
+
+|===
+
+The _Program Execution Monitor_ implementation wraps several system headers and is intended to be used as standalone library. While there
+exist an alternative variant to xref:program_execution_monitor.adoc#ref_pem_direct_include[include the whole implementation
+directly] into your program, for the long term usage the preferable solution is to
+xref:program_execution_monitor.adoc#ref_pem_stanlone[build library once] and reuse it.
+
+[#section_pem_compilation]
+== Compilation
+
+In comparison with many other boost libraries, which are completely implemented in header files, compilation and
+linking with the _Program Execution Monitor_ may require additional steps. The _Program Execution Monitor_ presents you with options to either
+
+. built and link with a xref:program_execution_monitor.adoc#ref_pem_stanlone[standalone library] or
+. include the implementation xref:program_execution_monitor.adoc#ref_pem_direct_include[directly] into your program.
+
+If you opt to use the library the _Program Execution Monitor_ header implements the
+*auto-linking support* and following flags can be used to configure
+compilation of the _Program Execution Monitor_ library and your program:
+
+[%header%autowidth,cols="2*"]
+|===
+|Variable
+|Usage
+
+|xref:{boost_test_dyn_link}[`BOOST_TEST_DYN_LINK`]
+|Define this flag to build/use dynamic library
+
+|xref:{boost_test_no_lib}[`BOOST_TEST_NO_LIB`]
+|Define this flag to prevent auto-linking
+
+|===
+
+[#section_pem_standalone]
+=== Standalone library compilation
+
+[#ref_pem_stanlone]
+If you opted to link your program with the standalone library, you need to build it first. To build a standalone
+library all C++ files (.cpp), that constitute _Program Execution Monitor_ xref:program_execution_monitor.adoc#ref_pem_implementation[implementation] need to be
+listed as source files in your makefile footnote:[There are varieties of make systems that can be used. To name
+a few: _GNU_ make (and other make clones) and build systems integrated into _IDE_s
+(for example _Microsoft Visual Studio_). The Boost preferred solution is Boost.Build system that is based on top of
+`b2`  tool. Make  systems require some kind of configuration file that lists all files that constitute the library
+and all build  options. For example the makefile that is used by make, or the Microsoft Visual Studio project file,
+Jamfile is used by Boost.Build. For the sake of simplicity let's call this file the makefile.].
+
+The makefile for use with Boost.Build system is supplied in
+
+[source,cpp]
+----
+libs/test/build
+----
+
+directory. The _Program Execution Monitor_ can be built as either xref:program_execution_monitor.adoc#ref_pem_static[static] or xref:program_execution_monitor.adoc#ref_pem_dynamic[dynamic] library.
+
+[#section_pem_compilation_static]
+==== Static library compilation
+
+[#ref_pem_static]
+There are no additional build defines or options required to build static library. Using Boost.Build system you
+can build the static library with a following command from `libs/test/build` directory:
+
+[source,cpp]
+----
+b2 -sTOOLS=<your-tool-name> -sBUILD=boost_prg_exec_monitor
+----
+
+Also on Windows you can use the Microsoft Visual Studio .NET project file provided.
+
+[#section_pem_compilation_dynamic]
+==== Dynamic library compilation
+
+[#ref_pem_dynamic]
+To build the dynamic library footnote:[What is meant by the term dynamic library is a _dynamically
+loaded library_, alternatively called a _shared library_.] you
+need to add xref:{boost_test_dyn_link}[`BOOST_TEST_DYN_LINK`] to the list of macro definitions in the
+
+[source,cpp]
+----
+libs/test/build
+----
+
+directory:
+
+[source,cpp]
+----
+b2 -sTOOLS=<your-tool-name> -sBUILD=boost_prg_exec_monitor
+----
+
+Also on Windows you can use the Microsoft Visual Studio .NET project file provided.
+
+[CAUTION]
+====
+For your program to successfully link with the dynamic library the flag
+  xref:{boost_test_dyn_link}[`BOOST_TEST_DYN_LINK`] needs to be defined both during dynamic library
+  build and during your program compilation.
+====
+
+[#support_of_the_auto_linking_feature]
+=== Support of the auto-linking feature
+
+[#ref_pem_auto_link]
+For the Microsoft family of compilers the _Program Execution Monitor_ provides an ability to automatically select proper library name
+and add it to the list of objects to be linked with. To employ this feature you required to include either header
+
+[source,cpp]
+----
+#include <boost/test/prg_exec_monitor.hpp>
+----
+
+or header
+
+[source,cpp]
+----
+#include <boost/test/included/prg_exec_monitor.hpp>
+----
+
+By default the feature is enabled. To disable it you have to define the flag xref:{boost_test_no_lib}[`BOOST_TEST_NO_LIB`].
+
+[#section_pem_full_include]
+=== Including the _Program Execution Monitor_ directly into your program
+
+[#ref_pem_direct_include]
+If you prefer to avoid the standalone library compilation you have two alternative usage variants: you can either
+include all files that constitute the static library in your program's makefile or include them as a part of
+your program's source file. To facilitate the later variant the _Program Execution Monitor_ implementation presents the header
+
+[source,cpp]
+----
+#include <boost/test/included/prg_exec_monitor.hpp>
+----
+
+In both variants neither xref:{boost_test_dyn_link}[`BOOST_TEST_DYN_LINK`] nor xref:{boost_test_no_lib}[`BOOST_TEST_NO_LIB`] are applicable. This solution may not be the best choice
+in a long run, since it requires the _Program Execution Monitor_ sources recompilation for every program you use it with.

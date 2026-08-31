@@ -43,7 +43,7 @@ jobs:
     with:
        enable_pr_coverage: false  # Disabled: Too many issues with lcov
        enable_cygwin: false
-       depinst_args: --include doc/examples
+       depinst_args: --include doc/modules
        enable_mingw: false
        enable_multiarch: false
        timeout: 360
@@ -62,3 +62,69 @@ jobs:
       # CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}  Disabled: Too many issues with lcov
       COVERITY_SCAN_NOTIFICATION_EMAIL: ${{ secrets.COVERITY_SCAN_NOTIFICATION_EMAIL }}
       COVERITY_SCAN_TOKEN: ${{ secrets.COVERITY_SCAN_TOKEN }}
+
+  antora:
+    name: Antora docs
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Install packages
+        uses: alandefreitas/cpp-actions/package-install@v1.8.8
+        with:
+          apt-get: git cmake
+
+      - name: Clone Boost.Test
+        uses: actions/checkout@v4
+
+      # MrDocs compiles an umbrella translation unit against the rest of Boost,
+      # so the dependencies have to be on disk. `scan-modules-ignore: test`
+      # keeps the clone from bringing in a second copy of this library.
+      - name: Clone Boost
+        uses: alandefreitas/cpp-actions/boost-clone@v1.8.8
+        id: boost-clone
+        with:
+          branch: ${{ (github.ref_name == 'master' && github.ref_name) || 'develop' }}
+          boost-dir: ../boost-source
+          scan-modules-dir: .
+          scan-modules-ignore: test
+
+      # The superproject looks for each library of BOOST_INCLUDE_LIBRARIES under
+      # <boost>/libs/<name>, and the clone above deliberately leaves that slot
+      # empty for `test`. Fill it with this checkout, so that MrDocs configures
+      # against the sources under review rather than a second copy of them.
+      - name: Graft Boost.Test into the Boost superproject
+        run: ln -s "$(pwd)" ../boost-source/libs/test
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Build Antora docs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config --global --add safe.directory "$(pwd)"
+
+          cd ..
+          BOOST_SRC_DIR="$(pwd)/boost-source"
+          export BOOST_SRC_DIR
+
+          cd test/doc
+          bash ./build_antora.sh
+
+          # Antora returns zero even when it fails, so check the site exists.
+          # build_antora.sh additionally passes --log-failure-level=warn when
+          # CI is set, which makes an unresolved xref or include fatal.
+          if [ ! -d "html" ]
+          then
+              echo "Antora build failed"
+              exit 1
+          fi
+
+      - name: Create Antora docs artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: antora-docs
+          path: doc/html

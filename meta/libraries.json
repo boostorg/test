@@ -6,6 +6,7 @@
         "Raffi Enficiaud"
     ],
     "description": "Support for simple program testing, full unit testing, and for program execution monitoring.",
+    "documentation": "doc/html/test/index.html",
     "category": [
         "Correctness"
     ],

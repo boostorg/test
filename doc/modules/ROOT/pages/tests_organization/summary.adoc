@@ -1,0 +1,85 @@
+= Summary of the API for declaring and organizing tests
+:page-aliases: boost_test/tests_organization/summary.adoc
+
+[%header%autowidth,cols="2*"]
+|===
+|Macro
+|Short description
+
+|xref:{boost_test_case}[`BOOST_TEST_CASE`] / xref:{boost_test_case_name}[`BOOST_TEST_CASE_NAME`]
+|Manual registration of a test case
+
+|xref:{boost_auto_test_case}[`BOOST_AUTO_TEST_CASE`]
+|Automatic declaration and registration of a test case
+
+|xref:{boost_param_test_case}[`BOOST_PARAM_TEST_CASE`]
+|Automatic declaration and registration of a test case with a collection of parameters
+
+|xref:{boost_auto_test_case_template}[`BOOST_AUTO_TEST_CASE_TEMPLATE`]
+|Automatic declaration and registration of a typed test case
+
+|xref:{boost_test_case_template}[`BOOST_TEST_CASE_TEMPLATE`]
+|Registration of a typed test case with an `boost::mpl` like sequence of types
+
+|xref:{boost_test_case_template_function}[`BOOST_TEST_CASE_TEMPLATE_FUNCTION`]
+|Declaration of the body of a typed test case
+
+|xref:{boost_data_test_case}[`BOOST_DATA_TEST_CASE`]
+|Declaration of the body of a test case on datasets
+
+|xref:{boost_data_test_case_f}[`BOOST_DATA_TEST_CASE_F`]
+|Same as xref:{boost_data_test_case}[`BOOST_DATA_TEST_CASE`] with fixtures support
+
+|xref:{boost_test_dataset_max_arity}[`BOOST_TEST_DATASET_MAX_ARITY`]
+|Controlling the maximal arity of the data test case declared with xref:{boost_data_test_case}[`BOOST_DATA_TEST_CASE`]
+
+|xref:{boost_test_suite}[`BOOST_TEST_SUITE`]
+|Manual creation of a test suite instance
+
+|xref:{boost_auto_test_suite}[`BOOST_AUTO_TEST_SUITE`]
+|Automatic declaration of a test suite
+
+|xref:{boost_auto_test_suite_end}[`BOOST_AUTO_TEST_SUITE_END`]
+|Automatic declaration of a test suite
+
+|xref:{boost_test_decorator}[`BOOST_TEST_DECORATOR`]
+|Adds decorators to a test unit
+
+|xref:{boost_fixture_test_case}[`BOOST_FIXTURE_TEST_CASE`]
+|Declares a test case with a fixture
+
+|xref:{boost_fixture_test_suite}[`BOOST_FIXTURE_TEST_SUITE`]
+|Declares a fixture for a test suite (the setup/teardown is called for each test of the test suite)
+
+|xref:{boost_test_global_fixture}[`BOOST_TEST_GLOBAL_FIXTURE`]
+|Declares a fixture globally to the test module
+
+|===
+
+[%header%autowidth,cols="2*"]
+|===
+|Decorator
+|Short description
+
+|xref:{decorator_depends_on}[`depends_on`]
+|Creates a dependency (in the execution order and xref:{default_run_status}[_default run status_]) from one test case to another.
+
+|xref:{decorator_description}[`description`]
+|Attaches a semantic string to a test unit, that is visible from the command line interface.
+
+|xref:{decorator_enabled}[`enabled`] , xref:{decorator_disabled}[`disabled`]
+|Enables or disables unconditionally a test unit. The action of these decorators may be overridden by the command line interface
+
+|xref:{decorator_enable_if}[`enable_if`]
+|Enables conditionally a test unit. The action of these decorators may be overridden by the command line interface
+
+|xref:{decorator_fixture}[`fixture`]
+|Attaches a fixture to a test unit
+
+|xref:{decorator_label}[`label`]
+|Labels a test unit to form a logical group
+
+|xref:{decorator_precondition}[`precondition`]
+|Enables or disables a test unit based on a predicate evaluated just before the execution of the test case.
+
+|===
