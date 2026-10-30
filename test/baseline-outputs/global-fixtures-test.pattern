@@ -10,24 +10,24 @@ xxx/test-macro-global-fixture.cpp:151: error: in "Fake Test Suite Hierarchy/bad_
 this is a message
 xxx/test-macro-global-fixture.cpp:154: info: check true has passed
 xxx/test-macro-global-fixture.cpp:158: error: in "Fake Test Suite Hierarchy/bad_foo": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 xxx/test-macro-global-fixture.cpp:160: error: in "Fake Test Suite Hierarchy/bad_foo": non sense
 xxx/test-macro-global-fixture.cpp:282: Leaving test case "bad_foo"
 xxx/test-macro-global-fixture.cpp:283: Entering test case "very_bad_foo"
 xxx/test-macro-global-fixture.cpp:165: fatal error: in "Fake Test Suite Hierarchy/very_bad_foo": very_bad_foo is fatal
-Failure occurred in a following context:
+Failure occurred in the following context:
     some context
 xxx/test-macro-global-fixture.cpp:283: Leaving test case "very_bad_foo"
 xxx/test-macro-global-fixture.cpp:284: Entering test case "very_bad_exception"
 xxx/test-macro-global-fixture.cpp:174: error: in "Fake Test Suite Hierarchy/very_bad_exception": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 unknown location:0: fatal error: in "Fake Test Suite Hierarchy/very_bad_exception": unknown type
 xxx/test-macro-global-fixture.cpp:174: last checkpoint
-Failure occurred in a following context:
+Failure occurred in the following context:
     exception context should be shown
 xxx/test-macro-global-fixture.cpp:284: Leaving test case "very_bad_exception"
 xxx/test-macro-global-fixture.cpp:275: Entering test suite "1 test cases inside"
@@ -41,7 +41,7 @@ xxx/test-macro-global-fixture.cpp:151: error: in "Fake Test Suite Hierarchy/1 ba
 this is a message
 xxx/test-macro-global-fixture.cpp:154: info: check true has passed
 xxx/test-macro-global-fixture.cpp:158: error: in "Fake Test Suite Hierarchy/1 bad test case inside/bad_foo": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 xxx/test-macro-global-fixture.cpp:160: error: in "Fake Test Suite Hierarchy/1 bad test case inside/bad_foo": non sense
@@ -375,24 +375,24 @@ xxx/test-macro-global-fixture.cpp:151: error: in "Fake Test Suite Hierarchy/bad_
 this is a message
 xxx/test-macro-global-fixture.cpp:154: info: check true has passed
 xxx/test-macro-global-fixture.cpp:158: error: in "Fake Test Suite Hierarchy/bad_foo": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 xxx/test-macro-global-fixture.cpp:160: error: in "Fake Test Suite Hierarchy/bad_foo": non sense
 xxx/test-macro-global-fixture.cpp:282: Leaving test case "bad_foo"
 xxx/test-macro-global-fixture.cpp:283: Entering test case "very_bad_foo"
 xxx/test-macro-global-fixture.cpp:165: fatal error: in "Fake Test Suite Hierarchy/very_bad_foo": very_bad_foo is fatal
-Failure occurred in a following context:
+Failure occurred in the following context:
     some context
 xxx/test-macro-global-fixture.cpp:283: Leaving test case "very_bad_foo"
 xxx/test-macro-global-fixture.cpp:284: Entering test case "very_bad_exception"
 xxx/test-macro-global-fixture.cpp:174: error: in "Fake Test Suite Hierarchy/very_bad_exception": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 unknown location:0: fatal error: in "Fake Test Suite Hierarchy/very_bad_exception": unknown type
 xxx/test-macro-global-fixture.cpp:174: last checkpoint
-Failure occurred in a following context:
+Failure occurred in the following context:
     exception context should be shown
 xxx/test-macro-global-fixture.cpp:284: Leaving test case "very_bad_exception"
 xxx/test-macro-global-fixture.cpp:275: Entering test suite "1 test cases inside"
@@ -406,7 +406,7 @@ xxx/test-macro-global-fixture.cpp:151: error: in "Fake Test Suite Hierarchy/1 ba
 this is a message
 xxx/test-macro-global-fixture.cpp:154: info: check true has passed
 xxx/test-macro-global-fixture.cpp:158: error: in "Fake Test Suite Hierarchy/1 bad test case inside/bad_foo": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 xxx/test-macro-global-fixture.cpp:160: error: in "Fake Test Suite Hierarchy/1 bad test case inside/bad_foo": non sense
@@ -739,7 +739,7 @@ xxx/test-macro-global-fixture.cpp:151: error: in "Fake Test Suite Hierarchy":
 this is a message
 xxx/test-macro-global-fixture.cpp:154: info: check true has passed
 xxx/test-macro-global-fixture.cpp:158: error: in "Fake Test Suite Hierarchy": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 xxx/test-macro-global-fixture.cpp:160: error: in "Fake Test Suite Hierarchy": non sense
@@ -748,24 +748,24 @@ xxx/test-macro-global-fixture.cpp:151: error: in "Fake Test Suite Hierarchy/bad_
 this is a message
 xxx/test-macro-global-fixture.cpp:154: info: check true has passed
 xxx/test-macro-global-fixture.cpp:158: error: in "Fake Test Suite Hierarchy/bad_foo": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 xxx/test-macro-global-fixture.cpp:160: error: in "Fake Test Suite Hierarchy/bad_foo": non sense
 xxx/test-macro-global-fixture.cpp:282: Leaving test case "bad_foo"
 xxx/test-macro-global-fixture.cpp:283: Entering test case "very_bad_foo"
 xxx/test-macro-global-fixture.cpp:165: fatal error: in "Fake Test Suite Hierarchy/very_bad_foo": very_bad_foo is fatal
-Failure occurred in a following context:
+Failure occurred in the following context:
     some context
 xxx/test-macro-global-fixture.cpp:283: Leaving test case "very_bad_foo"
 xxx/test-macro-global-fixture.cpp:284: Entering test case "very_bad_exception"
 xxx/test-macro-global-fixture.cpp:174: error: in "Fake Test Suite Hierarchy/very_bad_exception": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 unknown location:0: fatal error: in "Fake Test Suite Hierarchy/very_bad_exception": unknown type
 xxx/test-macro-global-fixture.cpp:174: last checkpoint
-Failure occurred in a following context:
+Failure occurred in the following context:
     exception context should be shown
 xxx/test-macro-global-fixture.cpp:284: Leaving test case "very_bad_exception"
 xxx/test-macro-global-fixture.cpp:275: Entering test suite "1 test cases inside"
@@ -779,7 +779,7 @@ xxx/test-macro-global-fixture.cpp:151: error: in "Fake Test Suite Hierarchy/1 ba
 this is a message
 xxx/test-macro-global-fixture.cpp:154: info: check true has passed
 xxx/test-macro-global-fixture.cpp:158: error: in "Fake Test Suite Hierarchy/1 bad test case inside/bad_foo": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 xxx/test-macro-global-fixture.cpp:160: error: in "Fake Test Suite Hierarchy/1 bad test case inside/bad_foo": non sense
@@ -1131,7 +1131,7 @@ xxx/test-macro-global-fixture.cpp:151: error: in "Fake Test Suite Hierarchy no e
 this is a message
 xxx/test-macro-global-fixture.cpp:154: info: check true has passed
 xxx/test-macro-global-fixture.cpp:158: error: in "Fake Test Suite Hierarchy no errors": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 xxx/test-macro-global-fixture.cpp:160: error: in "Fake Test Suite Hierarchy no errors": non sense
@@ -1266,7 +1266,7 @@ Running 5 test cases...
 xxx/test-macro-global-fixture.cpp:281: Entering test suite "Fake Test Suite Hierarchy"
 GlobalFixtureWithCtor: ctor
 xxx/test-macro-global-fixture.cpp:165: fatal error: in "Fake Test Suite Hierarchy": very_bad_foo is fatal
-Failure occurred in a following context:
+Failure occurred in the following context:
     some context
 xxx/test-macro-global-fixture.cpp:281: Leaving test suite "Fake Test Suite Hierarchy"
 
@@ -1383,7 +1383,7 @@ Running 2 test cases...
 xxx/test-macro-global-fixture.cpp:293: Entering test suite "Fake Test Suite Hierarchy no errors"
 GlobalFixtureWithCtor: ctor
 xxx/test-macro-global-fixture.cpp:165: fatal error: in "Fake Test Suite Hierarchy no errors": very_bad_foo is fatal
-Failure occurred in a following context:
+Failure occurred in the following context:
     some context
 xxx/test-macro-global-fixture.cpp:293: Leaving test suite "Fake Test Suite Hierarchy no errors"
 
@@ -1465,12 +1465,12 @@ Running 5 test cases...
 xxx/test-macro-global-fixture.cpp:281: Entering test suite "Fake Test Suite Hierarchy"
 GlobalFixtureWithCtor: ctor
 xxx/test-macro-global-fixture.cpp:174: error: in "Fake Test Suite Hierarchy": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 unknown location:0: fatal error: in "Fake Test Suite Hierarchy": unknown type
 xxx/test-macro-global-fixture.cpp:174: last checkpoint
-Failure occurred in a following context:
+Failure occurred in the following context:
     exception context should be shown
 xxx/test-macro-global-fixture.cpp:281: Leaving test suite "Fake Test Suite Hierarchy"
 
@@ -1625,12 +1625,12 @@ Running 2 test cases...
 xxx/test-macro-global-fixture.cpp:293: Entering test suite "Fake Test Suite Hierarchy no errors"
 GlobalFixtureWithCtor: ctor
 xxx/test-macro-global-fixture.cpp:174: error: in "Fake Test Suite Hierarchy no errors": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 unknown location:0: fatal error: in "Fake Test Suite Hierarchy no errors": unknown type
 xxx/test-macro-global-fixture.cpp:174: last checkpoint
-Failure occurred in a following context:
+Failure occurred in the following context:
     exception context should be shown
 xxx/test-macro-global-fixture.cpp:293: Leaving test suite "Fake Test Suite Hierarchy no errors"
 
@@ -1756,24 +1756,24 @@ xxx/test-macro-global-fixture.cpp:151: error: in "Fake Test Suite Hierarchy/bad_
 this is a message
 xxx/test-macro-global-fixture.cpp:154: info: check true has passed
 xxx/test-macro-global-fixture.cpp:158: error: in "Fake Test Suite Hierarchy/bad_foo": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 xxx/test-macro-global-fixture.cpp:160: error: in "Fake Test Suite Hierarchy/bad_foo": non sense
 xxx/test-macro-global-fixture.cpp:282: Leaving test case "bad_foo"
 xxx/test-macro-global-fixture.cpp:283: Entering test case "very_bad_foo"
 xxx/test-macro-global-fixture.cpp:165: fatal error: in "Fake Test Suite Hierarchy/very_bad_foo": very_bad_foo is fatal
-Failure occurred in a following context:
+Failure occurred in the following context:
     some context
 xxx/test-macro-global-fixture.cpp:283: Leaving test case "very_bad_foo"
 xxx/test-macro-global-fixture.cpp:284: Entering test case "very_bad_exception"
 xxx/test-macro-global-fixture.cpp:174: error: in "Fake Test Suite Hierarchy/very_bad_exception": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 unknown location:0: fatal error: in "Fake Test Suite Hierarchy/very_bad_exception": unknown type
 xxx/test-macro-global-fixture.cpp:174: last checkpoint
-Failure occurred in a following context:
+Failure occurred in the following context:
     exception context should be shown
 xxx/test-macro-global-fixture.cpp:284: Leaving test case "very_bad_exception"
 xxx/test-macro-global-fixture.cpp:275: Entering test suite "1 test cases inside"
@@ -1787,7 +1787,7 @@ xxx/test-macro-global-fixture.cpp:151: error: in "Fake Test Suite Hierarchy/1 ba
 this is a message
 xxx/test-macro-global-fixture.cpp:154: info: check true has passed
 xxx/test-macro-global-fixture.cpp:158: error: in "Fake Test Suite Hierarchy/1 bad test case inside/bad_foo": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 xxx/test-macro-global-fixture.cpp:160: error: in "Fake Test Suite Hierarchy/1 bad test case inside/bad_foo": non sense
@@ -2125,24 +2125,24 @@ xxx/test-macro-global-fixture.cpp:151: error: in "Fake Test Suite Hierarchy/bad_
 this is a message
 xxx/test-macro-global-fixture.cpp:154: info: check true has passed
 xxx/test-macro-global-fixture.cpp:158: error: in "Fake Test Suite Hierarchy/bad_foo": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 xxx/test-macro-global-fixture.cpp:160: error: in "Fake Test Suite Hierarchy/bad_foo": non sense
 xxx/test-macro-global-fixture.cpp:282: Leaving test case "bad_foo"
 xxx/test-macro-global-fixture.cpp:283: Entering test case "very_bad_foo"
 xxx/test-macro-global-fixture.cpp:165: fatal error: in "Fake Test Suite Hierarchy/very_bad_foo": very_bad_foo is fatal
-Failure occurred in a following context:
+Failure occurred in the following context:
     some context
 xxx/test-macro-global-fixture.cpp:283: Leaving test case "very_bad_foo"
 xxx/test-macro-global-fixture.cpp:284: Entering test case "very_bad_exception"
 xxx/test-macro-global-fixture.cpp:174: error: in "Fake Test Suite Hierarchy/very_bad_exception": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 unknown location:0: fatal error: in "Fake Test Suite Hierarchy/very_bad_exception": unknown type
 xxx/test-macro-global-fixture.cpp:174: last checkpoint
-Failure occurred in a following context:
+Failure occurred in the following context:
     exception context should be shown
 xxx/test-macro-global-fixture.cpp:284: Leaving test case "very_bad_exception"
 xxx/test-macro-global-fixture.cpp:275: Entering test suite "1 test cases inside"
@@ -2156,7 +2156,7 @@ xxx/test-macro-global-fixture.cpp:151: error: in "Fake Test Suite Hierarchy/1 ba
 this is a message
 xxx/test-macro-global-fixture.cpp:154: info: check true has passed
 xxx/test-macro-global-fixture.cpp:158: error: in "Fake Test Suite Hierarchy/1 bad test case inside/bad_foo": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 xxx/test-macro-global-fixture.cpp:160: error: in "Fake Test Suite Hierarchy/1 bad test case inside/bad_foo": non sense
@@ -2492,7 +2492,7 @@ xxx/test-macro-global-fixture.cpp:151: error: in "Fake Test Suite Hierarchy":
 this is a message
 xxx/test-macro-global-fixture.cpp:154: info: check true has passed
 xxx/test-macro-global-fixture.cpp:158: error: in "Fake Test Suite Hierarchy": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 xxx/test-macro-global-fixture.cpp:160: error: in "Fake Test Suite Hierarchy": non sense
@@ -2502,24 +2502,24 @@ xxx/test-macro-global-fixture.cpp:151: error: in "Fake Test Suite Hierarchy/bad_
 this is a message
 xxx/test-macro-global-fixture.cpp:154: info: check true has passed
 xxx/test-macro-global-fixture.cpp:158: error: in "Fake Test Suite Hierarchy/bad_foo": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 xxx/test-macro-global-fixture.cpp:160: error: in "Fake Test Suite Hierarchy/bad_foo": non sense
 xxx/test-macro-global-fixture.cpp:282: Leaving test case "bad_foo"
 xxx/test-macro-global-fixture.cpp:283: Entering test case "very_bad_foo"
 xxx/test-macro-global-fixture.cpp:165: fatal error: in "Fake Test Suite Hierarchy/very_bad_foo": very_bad_foo is fatal
-Failure occurred in a following context:
+Failure occurred in the following context:
     some context
 xxx/test-macro-global-fixture.cpp:283: Leaving test case "very_bad_foo"
 xxx/test-macro-global-fixture.cpp:284: Entering test case "very_bad_exception"
 xxx/test-macro-global-fixture.cpp:174: error: in "Fake Test Suite Hierarchy/very_bad_exception": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 unknown location:0: fatal error: in "Fake Test Suite Hierarchy/very_bad_exception": unknown type
 xxx/test-macro-global-fixture.cpp:174: last checkpoint
-Failure occurred in a following context:
+Failure occurred in the following context:
     exception context should be shown
 xxx/test-macro-global-fixture.cpp:284: Leaving test case "very_bad_exception"
 xxx/test-macro-global-fixture.cpp:275: Entering test suite "1 test cases inside"
@@ -2533,7 +2533,7 @@ xxx/test-macro-global-fixture.cpp:151: error: in "Fake Test Suite Hierarchy/1 ba
 this is a message
 xxx/test-macro-global-fixture.cpp:154: info: check true has passed
 xxx/test-macro-global-fixture.cpp:158: error: in "Fake Test Suite Hierarchy/1 bad test case inside/bad_foo": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 xxx/test-macro-global-fixture.cpp:160: error: in "Fake Test Suite Hierarchy/1 bad test case inside/bad_foo": non sense
@@ -2896,7 +2896,7 @@ xxx/test-macro-global-fixture.cpp:151: error: in "Fake Test Suite Hierarchy no e
 this is a message
 xxx/test-macro-global-fixture.cpp:154: info: check true has passed
 xxx/test-macro-global-fixture.cpp:158: error: in "Fake Test Suite Hierarchy no errors": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 xxx/test-macro-global-fixture.cpp:160: error: in "Fake Test Suite Hierarchy no errors": non sense
@@ -3043,7 +3043,7 @@ xxx/test-macro-global-fixture.cpp:281: Entering test suite "Fake Test Suite Hier
 GlobalFixtureWithSetup ctor
 GlobalFixtureWithSetup::setup-calling function
 xxx/test-macro-global-fixture.cpp:165: fatal error: in "Fake Test Suite Hierarchy": very_bad_foo is fatal
-Failure occurred in a following context:
+Failure occurred in the following context:
     some context
 GlobalFixtureWithSetup dtor
 xxx/test-macro-global-fixture.cpp:281: Leaving test suite "Fake Test Suite Hierarchy"
@@ -3172,7 +3172,7 @@ xxx/test-macro-global-fixture.cpp:293: Entering test suite "Fake Test Suite Hier
 GlobalFixtureWithSetup ctor
 GlobalFixtureWithSetup::setup-calling function
 xxx/test-macro-global-fixture.cpp:165: fatal error: in "Fake Test Suite Hierarchy no errors": very_bad_foo is fatal
-Failure occurred in a following context:
+Failure occurred in the following context:
     some context
 GlobalFixtureWithSetup dtor
 xxx/test-macro-global-fixture.cpp:293: Leaving test suite "Fake Test Suite Hierarchy no errors"
@@ -3266,12 +3266,12 @@ xxx/test-macro-global-fixture.cpp:281: Entering test suite "Fake Test Suite Hier
 GlobalFixtureWithSetup ctor
 GlobalFixtureWithSetup::setup-calling function
 xxx/test-macro-global-fixture.cpp:174: error: in "Fake Test Suite Hierarchy": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 unknown location:0: fatal error: in "Fake Test Suite Hierarchy": unknown type
 xxx/test-macro-global-fixture.cpp:174: last checkpoint
-Failure occurred in a following context:
+Failure occurred in the following context:
     exception context should be shown
 GlobalFixtureWithSetup dtor
 xxx/test-macro-global-fixture.cpp:281: Leaving test suite "Fake Test Suite Hierarchy"
@@ -3438,12 +3438,12 @@ xxx/test-macro-global-fixture.cpp:293: Entering test suite "Fake Test Suite Hier
 GlobalFixtureWithSetup ctor
 GlobalFixtureWithSetup::setup-calling function
 xxx/test-macro-global-fixture.cpp:174: error: in "Fake Test Suite Hierarchy no errors": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 unknown location:0: fatal error: in "Fake Test Suite Hierarchy no errors": unknown type
 xxx/test-macro-global-fixture.cpp:174: last checkpoint
-Failure occurred in a following context:
+Failure occurred in the following context:
     exception context should be shown
 GlobalFixtureWithSetup dtor
 xxx/test-macro-global-fixture.cpp:293: Leaving test suite "Fake Test Suite Hierarchy no errors"
@@ -3578,24 +3578,24 @@ xxx/test-macro-global-fixture.cpp:151: error: in "Fake Test Suite Hierarchy/bad_
 this is a message
 xxx/test-macro-global-fixture.cpp:154: info: check true has passed
 xxx/test-macro-global-fixture.cpp:158: error: in "Fake Test Suite Hierarchy/bad_foo": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 xxx/test-macro-global-fixture.cpp:160: error: in "Fake Test Suite Hierarchy/bad_foo": non sense
 xxx/test-macro-global-fixture.cpp:282: Leaving test case "bad_foo"
 xxx/test-macro-global-fixture.cpp:283: Entering test case "very_bad_foo"
 xxx/test-macro-global-fixture.cpp:165: fatal error: in "Fake Test Suite Hierarchy/very_bad_foo": very_bad_foo is fatal
-Failure occurred in a following context:
+Failure occurred in the following context:
     some context
 xxx/test-macro-global-fixture.cpp:283: Leaving test case "very_bad_foo"
 xxx/test-macro-global-fixture.cpp:284: Entering test case "very_bad_exception"
 xxx/test-macro-global-fixture.cpp:174: error: in "Fake Test Suite Hierarchy/very_bad_exception": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 unknown location:0: fatal error: in "Fake Test Suite Hierarchy/very_bad_exception": unknown type
 xxx/test-macro-global-fixture.cpp:174: last checkpoint
-Failure occurred in a following context:
+Failure occurred in the following context:
     exception context should be shown
 xxx/test-macro-global-fixture.cpp:284: Leaving test case "very_bad_exception"
 xxx/test-macro-global-fixture.cpp:275: Entering test suite "1 test cases inside"
@@ -3609,7 +3609,7 @@ xxx/test-macro-global-fixture.cpp:151: error: in "Fake Test Suite Hierarchy/1 ba
 this is a message
 xxx/test-macro-global-fixture.cpp:154: info: check true has passed
 xxx/test-macro-global-fixture.cpp:158: error: in "Fake Test Suite Hierarchy/1 bad test case inside/bad_foo": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 xxx/test-macro-global-fixture.cpp:160: error: in "Fake Test Suite Hierarchy/1 bad test case inside/bad_foo": non sense
@@ -3946,24 +3946,24 @@ xxx/test-macro-global-fixture.cpp:151: error: in "Fake Test Suite Hierarchy/bad_
 this is a message
 xxx/test-macro-global-fixture.cpp:154: info: check true has passed
 xxx/test-macro-global-fixture.cpp:158: error: in "Fake Test Suite Hierarchy/bad_foo": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 xxx/test-macro-global-fixture.cpp:160: error: in "Fake Test Suite Hierarchy/bad_foo": non sense
 xxx/test-macro-global-fixture.cpp:282: Leaving test case "bad_foo"
 xxx/test-macro-global-fixture.cpp:283: Entering test case "very_bad_foo"
 xxx/test-macro-global-fixture.cpp:165: fatal error: in "Fake Test Suite Hierarchy/very_bad_foo": very_bad_foo is fatal
-Failure occurred in a following context:
+Failure occurred in the following context:
     some context
 xxx/test-macro-global-fixture.cpp:283: Leaving test case "very_bad_foo"
 xxx/test-macro-global-fixture.cpp:284: Entering test case "very_bad_exception"
 xxx/test-macro-global-fixture.cpp:174: error: in "Fake Test Suite Hierarchy/very_bad_exception": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 unknown location:0: fatal error: in "Fake Test Suite Hierarchy/very_bad_exception": unknown type
 xxx/test-macro-global-fixture.cpp:174: last checkpoint
-Failure occurred in a following context:
+Failure occurred in the following context:
     exception context should be shown
 xxx/test-macro-global-fixture.cpp:284: Leaving test case "very_bad_exception"
 xxx/test-macro-global-fixture.cpp:275: Entering test suite "1 test cases inside"
@@ -3977,7 +3977,7 @@ xxx/test-macro-global-fixture.cpp:151: error: in "Fake Test Suite Hierarchy/1 ba
 this is a message
 xxx/test-macro-global-fixture.cpp:154: info: check true has passed
 xxx/test-macro-global-fixture.cpp:158: error: in "Fake Test Suite Hierarchy/1 bad test case inside/bad_foo": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 xxx/test-macro-global-fixture.cpp:160: error: in "Fake Test Suite Hierarchy/1 bad test case inside/bad_foo": non sense
@@ -4316,24 +4316,24 @@ xxx/test-macro-global-fixture.cpp:151: error: in "Fake Test Suite Hierarchy/bad_
 this is a message
 xxx/test-macro-global-fixture.cpp:154: info: check true has passed
 xxx/test-macro-global-fixture.cpp:158: error: in "Fake Test Suite Hierarchy/bad_foo": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 xxx/test-macro-global-fixture.cpp:160: error: in "Fake Test Suite Hierarchy/bad_foo": non sense
 xxx/test-macro-global-fixture.cpp:282: Leaving test case "bad_foo"
 xxx/test-macro-global-fixture.cpp:283: Entering test case "very_bad_foo"
 xxx/test-macro-global-fixture.cpp:165: fatal error: in "Fake Test Suite Hierarchy/very_bad_foo": very_bad_foo is fatal
-Failure occurred in a following context:
+Failure occurred in the following context:
     some context
 xxx/test-macro-global-fixture.cpp:283: Leaving test case "very_bad_foo"
 xxx/test-macro-global-fixture.cpp:284: Entering test case "very_bad_exception"
 xxx/test-macro-global-fixture.cpp:174: error: in "Fake Test Suite Hierarchy/very_bad_exception": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 unknown location:0: fatal error: in "Fake Test Suite Hierarchy/very_bad_exception": unknown type
 xxx/test-macro-global-fixture.cpp:174: last checkpoint
-Failure occurred in a following context:
+Failure occurred in the following context:
     exception context should be shown
 xxx/test-macro-global-fixture.cpp:284: Leaving test case "very_bad_exception"
 xxx/test-macro-global-fixture.cpp:275: Entering test suite "1 test cases inside"
@@ -4347,7 +4347,7 @@ xxx/test-macro-global-fixture.cpp:151: error: in "Fake Test Suite Hierarchy/1 ba
 this is a message
 xxx/test-macro-global-fixture.cpp:154: info: check true has passed
 xxx/test-macro-global-fixture.cpp:158: error: in "Fake Test Suite Hierarchy/1 bad test case inside/bad_foo": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 xxx/test-macro-global-fixture.cpp:160: error: in "Fake Test Suite Hierarchy/1 bad test case inside/bad_foo": non sense
@@ -4358,7 +4358,7 @@ xxx/test-macro-global-fixture.cpp:151: error: in "Fake Test Suite Hierarchy":
 this is a message
 xxx/test-macro-global-fixture.cpp:154: info: check true has passed
 xxx/test-macro-global-fixture.cpp:158: error: in "Fake Test Suite Hierarchy": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 xxx/test-macro-global-fixture.cpp:160: error: in "Fake Test Suite Hierarchy": non sense
@@ -4730,7 +4730,7 @@ xxx/test-macro-global-fixture.cpp:151: error: in "Fake Test Suite Hierarchy no e
 this is a message
 xxx/test-macro-global-fixture.cpp:154: info: check true has passed
 xxx/test-macro-global-fixture.cpp:158: error: in "Fake Test Suite Hierarchy no errors": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 xxx/test-macro-global-fixture.cpp:160: error: in "Fake Test Suite Hierarchy no errors": non sense
@@ -4870,24 +4870,24 @@ xxx/test-macro-global-fixture.cpp:151: error: in "Fake Test Suite Hierarchy/bad_
 this is a message
 xxx/test-macro-global-fixture.cpp:154: info: check true has passed
 xxx/test-macro-global-fixture.cpp:158: error: in "Fake Test Suite Hierarchy/bad_foo": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 xxx/test-macro-global-fixture.cpp:160: error: in "Fake Test Suite Hierarchy/bad_foo": non sense
 xxx/test-macro-global-fixture.cpp:282: Leaving test case "bad_foo"
 xxx/test-macro-global-fixture.cpp:283: Entering test case "very_bad_foo"
 xxx/test-macro-global-fixture.cpp:165: fatal error: in "Fake Test Suite Hierarchy/very_bad_foo": very_bad_foo is fatal
-Failure occurred in a following context:
+Failure occurred in the following context:
     some context
 xxx/test-macro-global-fixture.cpp:283: Leaving test case "very_bad_foo"
 xxx/test-macro-global-fixture.cpp:284: Entering test case "very_bad_exception"
 xxx/test-macro-global-fixture.cpp:174: error: in "Fake Test Suite Hierarchy/very_bad_exception": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 unknown location:0: fatal error: in "Fake Test Suite Hierarchy/very_bad_exception": unknown type
 xxx/test-macro-global-fixture.cpp:174: last checkpoint
-Failure occurred in a following context:
+Failure occurred in the following context:
     exception context should be shown
 xxx/test-macro-global-fixture.cpp:284: Leaving test case "very_bad_exception"
 xxx/test-macro-global-fixture.cpp:275: Entering test suite "1 test cases inside"
@@ -4901,7 +4901,7 @@ xxx/test-macro-global-fixture.cpp:151: error: in "Fake Test Suite Hierarchy/1 ba
 this is a message
 xxx/test-macro-global-fixture.cpp:154: info: check true has passed
 xxx/test-macro-global-fixture.cpp:158: error: in "Fake Test Suite Hierarchy/1 bad test case inside/bad_foo": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 xxx/test-macro-global-fixture.cpp:160: error: in "Fake Test Suite Hierarchy/1 bad test case inside/bad_foo": non sense
@@ -4909,7 +4909,7 @@ xxx/test-macro-global-fixture.cpp:279: Leaving test case "bad_foo"
 xxx/test-macro-global-fixture.cpp:278: Leaving test suite "1 bad test case inside"
 GlobalFixtureWithTeardown::teardown-calling function
 xxx/test-macro-global-fixture.cpp:165: fatal error: in "Fake Test Suite Hierarchy": very_bad_foo is fatal
-Failure occurred in a following context:
+Failure occurred in the following context:
     some context
 xxx/test-macro-global-fixture.cpp:281: Leaving test suite "Fake Test Suite Hierarchy"
 
@@ -5228,7 +5228,7 @@ xxx/test-macro-global-fixture.cpp:291: Leaving test case "good_foo"
 xxx/test-macro-global-fixture.cpp:290: Leaving test suite "1 test cases inside"
 GlobalFixtureWithTeardown::teardown-calling function
 xxx/test-macro-global-fixture.cpp:165: fatal error: in "Fake Test Suite Hierarchy no errors": very_bad_foo is fatal
-Failure occurred in a following context:
+Failure occurred in the following context:
     some context
 xxx/test-macro-global-fixture.cpp:293: Leaving test suite "Fake Test Suite Hierarchy no errors"
 
@@ -5318,24 +5318,24 @@ xxx/test-macro-global-fixture.cpp:151: error: in "Fake Test Suite Hierarchy/bad_
 this is a message
 xxx/test-macro-global-fixture.cpp:154: info: check true has passed
 xxx/test-macro-global-fixture.cpp:158: error: in "Fake Test Suite Hierarchy/bad_foo": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 xxx/test-macro-global-fixture.cpp:160: error: in "Fake Test Suite Hierarchy/bad_foo": non sense
 xxx/test-macro-global-fixture.cpp:282: Leaving test case "bad_foo"
 xxx/test-macro-global-fixture.cpp:283: Entering test case "very_bad_foo"
 xxx/test-macro-global-fixture.cpp:165: fatal error: in "Fake Test Suite Hierarchy/very_bad_foo": very_bad_foo is fatal
-Failure occurred in a following context:
+Failure occurred in the following context:
     some context
 xxx/test-macro-global-fixture.cpp:283: Leaving test case "very_bad_foo"
 xxx/test-macro-global-fixture.cpp:284: Entering test case "very_bad_exception"
 xxx/test-macro-global-fixture.cpp:174: error: in "Fake Test Suite Hierarchy/very_bad_exception": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 unknown location:0: fatal error: in "Fake Test Suite Hierarchy/very_bad_exception": unknown type
 xxx/test-macro-global-fixture.cpp:174: last checkpoint
-Failure occurred in a following context:
+Failure occurred in the following context:
     exception context should be shown
 xxx/test-macro-global-fixture.cpp:284: Leaving test case "very_bad_exception"
 xxx/test-macro-global-fixture.cpp:275: Entering test suite "1 test cases inside"
@@ -5349,7 +5349,7 @@ xxx/test-macro-global-fixture.cpp:151: error: in "Fake Test Suite Hierarchy/1 ba
 this is a message
 xxx/test-macro-global-fixture.cpp:154: info: check true has passed
 xxx/test-macro-global-fixture.cpp:158: error: in "Fake Test Suite Hierarchy/1 bad test case inside/bad_foo": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 xxx/test-macro-global-fixture.cpp:160: error: in "Fake Test Suite Hierarchy/1 bad test case inside/bad_foo": non sense
@@ -5357,12 +5357,12 @@ xxx/test-macro-global-fixture.cpp:279: Leaving test case "bad_foo"
 xxx/test-macro-global-fixture.cpp:278: Leaving test suite "1 bad test case inside"
 GlobalFixtureWithTeardown::teardown-calling function
 xxx/test-macro-global-fixture.cpp:174: error: in "Fake Test Suite Hierarchy": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 unknown location:0: fatal error: in "Fake Test Suite Hierarchy": unknown type
 xxx/test-macro-global-fixture.cpp:174: last checkpoint
-Failure occurred in a following context:
+Failure occurred in the following context:
     exception context should be shown
 xxx/test-macro-global-fixture.cpp:281: Leaving test suite "Fake Test Suite Hierarchy"
 
@@ -5719,12 +5719,12 @@ xxx/test-macro-global-fixture.cpp:291: Leaving test case "good_foo"
 xxx/test-macro-global-fixture.cpp:290: Leaving test suite "1 test cases inside"
 GlobalFixtureWithTeardown::teardown-calling function
 xxx/test-macro-global-fixture.cpp:174: error: in "Fake Test Suite Hierarchy no errors": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 unknown location:0: fatal error: in "Fake Test Suite Hierarchy no errors": unknown type
 xxx/test-macro-global-fixture.cpp:174: last checkpoint
-Failure occurred in a following context:
+Failure occurred in the following context:
     exception context should be shown
 xxx/test-macro-global-fixture.cpp:293: Leaving test suite "Fake Test Suite Hierarchy no errors"
 

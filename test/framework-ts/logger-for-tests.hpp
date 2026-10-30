@@ -85,8 +85,9 @@ public:
             const std::string to_look_for[] = {"time=\"*\"",
                                                basename + "(*):",
                                                "unknown location(*):",
-                                               "; testing time: *us\n", // removing this is far more easier than adding a testing time
-                                               "; testing time: *ms\n",
+                                               // One "*s\n" covers both "us" and "ms" units; separate patterns let "*us\n"
+                                               // run past a line ending in "ms" and delete the following line
+                                               "; testing time: *s\n", // removing this is far more easier than adding a testing time
                                                "<TestingTime>*</TestingTime>",
                                                "condition 2>3 is not satisfied\n",
                                                "condition 2>3 is not satisfied]",
@@ -99,7 +100,6 @@ public:
             const std::string to_replace[]  = {"time=\"0.1234\"",
                                                basename + ":*:" ,
                                                "unknown location:*:",
-                                               "\n",
                                                "\n",
                                                "<TestingTime>ZZZ</TestingTime>",
                                                "condition 2>3 is not satisfied [2 <= 3]\n",
