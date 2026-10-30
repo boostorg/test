@@ -57,7 +57,12 @@ public:
     assertion_result( BoolConvertable const& pv_ ) : p_predicate_value( !!pv_ ) {}
 
     // Access methods
-    bool                operator!() const           { return !p_predicate_value; }
+    assertion_result    operator!() const
+    {
+        assertion_result negatedResult = !p_predicate_value;
+        negatedResult.message() << "NOT(" << ( !m_message ? std::string() : m_message->str() ) << ")";
+        return negatedResult;
+    }
     void                operator=( bool pv_ )       { p_predicate_value.value = pv_; }
     operator            safe_bool() const           { return !!p_predicate_value ? &dummy::nonnull : 0; }
 
@@ -74,6 +79,12 @@ public:
         return *m_message;
     }
     const_string        message() const                   { return !m_message ? const_string() : const_string( m_message->str() ); }
+
+    // Operators
+    friend bool operator==(bool left, const assertion_result& right) { return left == static_cast<bool>(right); }
+    friend bool operator==(const assertion_result& left, bool right) { return static_cast<bool>(left) == right; }
+    friend bool operator!=(bool left, const assertion_result& right) { return left == static_cast<bool>(right); }
+    friend bool operator!=(const assertion_result& left, bool right) { return static_cast<bool>(left) == right; }
 
 private:
     // Data members

@@ -20,6 +20,7 @@
 
 #include <boost/noncopyable.hpp>
 
+#include <locale>
 #include <map>
 #include <set>
 
@@ -405,6 +406,15 @@ public:
     }
 };
 
+boost::test_tools::predicate_result isEqualCaseInsensitive(char left, char right)
+{
+    boost::test_tools::predicate_result result(
+        std::tolower(left, std::locale::classic()) == std::tolower(right, std::locale::classic()));
+    result.message() << "[" << left << " isEqualCaseInsensitiveTo " << right << ']';
+    return result;
+}
+
+
 BOOST_AUTO_TEST_CASE( test_objects )
 {
     using namespace boost::test_tools;
@@ -468,6 +478,27 @@ BOOST_AUTO_TEST_CASE( test_objects )
         predicate_result const& res = EXPR_TYPE( nc1 == nc2 ).evaluate();
         BOOST_TEST( !res );
         BOOST_TEST( res.message() == " [NC != NC]" );
+    }
+
+    {
+        predicate_result const& res = EXPR_TYPE( isEqualCaseInsensitive('z', 'Z') ).evaluate();
+        BOOST_TEST( res );
+        BOOST_TEST( res.message() == "[z isEqualCaseInsensitiveTo Z]" );
+    }
+
+    {
+        predicate_result const& res = !EXPR_TYPE( isEqualCaseInsensitive('z', 'Z') ).evaluate();
+        BOOST_TEST( !res );
+        BOOST_TEST( res.message() == "NOT([z isEqualCaseInsensitiveTo Z])" );
+    }
+
+    {
+        NC nc1;
+        NC nc2;
+
+        predicate_result const& res = !EXPR_TYPE( nc1 == nc2 ).evaluate();
+        BOOST_TEST( res );
+        BOOST_TEST( res.message() == "NOT( [NC != NC])" );
     }
 }
 
