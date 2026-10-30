@@ -58,6 +58,7 @@ jobs:
           os: windows, cxxstd: '11,14'                    # Reduce number of configurations
           os: windows, address-model: 32                  # Reduce number of configurations, test only 64bit
           os: ubuntu, sanitize: yes                       # Memory leaks in test-macro-global-fixture, not on macos
+          compiler: icpx-2025                             # b2 intel-linux compiles release with -ipo (LTO) but links without it
     secrets:
       # CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}  Disabled: Too many issues with lcov
       COVERITY_SCAN_NOTIFICATION_EMAIL: ${{ secrets.COVERITY_SCAN_NOTIFICATION_EMAIL }}

@@ -12,7 +12,7 @@ test 2: 1.00001, 0
 test 2: 1.13154, 1
 test 2: 1.75561, 2
 test.cpp(35): error: in "test2/_2": check random_sample < 1.7 has failed [1.75560534 >= 1.7]
-Failure occurred in a following context:
+Failure occurred in the following context:
     random_sample = 1.75560534; index = 2;
 test 2: 1.45865, 3
 test 2: 1.53277, 4
