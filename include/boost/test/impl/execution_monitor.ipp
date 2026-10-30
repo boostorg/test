@@ -175,8 +175,42 @@ namespace { void _set_se_translator( void* ) {} }
 #    define BOOST_TEST_CATCH_SIGPOLL
 #  endif
 
+// AT_MINSIGSTKSZ lets the alternate signal stack be sized from what the running
+// kernel requires rather than from SIGSTKSZ. Both glibc and musl expose the
+// constant through <sys/auxv.h>, so it is taken from there rather than being
+// restated here -- the value is kernel ABI (linux/auxvec.h) and does not belong
+// in this header. Where a libc provides the header but not the constant, the
+// feature is simply not enabled and SIGSTKSZ is used as before.
+#  if defined(__linux__) && defined(__has_include)
+#    if __has_include(<sys/auxv.h>)
+#      include <sys/auxv.h>
+#      ifdef AT_MINSIGSTKSZ
+#        define BOOST_TEST_HAS_SYS_AUXV
+#      endif
+#    endif
+#  endif
+
 #  ifdef BOOST_TEST_USE_ALT_STACK
-#    define BOOST_TEST_ALT_STACK_SIZE SIGSTKSZ
+// SIGSTKSZ is not a reliable size for the alternate signal stack.
+//
+// glibc 2.34+ made it dynamic -- sysconf(_SC_SIGSTKSZ) -- so it reflects what
+// the running kernel requires. Other C libraries still define it as a compile
+// time constant; musl uses 8192.
+//
+// The kernel derives its actual minimum from the CPU's XSAVE area and publishes
+// it as auxv AT_MINSIGSTKSZ. On hardware with large register state that value
+// exceeds a hardcoded SIGSTKSZ -- measured 11952 on an AMX-capable CPU, against
+// musl's 8192 -- and sigaltstack(2) then fails with ENOMEM, aborting the test
+// binary before any test runs.
+//
+// Prefer the kernel's own figure where it is available, and never go below
+// MINSIGSTKSZ.
+#    if defined(__linux__) && defined(BOOST_TEST_HAS_SYS_AUXV)
+#      define BOOST_TEST_ALT_STACK_SIZE ::boost::detail::alt_stack_size()
+#    else
+#      define BOOST_TEST_ALT_STACK_SIZE ((std::size_t)SIGSTKSZ > (std::size_t)MINSIGSTKSZ \
+                                            ? (std::size_t)SIGSTKSZ : (std::size_t)MINSIGSTKSZ)
+#    endif
 #  endif
 
 
@@ -666,6 +700,41 @@ system_signal_exception::report() const
 //____________________________________________________________________________//
 
 // ************************************************************************** //
+// **************        boost::detail::alt_stack_size         ************** //
+// ************************************************************************** //
+
+#if defined(BOOST_TEST_USE_ALT_STACK) && defined(BOOST_TEST_HAS_SYS_AUXV)
+
+inline std::size_t alt_stack_size_impl()
+{
+    std::size_t candidate = static_cast<std::size_t>( SIGSTKSZ );
+
+    std::size_t const from_kernel = static_cast<std::size_t>( ::getauxval( AT_MINSIGSTKSZ ) );
+    if( from_kernel > candidate )
+        candidate = from_kernel;
+
+    if( candidate < static_cast<std::size_t>( MINSIGSTKSZ ) )
+        candidate = static_cast<std::size_t>( MINSIGSTKSZ );
+
+    return candidate;
+}
+
+//! Size for the alternate signal stack, taken from the running kernel.
+//!
+//! AT_MINSIGSTKSZ is what the kernel says a signal frame needs on this CPU. It
+//! is derived from the XSAVE area, so it grows with the register state the
+//! hardware carries, and it is the figure sigaltstack(2) validates against.
+//! Falls back to SIGSTKSZ where the kernel does not publish it.
+inline std::size_t alt_stack_size()
+{
+    static std::size_t const size = alt_stack_size_impl();
+
+    return size;
+}
+
+#endif
+
+// ************************************************************************** //
 // **************         boost::detail::signal_action         ************** //
 // ************************************************************************** //
 
@@ -787,6 +856,14 @@ private:
     sigjmp_buf              m_sigjmp_buf;
     system_signal_exception m_sys_sig;
 
+#ifdef BOOST_TEST_USE_ALT_STACK
+    // Whether THIS handler installed the alternate stack, and what was in place
+    // before it did. Restoring beats unconditionally disabling: a caller may have
+    // installed its own alternate stack, and that is not ours to discard.
+    bool                    m_installed_alt_stack;
+    stack_t                 m_prev_alt_stack;
+#endif
+
     static signal_handler*  s_active_handler;
 };
 
@@ -812,6 +889,9 @@ signal_handler::signal_handler( bool catch_system_errors,
 #endif
 , m_ABRT_action( SIGABRT, catch_system_errors,      attach_dbg, alt_stack )
 , m_ALRM_action( SIGALRM, timeout_microseconds > 0, attach_dbg, alt_stack )
+#ifdef BOOST_TEST_USE_ALT_STACK
+, m_installed_alt_stack( false )
+#endif
 {
     s_active_handler = this;
 
@@ -827,11 +907,15 @@ signal_handler::signal_handler( bool catch_system_errors,
 
         BOOST_TEST_SYS_ASSERT( ::sigaltstack( 0, &sigstk ) != -1 );
 
+        m_prev_alt_stack = sigstk;
+
         if( sigstk.ss_flags & SS_DISABLE ) {
             sigstk.ss_sp    = alt_stack;
             sigstk.ss_size  = BOOST_TEST_ALT_STACK_SIZE;
             sigstk.ss_flags = 0;
             BOOST_TEST_SYS_ASSERT( ::sigaltstack( &sigstk, 0 ) != -1 );
+
+            m_installed_alt_stack = true;
         }
     }
 #endif
@@ -856,13 +940,23 @@ signal_handler::~signal_handler()
     stack_t sigstk = { };
 #endif
 
-    sigstk.ss_size  = MINSIGSTKSZ;
-    sigstk.ss_flags = SS_DISABLE;
-    if( ::sigaltstack( &sigstk, 0 ) == -1 ) {
-        int error_n = errno;
-        std::cerr << "******** errors disabling the alternate stack:" << std::endl
-                  << "\t#error:" << error_n << std::endl
-                  << "\t" << std::strerror( error_n ) << std::endl;
+    // Only undo what this handler did. If it did not install the alternate stack,
+    // something else owns it -- possibly the calling program, which may have
+    // installed one deliberately -- and tearing that down is not ours to do.
+    //
+    // Where we did install, put back exactly what was there before, which the
+    // constructor captured. That was a disabled stack in every case reachable
+    // today, since the install only happens when SS_DISABLE was set, but
+    // restoring the saved value keeps this correct if that guard ever relaxes.
+    if( m_installed_alt_stack ) {
+        sigstk = m_prev_alt_stack;
+
+        if( ::sigaltstack( &sigstk, 0 ) == -1 ) {
+            int error_n = errno;
+            std::cerr << "******** errors restoring the alternate stack:" << std::endl
+                      << "\t#error:" << error_n << std::endl
+                      << "\t" << std::strerror( error_n ) << std::endl;
+        }
     }
 #endif
 

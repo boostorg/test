@@ -259,7 +259,7 @@ compiler_log_formatter::entry_context_start( std::ostream& output, log_level l )
         output << "\n[context:";
     }
     else {
-        output << (l == log_successful_tests ? "\nAssertion" : "\nFailure" ) << " occurred in a following context:";
+        output << (l == log_successful_tests ? "\nAssertion" : "\nFailure" ) << " occurred in the following context:";
     }
 }
 
