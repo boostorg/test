@@ -10,7 +10,7 @@ test 2: 1
 test 2: 4
 test 2: 7
 test.cpp(27): error: in "test2/_2": check (sample <= 4 && sample >= 0) has failed
-Failure occurred in a following context:
+Failure occurred in the following context:
     sample = 7;
 
 *** 1 failure is detected in the test module "dataset_example59"

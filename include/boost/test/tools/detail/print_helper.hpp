@@ -34,6 +34,9 @@
 #if !defined(BOOST_NO_CXX11_NULLPTR)
 #include <cstddef>
 #endif
+#if !defined(BOOST_NO_CXX17_HDR_OPTIONAL)
+#include <optional>
+#endif
 
 #include <boost/test/detail/suppress_warnings.hpp>
 
@@ -178,6 +181,26 @@ struct print_log_value<std::nullptr_t> {
     // declaration and definition is here because of #12969 https://svn.boost.org/trac10/ticket/12969
     void    operator()( std::ostream& ostr, std::nullptr_t /*t*/ ) {
         ostr << "nullptr";
+    }
+};
+#endif
+
+//____________________________________________________________________________//
+
+#if !defined(BOOST_NO_CXX17_HDR_OPTIONAL)
+template<typename T>
+struct print_log_value<std::optional<T>> {
+    void    operator()( std::ostream& ostr, std::optional<T> const& t ) {
+        if( t )
+            ostr << ' ' << *t;
+        else
+            ostr << "--";
+    }
+};
+template<>
+struct print_log_value<std::nullopt_t> {
+    void    operator()( std::ostream& ostr, std::nullopt_t /*t*/ ) {
+        ostr << "--";
     }
 };
 #endif

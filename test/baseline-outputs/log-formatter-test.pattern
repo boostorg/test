@@ -34,7 +34,7 @@ xxx/log-formatter-test.cpp:50: error: in "1 bad test case inside/bad_foo":
 this is a message
 xxx/log-formatter-test.cpp:53: info: check true has passed
 xxx/log-formatter-test.cpp:57: error: in "1 bad test case inside/bad_foo": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 xxx/log-formatter-test.cpp:59: error: in "1 bad test case inside/bad_foo": non sense
@@ -165,7 +165,7 @@ xxx/log-formatter-test.cpp:50: error: in "Fake Test Suite Hierarchy/2 test cases
 this is a message
 xxx/log-formatter-test.cpp:53: info: check true has passed
 xxx/log-formatter-test.cpp:57: error: in "Fake Test Suite Hierarchy/2 test cases inside/bad_foo": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 xxx/log-formatter-test.cpp:59: error: in "Fake Test Suite Hierarchy/2 test cases inside/bad_foo": non sense
@@ -269,14 +269,14 @@ xxx/log-formatter-test.cpp:50: error: in "Fake Test Suite Hierarchy/3 test cases
 this is a message
 xxx/log-formatter-test.cpp:53: info: check true has passed
 xxx/log-formatter-test.cpp:57: error: in "Fake Test Suite Hierarchy/3 test cases inside/bad_foo": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 xxx/log-formatter-test.cpp:59: error: in "Fake Test Suite Hierarchy/3 test cases inside/bad_foo": non sense
 xxx/log-formatter-test.cpp:173: Leaving test case "bad_foo"
 xxx/log-formatter-test.cpp:174: Entering test case "very_bad_foo"
 xxx/log-formatter-test.cpp:64: fatal error: in "Fake Test Suite Hierarchy/3 test cases inside/very_bad_foo": very_bad_foo is fatal
-Failure occurred in a following context:
+Failure occurred in the following context:
     some context
 xxx/log-formatter-test.cpp:174: Leaving test case "very_bad_foo"
 xxx/log-formatter-test.cpp:176: Test case "Fake Test Suite Hierarchy/3 test cases inside/bad_foo2<int>" is skipped because dependency test case "Fake Test Suite Hierarchy/3 test cases inside/very_bad_foo" has failed
@@ -413,24 +413,24 @@ xxx/log-formatter-test.cpp:50: error: in "Fake Test Suite Hierarchy/4 test cases
 this is a message
 xxx/log-formatter-test.cpp:53: info: check true has passed
 xxx/log-formatter-test.cpp:57: error: in "Fake Test Suite Hierarchy/4 test cases inside/bad_foo": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 xxx/log-formatter-test.cpp:59: error: in "Fake Test Suite Hierarchy/4 test cases inside/bad_foo": non sense
 xxx/log-formatter-test.cpp:181: Leaving test case "bad_foo"
 xxx/log-formatter-test.cpp:182: Entering test case "very_bad_foo"
 xxx/log-formatter-test.cpp:64: fatal error: in "Fake Test Suite Hierarchy/4 test cases inside/very_bad_foo": very_bad_foo is fatal
-Failure occurred in a following context:
+Failure occurred in the following context:
     some context
 xxx/log-formatter-test.cpp:182: Leaving test case "very_bad_foo"
 xxx/log-formatter-test.cpp:183: Entering test case "very_bad_exception"
 xxx/log-formatter-test.cpp:73: error: in "Fake Test Suite Hierarchy/4 test cases inside/very_bad_exception": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 unknown location:0: fatal error: in "Fake Test Suite Hierarchy/4 test cases inside/very_bad_exception": unknown type
 xxx/log-formatter-test.cpp:73: last checkpoint
-Failure occurred in a following context:
+Failure occurred in the following context:
     exception context should be shown
 xxx/log-formatter-test.cpp:183: Leaving test case "very_bad_exception"
 xxx/log-formatter-test.cpp:184: Entering test case "bad_foo2"
@@ -438,7 +438,7 @@ xxx/log-formatter-test.cpp:50: error: in "Fake Test Suite Hierarchy/4 test cases
 this is a message
 xxx/log-formatter-test.cpp:53: info: check true has passed
 xxx/log-formatter-test.cpp:57: error: in "Fake Test Suite Hierarchy/4 test cases inside/bad_foo2": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 xxx/log-formatter-test.cpp:59: error: in "Fake Test Suite Hierarchy/4 test cases inside/bad_foo2": non sense
@@ -708,7 +708,7 @@ xxx/log-formatter-test.cpp:50: error: in "Fake Test Suite Hierarchy/1 test cases
 this is a message
 xxx/log-formatter-test.cpp:53: info: check true has passed
 xxx/log-formatter-test.cpp:57: error: in "Fake Test Suite Hierarchy/1 test cases inside/bad<bool>": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 xxx/log-formatter-test.cpp:59: error: in "Fake Test Suite Hierarchy/1 test cases inside/bad<bool>": non sense
@@ -723,7 +723,7 @@ xxx/log-formatter-test.cpp:50: error: in "Fake Test Suite Hierarchy/2 test cases
 this is a message
 xxx/log-formatter-test.cpp:53: info: check true has passed
 xxx/log-formatter-test.cpp:57: error: in "Fake Test Suite Hierarchy/2 test cases inside/bad_foo": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 xxx/log-formatter-test.cpp:59: error: in "Fake Test Suite Hierarchy/2 test cases inside/bad_foo": non sense
@@ -735,24 +735,24 @@ xxx/log-formatter-test.cpp:50: error: in "Fake Test Suite Hierarchy/4 test cases
 this is a message
 xxx/log-formatter-test.cpp:53: info: check true has passed
 xxx/log-formatter-test.cpp:57: error: in "Fake Test Suite Hierarchy/4 test cases inside/bad_foo": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 xxx/log-formatter-test.cpp:59: error: in "Fake Test Suite Hierarchy/4 test cases inside/bad_foo": non sense
 xxx/log-formatter-test.cpp:181: Leaving test case "bad_foo"
 xxx/log-formatter-test.cpp:182: Entering test case "very_bad_foo"
 xxx/log-formatter-test.cpp:64: fatal error: in "Fake Test Suite Hierarchy/4 test cases inside/very_bad_foo": very_bad_foo is fatal
-Failure occurred in a following context:
+Failure occurred in the following context:
     some context
 xxx/log-formatter-test.cpp:182: Leaving test case "very_bad_foo"
 xxx/log-formatter-test.cpp:183: Entering test case "very_bad_exception"
 xxx/log-formatter-test.cpp:73: error: in "Fake Test Suite Hierarchy/4 test cases inside/very_bad_exception": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 unknown location:0: fatal error: in "Fake Test Suite Hierarchy/4 test cases inside/very_bad_exception": unknown type
 xxx/log-formatter-test.cpp:73: last checkpoint
-Failure occurred in a following context:
+Failure occurred in the following context:
     exception context should be shown
 xxx/log-formatter-test.cpp:183: Leaving test case "very_bad_exception"
 xxx/log-formatter-test.cpp:184: Entering test case "bad_foo2"
@@ -760,7 +760,7 @@ xxx/log-formatter-test.cpp:50: error: in "Fake Test Suite Hierarchy/4 test cases
 this is a message
 xxx/log-formatter-test.cpp:53: info: check true has passed
 xxx/log-formatter-test.cpp:57: error: in "Fake Test Suite Hierarchy/4 test cases inside/bad_foo2": with some message
-Failure occurred in a following context:
+Failure occurred in the following context:
     Context value=something
     Context value2=something different
 xxx/log-formatter-test.cpp:59: error: in "Fake Test Suite Hierarchy/4 test cases inside/bad_foo2": non sense

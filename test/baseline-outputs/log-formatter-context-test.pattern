@@ -3,11 +3,11 @@ Running 1 test case...
 xxx/log-formatter-test.cpp:330: Entering test suite "1 test cases inside"
 xxx/log-formatter-test.cpp:331: Entering test case "context_mixed_foo"
 xxx/log-formatter-test.cpp:93: info: check true has passed
-Assertion occurred in a following context:
+Assertion occurred in the following context:
     some context
 unknown location:0: fatal error: in "1 test cases inside/context_mixed_foo": unknown type
 xxx/log-formatter-test.cpp:93: last checkpoint
-Failure occurred in a following context:
+Failure occurred in the following context:
     other context
 xxx/log-formatter-test.cpp:331: Leaving test case "context_mixed_foo"
 xxx/log-formatter-test.cpp:330: Leaving test suite "1 test cases inside"
@@ -16,7 +16,7 @@ xxx/log-formatter-test.cpp:330: Leaving test suite "1 test cases inside"
 Running 1 test case...
 unknown location:0: fatal error: in "1 test cases inside/context_mixed_foo": unknown type
 xxx/log-formatter-test.cpp:93: last checkpoint
-Failure occurred in a following context:
+Failure occurred in the following context:
     other context
 
 * 1-format  *******************************************************************
@@ -24,11 +24,11 @@ Running 1 test case...
 xxx/log-formatter-test.cpp:330: Entering test suite "1 test cases inside"
 xxx/log-formatter-test.cpp:331: Entering test case "context_mixed_foo"
 xxx/log-formatter-test.cpp:93: info: check true has passed
-Assertion occurred in a following context:
+Assertion occurred in the following context:
     some context
 unknown location:0: fatal error: in "1 test cases inside/context_mixed_foo": unknown type
 xxx/log-formatter-test.cpp:93: last checkpoint
-Failure occurred in a following context:
+Failure occurred in the following context:
     other context
 xxx/log-formatter-test.cpp:331: Leaving test case "context_mixed_foo"
 xxx/log-formatter-test.cpp:330: Leaving test suite "1 test cases inside"
@@ -73,7 +73,7 @@ CONTEXT:
 Running 1 test case...
 unknown location:0: fatal error: in "1 test cases inside/context_mixed_foo": unknown type
 xxx/log-formatter-test.cpp:93: last checkpoint
-Failure occurred in a following context:
+Failure occurred in the following context:
     other context
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuite tests="1" skipped="0" errors="1" failures="0" id="0" name="1_test_cases_inside" time="0.1234">

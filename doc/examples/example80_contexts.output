@@ -2,7 +2,7 @@
 > example
 Running 1 test case...
 test.cpp(14): error: in "test_case1": check false has failed
-Failure occurred in a following context:
+Failure occurred in the following context:
     Gamma
     Delta
 

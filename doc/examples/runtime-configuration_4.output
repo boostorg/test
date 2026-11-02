@@ -13,12 +13,12 @@ Entering test module "runtime_configuration4"
 test.cpp:107: Entering test suite "command_line_test_file"
 test.cpp:107: Entering test case "_0"
 test.cpp:108: info: check input <= expected has passed
-Assertion occurred in a following context:
+Assertion occurred in the following context:
     input = 15.9879837; expected = 15.9991999; 
 test.cpp:107: Leaving test case "_0"; testing time: 433us
 test.cpp:107: Entering test case "_1"
 test.cpp:108: error: in "command_line_test_file/_1": check input <= expected has failed [15.9979839 > 15.9961996]
-Failure occurred in a following context:
+Failure occurred in the following context:
     input = 15.9979839; expected = 15.9961996; 
 test.cpp:107: Leaving test case "_1"; testing time: 114us
 test.cpp:107: Leaving test suite "command_line_test_file"; testing time: 616us

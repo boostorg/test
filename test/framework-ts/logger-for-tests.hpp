@@ -54,6 +54,15 @@ public:
         return basename;
     }
 
+    virtual boost::test_tools::assertion_result match_pattern( bool flush_stream = true ) {
+        boost::test_tools::assertion_result result = output_test_stream::match_pattern(false);
+        if(!result)
+            result.message() << "[Full content]:\n" << get_stream_string_representation() << "\n[End Full content]";
+        if(flush_stream)
+            flush();
+        return result;
+    }
+
     virtual std::string get_stream_string_representation() const {
         std::string current_string = output_test_stream::get_stream_string_representation();
 
@@ -76,8 +85,9 @@ public:
             const std::string to_look_for[] = {"time=\"*\"",
                                                basename + "(*):",
                                                "unknown location(*):",
-                                               "; testing time: *us\n", // removing this is far more easier than adding a testing time
-                                               "; testing time: *ms\n",
+                                               // One "*s\n" covers both "us" and "ms" units; separate patterns let "*us\n"
+                                               // run past a line ending in "ms" and delete the following line
+                                               "; testing time: *s\n", // removing this is far more easier than adding a testing time
                                                "<TestingTime>*</TestingTime>",
                                                "condition 2>3 is not satisfied\n",
                                                "condition 2>3 is not satisfied]",
@@ -90,7 +100,6 @@ public:
             const std::string to_replace[]  = {"time=\"0.1234\"",
                                                basename + ":*:" ,
                                                "unknown location:*:",
-                                               "\n",
                                                "\n",
                                                "<TestingTime>ZZZ</TestingTime>",
                                                "condition 2>3 is not satisfied [2 <= 3]\n",

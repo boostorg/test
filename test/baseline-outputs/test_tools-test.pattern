@@ -70,36 +70,36 @@ last checkpoint: Going to do a silly things
 fatal error: in "test_BOOST_TEST_PASSPOINT": unknown type
 last checkpoint
 error: in "test_context_logging": check false has failed
-Failure occurred in a following context:
+Failure occurred in the following context:
     some context
 error: in "test_context_logging": check false has failed
-Failure occurred in a following context:
+Failure occurred in the following context:
     some more context: 12
 error: in "test_context_logging": check false has failed
-Failure occurred in a following context:
+Failure occurred in the following context:
     info 1
     info 2
     info 3
 error: in "test_context_logging": check false has failed
-Failure occurred in a following context:
+Failure occurred in the following context:
     some sticky context
 error: in "test_context_logging": check false has failed
-Failure occurred in a following context:
+Failure occurred in the following context:
     some sticky context
     more context
 error: in "test_context_logging": check false has failed
-Failure occurred in a following context:
+Failure occurred in the following context:
     some sticky context
     different subcontext
 error: in "test_context_logging": check false has failed
-Failure occurred in a following context:
+Failure occurred in the following context:
     outer context
 error: in "test_context_logging": check false has failed
-Failure occurred in a following context:
+Failure occurred in the following context:
     outer context
     inner context
 error: in "test_context_logging": check false has failed
-Failure occurred in a following context:
+Failure occurred in the following context:
     outer context
 info: check true has passed
 error: in "test_BOOST_TEST_basic_arithmetic_op": check false has failed
